@@ -1,7 +1,8 @@
 # Architectural Technical Prototype Style Decisions
 
 - Prototypes should be stored under [`//architecture/prototypes/`][1]. Each
-prototype should be stored in its own directory with a name prefixed by `pt-`.
+prototype should be stored in its own directory with a name prefixed by `pt-`
+(an abbreviation of "prototype").
 
 - Each prototype should be studying a fixed set of technical artifacts. For
 example, the [ASM Java Agent][2] illustrates how the ASM library can be used
