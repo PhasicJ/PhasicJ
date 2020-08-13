@@ -6,16 +6,21 @@ load(
 
 dwtj_java_agent(
     name = "agent",
-    srcs = ["PtAsmJavaAgent.java"],
+    srcs = [
+        "pt/AsmJavaAgent.java",
+        "pt/MonitorEnterCounter.java",
+    ],
+    can_retransform_classes = True,
+    premain_class = "pt.AsmJavaAgent",
     deps = ["//third_party/maven:asm"],
-    premain_class = "PtAsmJavaAgent",
 )
 
 dwtj_java_test(
     name = "test",
-    srcs = ["MyTestApp.java"],
+    srcs = ["pt/MyTestApp.java"],
     java_agents = {
         ":agent": "",
     },
-    main_class = "MyTestApp",
+    main_class = "pt.MyTestApp",
+    deps = ["//third_party/maven:asm"],  # NOTE(dwtj): No support for the `exports` attribute yet.
 )
