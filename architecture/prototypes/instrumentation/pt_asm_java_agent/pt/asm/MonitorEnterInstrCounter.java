@@ -1,11 +1,11 @@
-package pt;
+package pt.asm;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class MonitorEnterCounter {
+public class MonitorEnterInstrCounter {
 
   static final int ASM_API_VERSION = Opcodes.ASM8;
 
@@ -30,7 +30,7 @@ class CountingClassVisitor extends ClassVisitor {
   private CountingMethodVisitor methodVisitor;
 
   CountingClassVisitor() {
-    super(MonitorEnterCounter.ASM_API_VERSION);
+    super(MonitorEnterInstrCounter.ASM_API_VERSION);
     count = 0;
     methodVisitor = new CountingMethodVisitor();
   }
@@ -50,7 +50,7 @@ class CountingClassVisitor extends ClassVisitor {
 
   class CountingMethodVisitor extends MethodVisitor {
     CountingMethodVisitor() {
-      super(MonitorEnterCounter.ASM_API_VERSION);
+      super(MonitorEnterInstrCounter.ASM_API_VERSION);
     }
 
     public void visitInsn(int opcode) {
