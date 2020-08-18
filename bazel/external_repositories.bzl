@@ -20,8 +20,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "a99941fe5163938b18c2b6edc7c0c8696ebe4c15",
-    "sha256": "8128ec00855279c92183eaf1a63c104a120c7a5da4f2ac029b19217b9133f788",
+    "commit": "8c12534a9a8bd19a48d8d2f4ff5cd165dea21c66",
+    "sha256": "8d48c750d210769305b8f0c79af531e2b4ce8975e8250613f67f21bb602726f4",
 }
 
 def dwtj_rules_java():
