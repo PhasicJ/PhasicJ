@@ -21,6 +21,7 @@ load(
     "@dwtj_rules_java//java:repositories.bzl",
     "dwtj_local_openjdk_repository",
     "remote_google_java_format_repository",
+    "maven_error_prone_repository",
 )
 
 # CONFIGURE `@local_openjdk_repository` #######################################
@@ -62,3 +63,18 @@ maven_install(
     #  aren't used during building or testing.
     fetch_sources = True,
 )
+
+# CONFIGURE `@error_prone` ####################################################
+
+maven_error_prone_repository(
+    name = "error_prone",
+)
+
+load(
+    "@error_prone//:defs.bzl",
+    "fetch_error_prone_toolchain",
+    "register_error_prone_toolchain",
+)
+
+fetch_error_prone_toolchain()
+register_error_prone_toolchain()
