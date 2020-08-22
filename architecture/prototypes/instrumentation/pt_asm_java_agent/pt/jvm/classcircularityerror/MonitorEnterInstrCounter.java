@@ -12,8 +12,10 @@ public class MonitorEnterInstrCounter {
   private static final int DEFAULT_ASM_PARSING_OPTIONS = 0;
 
   /**
+   * Counts the number of {@code MONITORENTER} JVM bytecode instructions found in the given class.
+   *
    * @param classFile A byte array to parse as a JVM class.
-   * @return The number of Monitor Enter JVM bytecode instructions found in the given class.
+   * @return The number of instructions found.
    */
   public static int count(byte[] classFile) {
     var reader = new ClassReader(classFile);
@@ -39,6 +41,7 @@ class CountingClassVisitor extends ClassVisitor {
     return count;
   }
 
+  @Override
   public MethodVisitor visitMethod(
       int access,
       java.lang.String name,
@@ -53,6 +56,7 @@ class CountingClassVisitor extends ClassVisitor {
       super(MonitorEnterInstrCounter.ASM_API_VERSION);
     }
 
+    @Override
     public void visitInsn(int opcode) {
       if (opcode == Opcodes.MONITORENTER) {
         count++;

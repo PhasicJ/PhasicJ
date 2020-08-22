@@ -13,6 +13,7 @@ class MyAgent {
         new ClassFileTransformer() {
           private final byte[] DO_NOT_TRANSFORM_CLASS = null;
 
+          @Override
           public byte[] transform(
               Module module,
               ClassLoader loader,
@@ -41,8 +42,13 @@ class MyAgent {
       } catch (UnmodifiableClassException ex) {
         System.out.println("Could not modify class: " + cls.getName());
       } catch (Throwable t) {
-        t.printStackTrace();
+        printThrowableStackTrace(t);
       }
     }
+  }
+
+  @SuppressWarnings("CatchAndPrintStackTrace")
+  private static void printThrowableStackTrace(Throwable t) {
+    t.printStackTrace();
   }
 }
