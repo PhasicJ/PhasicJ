@@ -8,7 +8,9 @@ dwtj_java_agent(
     name = "my_agent",
     srcs = [
         "MonitorEnterInstrCounter.java",
+        "MonitorEnterInstrInstrumenter.java",
         "MyAgent.java",
+        "Printer.java",
     ],
     premain_class = "pt.asm.MyAgent",
     deps = ["//third_party/maven:asm"],

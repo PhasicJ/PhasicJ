@@ -60,7 +60,9 @@ http_archive(
     url = "https://github.com/bazelbuild/buildtools/archive/3.2.0.zip",
 )
 
-# CONFIGURE `@dwtj_rules_markdown` FOR AUTOMATIC `markdownlint` SUPPORT #######
+# CONFIGURE `@dwtj_rules_markdown` #############################################
+#
+# This dependency is used to add `markdownlint` actions during `bazel build`.
 
 # This version was chosen because it was the latest as of 2020-07-06.
 DWTJ_RULES_MARKDOWN_COMMIT = "c555fe9dca1782c123ec8eda1fdba11345e9e5e7"

@@ -29,7 +29,7 @@ public class MonitorEnterInstrCounter {
 class CountingClassVisitor extends ClassVisitor {
 
   private int count;
-  private CountingMethodVisitor methodVisitor;
+  private final CountingMethodVisitor methodVisitor;
 
   CountingClassVisitor() {
     super(MonitorEnterInstrCounter.ASM_API_VERSION);
@@ -43,11 +43,7 @@ class CountingClassVisitor extends ClassVisitor {
 
   @Override
   public MethodVisitor visitMethod(
-      int access,
-      java.lang.String name,
-      java.lang.String descriptor,
-      java.lang.String signature,
-      java.lang.String[] exceptions) {
+      int access, String name, String descriptor, String signature, String[] exceptions) {
     return methodVisitor;
   }
 
