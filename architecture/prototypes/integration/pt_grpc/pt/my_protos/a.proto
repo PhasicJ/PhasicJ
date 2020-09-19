@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package pt.my_protos;
+
+message A {
+    string a = 1;
+}

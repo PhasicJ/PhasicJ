@@ -1,0 +1,92 @@
+workspace(name = "pt_grpc")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# CONFIGURE `@phasicj` ########################################################
+# This external workspace is used to fetch additional external workspaces (e.g.
+#  `@rules_proto`).
+
+local_repository(
+    name = "phasicj",
+    path = "../../../..",
+)
+
+load(
+    "@phasicj//bazel:external_repositories.bzl",
+    "rules_proto",
+    "dwtj_rules_java",
+    "rules_java",
+    "rules_cc",
+)
+
+# CONFIGURE `@rules_proto` ####################################################
+
+rules_proto()
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+rules_proto_dependencies()
+rules_proto_toolchains()
+
+# CONFIGURE `@dwtj_rules_java` ################################################
+
+dwtj_rules_java()
+load("@dwtj_rules_java//java:repositories.bzl", "dwtj_local_openjdk_repository")
+dwtj_local_openjdk_repository(
+    name = "dwtj_local_openjdk",
+)
+
+load("@dwtj_local_openjdk//:defs.bzl", "register_java_toolchains")
+register_java_toolchains()
+
+# CONFIGURE `@rules_java`
+
+rules_java()
+
+#load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
+#rules_java_dependencies()
+#rules_java_toolchains()
+
+# CONFIGURE `@rules_cc` #######################################################
+
+rules_cc()
+
+# CONFIGURE `@com_github_grpc_grpc` ###########################################
+
+# NOTE(dwtj): This version is used because it is the latest release as I am
+#  drafting this on 2020-09-19.
+
+_GRPC_TAG = "v1.32.0"
+_GRPC_ARCHIVE_PREFIX = "grpc-1.32.0"
+_GRPC_SHA256 = "f880ebeb2ccf0e47721526c10dd97469200e40b5f101a0d9774eb69efa0bd07a"
+
+http_archive(
+    name = "com_github_grpc_grpc",
+    url = "https://github.com/grpc/grpc/archive/{}.tar.gz".format(_GRPC_TAG),
+    strip_prefix = _GRPC_ARCHIVE_PREFIX,
+    sha256 = _GRPC_SHA256,
+)
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+grpc_deps()
+
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+grpc_extra_deps()
+
+# CONFIGURE `@com_github_grpc_grpc_java` ######################################
+
+# NOTE(dwtj): This version is used because it is the latest release as I am
+#  drafting this on 2020-09-19.
+
+_GRPC_JAVA_TAG = "v1.32.1"
+_GRPC_JAVA_ARCHIVE_PREFIX = "grpc-java-1.32.1"
+_GRPC_JAVA_SHA256 = "e5d691f80e7388035c34616a17830ec2687fb2ef5c5d9c9b79c605a7addb78ab"
+
+http_archive(
+    name = "com_github_grpc_grpc_java",
+    url = "https://github.com/grpc/grpc-java/archive/{}.tar.gz".format(_GRPC_JAVA_TAG),
+    strip_prefix = _GRPC_JAVA_ARCHIVE_PREFIX,
+    sha256 = _GRPC_JAVA_SHA256,
+)
+
+load("@com_github_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+grpc_java_repositories()
