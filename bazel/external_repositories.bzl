@@ -20,8 +20,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "748a530b5b62bed23e165f98974d6b296402cb07",
-    "sha256": "d2fa381457efba2d199ccd88fcdadc1c7b0115463d0b3408e4d0e19d10227e69",
+    "commit": "6fda17081894b1044c2659c2c58a14489f06641e",
+    "sha256": "ba1a927b03176543bb71933871815f443464254f1195b26f2c1e92262226ec9b",
 }
 
 def dwtj_rules_java():
@@ -84,6 +84,6 @@ def rules_cc():
     http_archive(
         name = "rules_cc",
         urls = ["https://github.com/bazelbuild/rules_cc/archive/{}.tar.gz".format(_RULES_CC_COMMIT)],
-	strip_prefix = "rules_cc-{}".format(_RULES_CC_COMMIT),
+	    strip_prefix = "rules_cc-{}".format(_RULES_CC_COMMIT),
         sha256 = _RULES_CC_SHA256,
     )

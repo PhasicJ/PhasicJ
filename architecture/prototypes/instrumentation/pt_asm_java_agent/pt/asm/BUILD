@@ -14,6 +14,7 @@ dwtj_java_agent(
     ],
     premain_class = "pt.asm.MyAgent",
     deps = ["//third_party/maven:asm"],
+    visibility = ["//visibility:public"],
 )
 
 dwtj_java_test(

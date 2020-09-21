@@ -1,0 +1,51 @@
+workspace(name = "pt_renaissance")
+
+# CONFIGURE `@phasicj` ########################################################
+
+local_repository(
+    name = "phasicj",
+    path = "../../../..",
+)
+
+load(
+    "@phasicj//bazel:external_repositories.bzl",
+    "dwtj_rules_java",
+    "rules_jvm_external",
+)
+
+# CONFIGURE `@dwtj_rules_java` ################################################
+
+dwtj_rules_java()
+
+load("@dwtj_rules_java//java:repositories.bzl", "dwtj_local_openjdk_repository")
+dwtj_local_openjdk_repository(
+    name = "dwtj_local_openjdk"
+)
+
+load("@dwtj_local_openjdk//:defs.bzl", "register_java_toolchains")
+register_java_toolchains()
+
+# CONFIGURE `@com_github_renaissance_benchmarks` ##############################
+
+load("//bazel:external_repositories.bzl", "com_github_renaissance_benchmarks")
+com_github_renaissance_benchmarks()
+
+# CONFIGURE `@rules_jvm_external` and `@maven` ################################
+
+rules_jvm_external()
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    artifacts = [
+        "org.ow2.asm:asm:8.0.1",
+    ],
+    repositories = [
+        "https://jcenter.bintray.com/",
+        "https://maven.google.com",
+        "https://repo1.maven.org/maven2",
+    ],
+    # NOTE(dwtj): Fetching sources to help developers during development. They
+    #  aren't used during building or testing.
+    fetch_sources = True,
+)

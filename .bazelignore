@@ -1,2 +1,3 @@
 architecture/prototypes/instrumentation/pt_asm_java_agent
 architecture/prototypes/integration/pt_grpc
+architecture/prototypes/benchmarking/pt_renaissance
