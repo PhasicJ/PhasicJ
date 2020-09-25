@@ -13,6 +13,9 @@
 #include "pt/my_services/greeter.grpc.pb.h"
 
 using std::string;
+using std::cout;
+using std::endl;
+using std::unique_ptr;
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -25,14 +28,14 @@ using pt::my_services::Greeter;
 class GreeterServiceImpl final : public Greeter::Service {
   Status SayHello(ServerContext* ctx, const Greeting* req, Greeting* reply) override {
     string prefix("Hello.");
-    std::cout << req->greeting() << std::endl;
+    cout << req->greeting() << endl;
     reply->set_greeting(prefix);
     return Status::OK;
   }
 };
 
 void RunServer() {
-  std::cout << "Starting server..." << std::endl;
+  cout << "Starting server..." << endl;
 
   string server_address("0.0.0.0:50051");
   GreeterServiceImpl service;
@@ -43,9 +46,9 @@ void RunServer() {
   ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
   builder.RegisterService(&service);
-  std::unique_ptr<Server> server(builder.BuildAndStart());
+  unique_ptr<Server> server(builder.BuildAndStart());
 
-  std::cout << "Server listening on " << server_address << std::endl;
+  cout << "Server listening on " << server_address << endl;
 
   server->Wait();
 }

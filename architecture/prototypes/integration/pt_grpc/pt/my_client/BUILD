@@ -1,5 +1,8 @@
-load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_binary")
-load("@dwtj_rules_java//java:defs.bzl", "dwtj_legacy_java_import")
+load(
+    "@dwtj_rules_java//java:defs.bzl",
+    "dwtj_java_binary",
+    "dwtj_legacy_java_import"
+)
 
 dwtj_java_binary(
     name = "my_client",
