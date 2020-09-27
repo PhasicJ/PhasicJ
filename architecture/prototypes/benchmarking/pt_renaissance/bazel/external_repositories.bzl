@@ -26,3 +26,12 @@ def com_github_renaissance_benchmarks():
         url = "https://github.com/renaissance-benchmarks/renaissance/releases/download/v{0}/renaissance-gpl-{0}.jar".format(_RENAISSANCE_BENCHMARKS_JAR_VERSION),
         sha256 = _RENAISSANCE_BENCHMARKS_JAR_SHA256
     )
+
+_ORG_OW2_ASM_JAR_VERSION = "8.0.1"
+_ORG_OW2_ASM_JAR_SHA256 = "ca5b8d11569e53921b0e3486469e7c674361c79845dad3d514f38ab6e0c8c10a"
+def org_ow2_asm():
+    http_jar(
+        name = "org_ow2_asm",
+        url = "https://repository.ow2.org/nexus/content/repositories/releases/org/ow2/asm/asm/{0}/asm-{0}.jar".format(_ORG_OW2_ASM_JAR_VERSION),
+        sha256 = _ORG_OW2_ASM_JAR_SHA256,
+    )
