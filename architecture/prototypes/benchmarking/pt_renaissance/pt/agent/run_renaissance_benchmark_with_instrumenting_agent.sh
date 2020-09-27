@@ -1,11 +1,11 @@
 #!/bin/sh -
 
-find .
+set -e
 
-JAVA_EXEC="java"
-AGENT_JAR="pt/agent/agent.jar"
-ASM_JAR="external/org_ow2_asm/jar/downloaded.jar"
-RENAISSANCE_JAR="external/com_github_renaissance_benchmarks/jar/downloaded.jar"
+JAVA_EXEC="$1"
+AGENT_JAR="$2"
+ASM_JAR="$3"
+RENAISSANCE_JAR="$4"
 
 "${JAVA_EXEC}" "-Xbootclasspath/a:${AGENT_JAR}:${ASM_JAR}" \
     "-javaagent:${AGENT_JAR}" \

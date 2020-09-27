@@ -21,7 +21,14 @@ dwtj_java_agent(
 sh_test(
     name = "instrument_renaissance_benchmark_test",
     srcs = ["run_renaissance_benchmark_with_instrumenting_agent.sh"],
+    args = [
+        "$(location @dwtj_local_openjdk//:java)",
+        "$(location :agent.jar)",
+        "$(location @org_ow2_asm//jar)",
+        "$(location @com_github_renaissance_benchmarks//jar)",
+    ],
     data = [
+        "@dwtj_local_openjdk//:java",
         ":agent.jar",
         "@org_ow2_asm//jar",
         "@com_github_renaissance_benchmarks//jar",
