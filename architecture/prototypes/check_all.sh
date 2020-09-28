@@ -19,7 +19,7 @@ timeout 5s bazel-bin/pt/my_server/my_server &
 sleep 1s
 bazel run //pt/my_client
 
-cd "${REPOSITORY_ROOT}/architecture/prototypes/benchmarking/pt_renaissance"
+cd "${REPOSITORY_ROOT}/architecture/prototypes/benchmarking/pt_instrument_renaissance"
 bazel build //...
 bazel run //third_party/renaissance:renaissance_exec -- --repetitions 1 scrabble
 bazel test //...

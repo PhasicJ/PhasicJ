@@ -1,4 +1,4 @@
-workspace(name = "pt_renaissance")
+workspace(name = "pt_instrument_renaissance")
 
 load(
     "//bazel:external_repositories.bzl",

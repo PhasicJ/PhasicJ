@@ -1,4 +1,4 @@
 bazel-bin
 bazel-out
-bazel-pt_renaissance
+bazel-pt_instrument_renaissance
 bazel-testlogs
