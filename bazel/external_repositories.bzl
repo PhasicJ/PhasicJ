@@ -20,8 +20,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "ccc5715a7b5a95638053e66f36be09678f27842c",
-    "sha256": "eef406eed9eca9b52b1eeb639ece2086487378f27cc734c1768abad30a67ad81",
+    "commit": "b469c5bbc0fa158b13e5e7eb80c3cda8a7e48398",
+    "sha256": "7a8f596e7800d28ecf39e4450d063a2d72a8717deb0f29d9a00f3e3fdd3a701f",
 }
 
 def dwtj_rules_java():
@@ -39,7 +39,6 @@ def rules_java():
     http_archive(
         name = "rules_java",
         url = "https://github.com/bazelbuild/rules_java/releases/download/{0}/rules_java-{0}.tar.gz".format(_RULES_JAVA_RELEASE),
-        #strip_prefix = "rules_java-{}".format(_RULES_JAVA_RELEASE),
         sha256 = _RULES_JAVA_SHA256,
     )
 

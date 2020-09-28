@@ -1,6 +1,7 @@
 load(
     "@dwtj_rules_java//java:defs.bzl",
     "dwtj_java_agent",
+    "dwtj_java_test",
 )
 
 dwtj_java_agent(
@@ -16,21 +17,29 @@ dwtj_java_agent(
     output_jar = "agent.jar",
 )
 
-# NOTE(dwtj): This `sh_test` target is a hack to invoke `java` with a custom-set
-#  `-Xbootclasspath/a` argument.
-sh_test(
-    name = "instrument_renaissance_benchmark_test",
-    srcs = ["run_renaissance_benchmark_with_instrumenting_agent.sh"],
-    args = [
-        "$(location @dwtj_local_openjdk//:java)",
-        "$(location :agent.jar)",
-        "$(location @org_ow2_asm//jar)",
-        "$(location @com_github_renaissance_benchmarks//jar)",
+dwtj_java_test(
+    name = "test",
+    main_class = "org.renaissance.core.Launcher",
+    # TODO(dwtj): Remove the `srcs` attribute and this file when they are no
+    #  longer needed. It is currently needed because the `srcs` attribute is
+    #  mandatory and required to be non-empty.
+    srcs = ["DoNothing.java"],
+    args = ["--repetitions", "1", "scrabble"],
+    java_agents = {
+        ":agent": "",
+    },
+    jvm_flags = [
+        # TODO(dwtj): Consider ways to not need to hard-code these paths to the
+        #  JARs. I tried modifying my Java rules to support $(location)
+        #  expansion, but that gave me paths to these JARs at compile time, not
+        #  at run time.
+        "-Xbootclasspath/a:external/org_ow2_asm/jar/downloaded.jar:pt/agent/agent.jar",
     ],
     data = [
-        "@dwtj_local_openjdk//:java",
-        ":agent.jar",
         "@org_ow2_asm//jar",
-        "@com_github_renaissance_benchmarks//jar",
-    ]
+    ],
+    deps = [
+        ":agent",
+        "//third_party/renaissance",
+    ],
 )
