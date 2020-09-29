@@ -1,0 +1,4 @@
+bazel-bin
+bazel-out
+bazel-pt_jvmti_vs_java_agent
+bazel-testlogs
