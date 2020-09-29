@@ -9,6 +9,8 @@ dwtj_java_binary(
     srcs = ["MyClient.java"],
     main_class = "pt.my_client.MyClient",
     deps = [":client_grpc_dep_imports"],
+    output_jar = "my_client.jar",
+    visibility = ["//visibility:public"],
 )
 
 dwtj_legacy_java_import(
