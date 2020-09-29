@@ -1,11 +1,5 @@
 workspace(name = "pt_instrument_renaissance")
 
-load(
-    "//bazel:external_repositories.bzl",
-    "com_github_renaissance_benchmarks",
-    "org_ow2_asm",
-)
-
 # CONFIGURE `@phasicj` ########################################################
 
 local_repository(
@@ -16,7 +10,8 @@ local_repository(
 load(
     "@phasicj//bazel:external_repositories.bzl",
     "dwtj_rules_java",
-    "rules_jvm_external",
+    "com_github_renaissance_benchmarks",
+    "org_ow2_asm",
 )
 
 # CONFIGURE `@dwtj_rules_java` ################################################
@@ -34,30 +29,6 @@ register_java_toolchains()
 # CONFIGURE `@com_github_renaissance_benchmarks` ##############################
 
 com_github_renaissance_benchmarks()
-
-# CONFIGURE `@rules_jvm_external` and `@maven` ################################
-#
-# NOTE(dwtj): I'd like to use this copy of ASM fetched via Maven if possible,
-#  but I'm finding it tricky to use it in my current ugly hack.
-# TODO(dwtj): Consider using this Maven-fetched ASM instead of `@org_ow2_asm`.
-#
-rules_jvm_external()
-
-load("@rules_jvm_external//:defs.bzl", "maven_install")
-
-maven_install(
-    artifacts = [
-        "org.ow2.asm:asm:8.0.1",
-    ],
-    repositories = [
-        "https://jcenter.bintray.com/",
-        "https://maven.google.com",
-        "https://repo1.maven.org/maven2",
-    ],
-    # NOTE(dwtj): Fetching sources to help developers during development. They
-    #  aren't used during building or testing.
-    fetch_sources = True,
-)
 
 # CONFIGURE `@org_ow2_asm` ####################################################
 

@@ -1,6 +1,13 @@
 workspace(name = "phasicj")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load(
+    "//bazel:external_repositories.bzl",
+    "dwtj_rules_java",
+    "com_github_renaissance_benchmarks",
+    "org_ow2_asm",
+)
+
 
 # CONFIGURE `buildifier` FOR BAZEL FILE LINTING AND FORMATTING ################
 #
@@ -60,7 +67,7 @@ http_archive(
     url = "https://github.com/bazelbuild/buildtools/archive/3.2.0.zip",
 )
 
-# CONFIGURE `@dwtj_rules_markdown` #############################################
+# CONFIGURE `@dwtj_rules_markdown` ############################################
 #
 # This dependency is used to add `markdownlint` actions during `bazel build`.
 
@@ -85,3 +92,23 @@ local_markdownlint_external_repository(
 load('@local_markdownlint//:defs.bzl', 'register_local_markdownlint_toolchain')
 
 register_local_markdownlint_toolchain()
+
+# CONFIGURE `@dwtj_rules_java` ################################################
+
+dwtj_rules_java()
+
+load("@dwtj_rules_java//java:repositories.bzl", "dwtj_local_openjdk_repository")
+dwtj_local_openjdk_repository(
+    name = "dwtj_local_openjdk"
+)
+
+load("@dwtj_local_openjdk//:defs.bzl", "register_java_toolchains")
+register_java_toolchains()
+
+# CONFIGURE `@com_github_renaissance_benchmarks` ################################################
+
+com_github_renaissance_benchmarks()
+
+# CONFIGURE `@org_ow2_asm` ################################################
+
+org_ow2_asm()
