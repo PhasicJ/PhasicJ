@@ -1,4 +1,4 @@
 bazel-bin
 bazel-out
-bazel-pt_jvmti_vs_java_agent
+bazel-pt_asm_jvmti_agent
 bazel-testlogs

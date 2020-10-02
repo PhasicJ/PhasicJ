@@ -1,0 +1,6 @@
+build --aspects @dwtj_rules_java//java:aspects.bzl%google_java_format_aspect
+
+# TODO(dwtj): Fix problems with Error Prone and re-enable it.
+#build --aspects @dwtj_rules_java//java:aspects.bzl%error_prone_aspect
+
+build --repo_env=BAZEL_CXXOPTS="--std=c++20"
