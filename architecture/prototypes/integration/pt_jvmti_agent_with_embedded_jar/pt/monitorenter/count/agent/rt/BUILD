@@ -10,6 +10,7 @@ dwtj_java_library(
     name = "agent_runtime",
     srcs = ["AgentRuntime.java"],
     output_jar = "agent_runtime.jar",
+    visibility = ["//visibility:public"],
 )
 
 AGENT_RUNTIME_SYMBOLS_NAME_BASE = "pt_monitorenter_count_agent_rt"
@@ -55,6 +56,7 @@ cc_library(
     srcs = ["extract_embedded_jar.cc"],
     hdrs = ["extract_embedded_jar.h"],
     deps = [":agent_runtime_jar_import"],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(

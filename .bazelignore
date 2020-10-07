@@ -1,5 +1,5 @@
 architecture/prototypes/integration/pt_grpc
 architecture/prototypes/integration/pt_asm_java_agent
-architecture/prototypes/integration/pt_asm_jvmti_agent
+architecture/prototypes/integration/pt_jvmti_agent_with_embedded_jar
 architecture/prototypes/integration/pt_asm_renaissance
 architecture/prototypes/benchmarking/pt_jvmti_vs_bytecode_events

@@ -1,7 +1,7 @@
-package pt.count.monitorenter;
+package pt.monitorenter.count.agent.rt;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-class AgentRuntime {
+public class AgentRuntime {
   public static AtomicInteger monitorEnterInstrCounter = new AtomicInteger(0);
 }
