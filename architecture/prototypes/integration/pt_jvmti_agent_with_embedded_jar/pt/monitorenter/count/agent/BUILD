@@ -6,8 +6,8 @@ cc_binary(
     srcs = ["agent.cc"],
     linkshared = True,
     deps = [
-        "//third_party/net/java/jdk:jni_headers",
-        "//third_party/net/java/jdk:jvmti_headers",
+        "@openjdk_linux_x64//cc/jni:headers",
+        "@openjdk_linux_x64//cc/jvmti:headers",
         "//pt/monitorenter/count/agent/rt:extract_embedded_jar",
     ],
 )
@@ -30,12 +30,12 @@ sh_test(
     name = "agent_test",
     srcs = ["agent_test.sh"],
     args = [
-        "$(location @net_java_jdk_15_linux_x64//:bin/java)",
+        "$(location @openjdk_linux_x64//:bin/java)",
         "$(location :agent)",
         "$(location :my_bin.jar)",
     ],
     data = [
-        "@net_java_jdk_15_linux_x64//:bin/java",
+        "@openjdk_linux_x64//:bin/java",
         ":agent",
         ":my_bin.jar",
     ],
