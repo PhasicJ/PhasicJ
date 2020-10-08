@@ -1,0 +1,4 @@
+bazel-bin
+bazel-out
+bazel-pt_graal_shadow_vm
+bazel-testlogs

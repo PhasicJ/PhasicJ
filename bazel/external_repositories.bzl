@@ -109,3 +109,14 @@ def org_ow2_asm():
         url = "https://repository.ow2.org/nexus/content/repositories/releases/org/ow2/asm/asm/{0}/asm-{0}.jar".format(_ORG_OW2_ASM_JAR_VERSION),
         sha256 = _ORG_OW2_ASM_JAR_SHA256,
     )
+
+_DWTJ_RULES_EMBED_SHA256 = "40069df3088f7df175d6fba7f53a1475aa284a32c971443c81966bb743da77a6"
+_DWTJ_RULES_EMBED_COMMIT = "182466efc926c103a40e3acb3e8aa031c8a92c2f"
+
+def dwtj_rules_embed(name = "dwtj_rules_embed"):
+    http_archive(
+        name = name,
+        url = "https://github.com/dwtj/dwtj_rules_embed/archive/{}.tar.gz".format(_DWTJ_RULES_EMBED_COMMIT),
+        sha256 = _DWTJ_RULES_EMBED_SHA256,
+        strip_prefix = "dwtj_rules_embed-{}".format(_DWTJ_RULES_EMBED_COMMIT)
+    )
