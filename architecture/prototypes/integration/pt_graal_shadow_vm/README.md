@@ -4,7 +4,7 @@ This document gives an overview of the design and purpose of this prototype.
 
 This prototype is meant to demonstrate a particular potential strategy for
 deploying analyses of Java applications using a combination of technologies:
-the JVM, [JVMTI][jvmti], GraalVM's `native-image`, and [ZeroMQ][zeromq].
+the JVM, [JVMTI][jvmti], and GraalVM's `native-image`.
 
 GraalVM's `native-image` tool provides support to compile Java applications to
 native code. This prototype demonstrates how JVMTI can be used to deploy a
@@ -26,24 +26,19 @@ traditional JVM in a separate process.)
 In this prototype, our shadow VM is deployed via JVMTI agent. Specifically, the
 shadow VM's executable code is embedded in a JVMTI agent. Then, when the JVMTI
 agent is installed in an application JVM, the JVMTI agent extracts this shadow
-VM's executable, runs it in a separate process, and then configures means of
-communication between the application and the analysis.
+VM's executable and runs it in a separate process.
 
 Our JVMTI agent instruments the application process to generate events
 describing its behavior as the application executes. These events should be
 sent to the analysis process in a timely manner.
 
-In this prototype we use [ZeroMQ][zeromq] (a.k.a. ØMQ, 0MQ, or zmq) to create
-communication channels between the application and the analysis.
-
 This prototype is intended to clarify some key aspects related to defining,
-building, deploying, and testing components arranged in this manner and
-usefully communicating with each other. It does not explore implementing any
-sophisticated or even useful instrumentation or analysis. Said another way,
-this prototype's instrumentation and analysis is kept intentionally trivial.
+building, deploying, and testing components arranged in this manner. It does
+not explore implementing any sophisticated or even useful instrumentation or
+analysis. Said another way, this prototype's instrumentation and analysis is
+kept intentionally trivial.
 
 ---
 
 [jvmti]: https://docs.oracle.com/en/java/javase/14/docs/specs/jvmti.html
 [marek2013shadowvm]: https://dl.acm.org/doi/abs/10.1145/2637365.2517219
-[zeromq]: https://zeromq.org/
