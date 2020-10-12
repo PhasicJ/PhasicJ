@@ -13,4 +13,4 @@ JVMTI_AGENT_SHARED_LIBRARY_ABSOLUTE_PATH="${PWD}/${JVMTI_AGENT_SHARED_LIBRARY}"
     -jar "$MAIN_JAR" | tee test.log
 
 grep 'Hello, from `pt.agent.test.TestApp`.' test.log
-grep 'Hello, from `pt.svm.Analysis`.' test.log
+grep 'Hello, from `pt.svm.Analysis`, implemented in Java.' test.log

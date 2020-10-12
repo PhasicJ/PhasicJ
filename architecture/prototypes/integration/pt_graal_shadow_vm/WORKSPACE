@@ -12,6 +12,7 @@ load(
     "dwtj_rules_java",
     "rules_cc",
     "dwtj_rules_embed",
+    "io_bazel_rules_rust",
 )
 
 # CONFIGURE `@dwtj_rules_java` ################################################
@@ -59,3 +60,15 @@ rules_cc()
 # CONFIGURE `@dwtj_rules_embed() ##############################################
 
 dwtj_rules_embed()
+
+# CONFIGURE `@io_bazel_rules_rust` ############################################
+
+io_bazel_rules_rust()
+
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()
+
+load("@io_bazel_rules_rust//:workspace.bzl", "rust_workspace")
+
+rust_workspace()
