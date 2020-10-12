@@ -1,0 +1,4 @@
+bazel-bin
+bazel-out
+bazel-pt_rust_jvmti_agent
+bazel-testlogs

@@ -11,6 +11,7 @@ load(
     "@phasicj//bazel:external_repositories.bzl",
     "dwtj_rules_java",
     "rules_cc",
+    "apply_dwtj_remote_openjdk_repository",
 )
 
 # CONFIGURE `@dwtj_rules_java` ################################################
@@ -24,12 +25,9 @@ load(
 
 # CONFIGURE REMOTE OPENJDK ####################################################
 
-dwtj_remote_openjdk_repository(
-    name = "openjdk_linux_x64",
-    url = "https://download.java.net/java/GA/jdk14/779bf45e88a44cbd9ea6621d33e33db1/36/GPL/openjdk-15_linux-x64_bin.tar.gz",
-    sha256 = "bb67cadee687d7b486583d03c9850342afea4593be4f436044d785fba9508fb7",
-    strip_prefix = "jdk-15",
-    os = "linux",
+apply_dwtj_remote_openjdk_repository(
+    "openjdk_linux_x64",
+    dwtj_remote_openjdk_repository,
 )
 
 load("@openjdk_linux_x64//:defs.bzl", "register_java_toolchains")

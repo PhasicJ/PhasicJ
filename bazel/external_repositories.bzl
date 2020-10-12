@@ -24,16 +24,27 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "d6f469edd7274220defb2473660ca2b6e35e06f9",
-    "sha256": "2495097e79d3fa930fc9e7a9826779da6a23f9cdaf9b018f44541ead72856efd",
+    "commit": "01fe18649bc6e60e9fea05f63522901dfd47c9c4",
+    "sha256": "0660f72d9da33ef9fefa95545b132743c701be056f26907ed206f3038a7bf3ab",
 }
 
 def dwtj_rules_java():
     http_archive(
         name = "dwtj_rules_java",
-        url = "https://github.com/dwtj/dwtj_rules_java/archive/{}.zip".format(_DWTJ_RULES_JAVA_ARCHIVE_INFO["commit"]),
+        url = "https://github.com/dwtj/dwtj_rules_java/archive/{}.tar.gz".format(_DWTJ_RULES_JAVA_ARCHIVE_INFO["commit"]),
         strip_prefix = "dwtj_rules_java-{}".format(_DWTJ_RULES_JAVA_ARCHIVE_INFO["commit"]),
         sha256 = _DWTJ_RULES_JAVA_ARCHIVE_INFO["sha256"],
+    )
+
+# TODO(dwtj): Document this.
+# TODO(dwtj): Generalize this.
+def apply_dwtj_remote_openjdk_repository(name = None, dwtj_remote_openjdk_repository = None):
+    dwtj_remote_openjdk_repository(
+        name = name,
+        url = "https://download.java.net/java/GA/jdk14/779bf45e88a44cbd9ea6621d33e33db1/36/GPL/openjdk-15_linux-x64_bin.tar.gz",
+        sha256 = "bb67cadee687d7b486583d03c9850342afea4593be4f436044d785fba9508fb7",
+        strip_prefix = "jdk-15",
+        os = "linux",
     )
 
 _RULES_JAVA_RELEASE = "0.1.1"
@@ -119,4 +130,17 @@ def dwtj_rules_embed(name = "dwtj_rules_embed"):
         url = "https://github.com/dwtj/dwtj_rules_embed/archive/{}.tar.gz".format(_DWTJ_RULES_EMBED_COMMIT),
         sha256 = _DWTJ_RULES_EMBED_SHA256,
         strip_prefix = "dwtj_rules_embed-{}".format(_DWTJ_RULES_EMBED_COMMIT)
+    )
+
+_BAZEL_SKYLIB_RELEASE_VERSION = "1.0.3"
+_BAZEL_SKYLIB_RELEASE_SHA256 = "1c531376ac7e5a180e0237938a2536de0c54d93f5c278634818e0efc952dd56c"
+
+def bazel_skylib():
+    http_archive(
+        name = "bazel_skylib",
+        urls = [
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/{0}/bazel-skylib-{0}.tar.gz".format(_BAZEL_SKYLIB_RELEASE_VERSION),
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/{0}/bazel-skylib-{0}.tar.gz".format(_BAZEL_SKYLIB_RELEASE_VERSION),
+        ],
+        sha256 = _BAZEL_SKYLIB_RELEASE_SHA256,
     )
