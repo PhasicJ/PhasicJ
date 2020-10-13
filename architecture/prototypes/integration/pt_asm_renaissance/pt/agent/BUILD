@@ -3,12 +3,12 @@ load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_agent")
 dwtj_java_agent(
     name = "agent",
     srcs = [
-        "MonitorEnterInstrInstrumenter.java",
         "Agent.java",
+        "MonitorEnterInstrInstrumenter.java",
         "Printer.java",
     ],
-    premain_class = "pt.agent.Agent",
-    deps = ["@phasicj//third_party/asm"],
-    visibility = ["//visibility:public"],
     output_jar = "agent.jar",
+    premain_class = "pt.agent.Agent",
+    visibility = ["//visibility:public"],
+    deps = ["@phasicj//third_party/asm"],
 )

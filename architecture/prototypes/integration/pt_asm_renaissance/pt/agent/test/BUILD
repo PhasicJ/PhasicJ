@@ -2,12 +2,18 @@ load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_test")
 
 dwtj_java_test(
     name = "test",
-    main_class = "org.renaissance.core.Launcher",
     # TODO(dwtj): Remove the `srcs` attribute and this file when they are no
     #  longer needed. It is currently needed because the `srcs` attribute is
     #  mandatory and required to be non-empty.
     srcs = ["DoNothing.java"],
-    args = ["--repetitions", "1", "scrabble"],
+    args = [
+        "--repetitions",
+        "1",
+        "scrabble",
+    ],
+    data = [
+        "@org_ow2_asm//jar",
+    ],
     java_agents = {
         "//pt/agent": "",
     },
@@ -18,9 +24,7 @@ dwtj_java_test(
         #  at run time.
         "-Xbootclasspath/a:external/org_ow2_asm/jar/downloaded.jar:pt/agent/agent.jar",
     ],
-    data = [
-        "@org_ow2_asm//jar",
-    ],
+    main_class = "org.renaissance.core.Launcher",
     deps = [
         "//pt/agent",
         "@phasicj//third_party/renaissance",

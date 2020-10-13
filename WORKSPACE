@@ -3,11 +3,10 @@ workspace(name = "phasicj")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load(
     "//bazel:external_repositories.bzl",
-    "dwtj_rules_java",
     "com_github_renaissance_benchmarks",
+    "dwtj_rules_java",
     "org_ow2_asm",
 )
-
 
 # CONFIGURE `buildifier` FOR BAZEL FILE LINTING AND FORMATTING ################
 #
@@ -73,6 +72,7 @@ http_archive(
 
 # This version was chosen because it was the latest as of 2020-07-06.
 DWTJ_RULES_MARKDOWN_COMMIT = "c555fe9dca1782c123ec8eda1fdba11345e9e5e7"
+
 DWTJ_RULES_MARKDOWN_SHA256 = "f5ed694d7a3998e68f2d3648263e59d8dfd5a815f985909c343a94f6c534ed10"
 
 http_archive(
@@ -85,11 +85,11 @@ http_archive(
 load("@dwtj_rules_markdown//markdown:defs.bzl", "local_markdownlint_external_repository")
 
 local_markdownlint_external_repository(
-    name = 'local_markdownlint',
-    config = '//:.markdownlint.json'
+    name = "local_markdownlint",
+    config = "//:.markdownlint.json",
 )
 
-load('@local_markdownlint//:defs.bzl', 'register_local_markdownlint_toolchain')
+load("@local_markdownlint//:defs.bzl", "register_local_markdownlint_toolchain")
 
 register_local_markdownlint_toolchain()
 
@@ -98,11 +98,13 @@ register_local_markdownlint_toolchain()
 dwtj_rules_java()
 
 load("@dwtj_rules_java//java:repositories.bzl", "dwtj_local_openjdk_repository")
+
 dwtj_local_openjdk_repository(
-    name = "dwtj_local_openjdk"
+    name = "dwtj_local_openjdk",
 )
 
 load("@dwtj_local_openjdk//:defs.bzl", "register_java_toolchains")
+
 register_java_toolchains()
 
 # CONFIGURE `@com_github_renaissance_benchmarks` ################################################

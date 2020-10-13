@@ -8,6 +8,6 @@ proto_library(
 
 cc_proto_library(
     name = "a_cc_proto",
-    deps = [":a_proto"],
     visibility = ["//visibility:public"],
+    deps = [":a_proto"],
 )

@@ -1,16 +1,16 @@
 load(
     "@dwtj_rules_java//java:defs.bzl",
     "dwtj_java_binary",
-    "dwtj_legacy_java_import"
+    "dwtj_legacy_java_import",
 )
 
 dwtj_java_binary(
     name = "my_client",
     srcs = ["MyClient.java"],
     main_class = "pt.my_client.MyClient",
-    deps = [":client_grpc_dep_imports"],
     output_jar = "my_client.jar",
     visibility = ["//visibility:public"],
+    deps = [":client_grpc_dep_imports"],
 )
 
 dwtj_legacy_java_import(

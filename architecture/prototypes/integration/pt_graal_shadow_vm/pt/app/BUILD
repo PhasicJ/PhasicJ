@@ -2,6 +2,6 @@ load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_binary")
 
 dwtj_java_binary(
     name = "an_app",
-    main_class = "pt.app.AnApp",
     srcs = ["AnApp.java"],
+    main_class = "pt.app.AnApp",
 )

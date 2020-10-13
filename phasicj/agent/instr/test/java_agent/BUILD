@@ -2,8 +2,8 @@ load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_agent")
 
 dwtj_java_agent(
     name = "java_agent",
-    premain_class = "phasicj.agent.instr.test.java_agent.JavaAgent",
     srcs = ["JavaAgent.java"],
-    deps = ["//phasicj/agent/instr"],
+    premain_class = "phasicj.agent.instr.test.java_agent.JavaAgent",
     visibility = [":__subpackages__"],
+    deps = ["//phasicj/agent/instr"],
 )

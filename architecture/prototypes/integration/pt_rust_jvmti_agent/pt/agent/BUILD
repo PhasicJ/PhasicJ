@@ -12,26 +12,26 @@ rust_library(
 
 dwtj_java_binary(
     name = "MyApp",
-    main_class = "pt.agent.MyApp",
     srcs = ["MyApp.java"],
+    main_class = "pt.agent.MyApp",
     output_jar = "MyApp.jar",
 )
 
 rename_cdylib(
-  name = "rename",
-  src = ":ptagent",
-  out = "libptagent.so",
+    name = "rename",
+    src = ":ptagent",
+    out = "libptagent.so",
 )
 
 sh_test(
     name = "test",
     srcs = ["test.sh"],
-    data = [
-        ":libptagent.so",
-        ":MyApp.jar",
-    ],
     args = [
         "$(location :libptagent.so)",
         "$(location :MyApp.jar)",
+    ],
+    data = [
+        ":MyApp.jar",
+        ":libptagent.so",
     ],
 )

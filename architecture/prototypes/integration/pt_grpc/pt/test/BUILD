@@ -6,8 +6,8 @@ sh_test(
         "$(location //pt/my_client)",
     ],
     data = [
-        "@dwtj_local_openjdk//:java",
-        "//pt/my_server",
         "//pt/my_client",
+        "//pt/my_server",
+        "@dwtj_local_openjdk//:java",
     ],
 )

@@ -26,10 +26,10 @@ load("@dwtj_rules_java//java:repositories.bzl", "dwtj_remote_openjdk_repository"
 
 dwtj_remote_openjdk_repository(
     name = "remote_openjdk_linux_x64",
-    url = "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.8%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz",
+    os = "linux",
     sha256 = "6e4cead158037cb7747ca47416474d4f408c9126be5b96f9befd532e0a762b47",
     strip_prefix = "jdk-11.0.8+10",
-    os = "linux",
+    url = "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.8%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz",
 )
 
 load("@remote_openjdk_linux_x64//:defs.bzl", "register_java_toolchains")
@@ -54,37 +54,40 @@ rules_cc()
 # This is the core ZeroMQ implementation library.
 
 _COM_GITHUB_ZEROMQ_LIBZMQ_VERSION = "4.3.3"
+
 _COM_GITHUB_ZEROMQ_LIBZMQ_SHA256 = "9853e0437d834cbed5d3c223bf1d755cadee70e7c964c6e42c4c6783dee5d02c"
 
 http_archive(
     name = "com_github_zeromq_libzmq",
-    url = "https://github.com/zeromq/libzmq/archive/v{}.tar.gz".format(_COM_GITHUB_ZEROMQ_LIBZMQ_VERSION),
     sha256 = _COM_GITHUB_ZEROMQ_LIBZMQ_SHA256,
     strip_prefix = "cppzmq-{}".format(_COM_GITHUB_ZEROMQ_LIBZMQ_VERSION),
+    url = "https://github.com/zeromq/libzmq/archive/v{}.tar.gz".format(_COM_GITHUB_ZEROMQ_LIBZMQ_VERSION),
 )
 
 # CONFIGURE `@com_github_zeromq_cppzmq` #######################################
 # These are the header-only C++ bindings for `libzmq`.
 
 _COM_GITHUB_ZEROMQ_CPPZMQ_VERSION = "4.7.1"
+
 _COM_GITHUB_ZEROMQ_CPPZMQ_SHA256 = "9853e0437d834cbed5d3c223bf1d755cadee70e7c964c6e42c4c6783dee5d02c"
 
 http_archive(
     name = "com_github_zeromq_cppzmq",
-    url = "https://github.com/zeromq/cppzmq/archive/v{}.tar.gz".format(_COM_GITHUB_ZEROMQ_CPPZMQ_VERSION),
     sha256 = _COM_GITHUB_ZEROMQ_CPPZMQ_SHA256,
     strip_prefix = "cppzmq-{}".format(_COM_GITHUB_ZEROMQ_CPPZMQ_VERSION),
+    url = "https://github.com/zeromq/cppzmq/archive/v{}.tar.gz".format(_COM_GITHUB_ZEROMQ_CPPZMQ_VERSION),
 )
 
 # CONFIGURE `@com_github_zeromq_jzmq` #########################################
 # These are JNI-based Java bindings for `libzmq`.
 
 _COM_GITHUB_ZEROMQ_JZMQ_VERSION = "3.1.0"
+
 _COM_GITHUB_ZEROMQ_JZMQ_SHA256 = "41880d141923423b74ff13d4a4d03aa545f5236ac4cb04ee1469da699be3073a"
 
 http_archive(
     name = "com_github_zeromq_jzmq",
-    url = "https://github.com/zeromq/jzmq/archive/v{}.tar.gz".format(_COM_GITHUB_ZEROMQ_JZMQ_VERSION),
     sha256 = _COM_GITHUB_ZEROMQ_JZMQ_SHA256,
     strip_prefix = "jzmq-{}".format(_COM_GITHUB_ZEROMQ_JZMQ_VERSION),
+    url = "https://github.com/zeromq/jzmq/archive/v{}.tar.gz".format(_COM_GITHUB_ZEROMQ_JZMQ_VERSION),
 )

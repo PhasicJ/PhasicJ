@@ -1,6 +1,6 @@
-'''Defines some helper macros to be called in a `WORKSPACE` file to add some
+"""Defines some helper macros to be called in a `WORKSPACE` file to add some
 external repositories.
-'''
+"""
 
 load(
     "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -14,8 +14,8 @@ _RULES_JVM_EXTERNAL_TAG = "3.3"
 _RULES_JVM_EXTERNAL_SHA256 = "d85951a92c0908c80bd8551002d66cb23c3434409c814179c0ff026b53544dab"
 
 def rules_jvm_external():
-    '''Fetches and creates the `@rules_jvm_external` external repository.
-    '''
+    """Fetches and creates the `@rules_jvm_external` external repository.
+    """
     http_archive(
         name = "rules_jvm_external",
         strip_prefix = "rules_jvm_external-{}".format(_RULES_JVM_EXTERNAL_TAG),
@@ -98,7 +98,7 @@ def rules_cc():
     http_archive(
         name = "rules_cc",
         urls = ["https://github.com/bazelbuild/rules_cc/archive/{}.tar.gz".format(_RULES_CC_COMMIT)],
-	    strip_prefix = "rules_cc-{}".format(_RULES_CC_COMMIT),
+        strip_prefix = "rules_cc-{}".format(_RULES_CC_COMMIT),
         sha256 = _RULES_CC_SHA256,
     )
 
@@ -109,11 +109,12 @@ def com_github_renaissance_benchmarks():
     http_jar(
         name = "com_github_renaissance_benchmarks",
         url = "https://github.com/renaissance-benchmarks/renaissance/releases/download/v{0}/renaissance-gpl-{0}.jar".format(_RENAISSANCE_BENCHMARKS_JAR_VERSION),
-        sha256 = _RENAISSANCE_BENCHMARKS_JAR_SHA256
+        sha256 = _RENAISSANCE_BENCHMARKS_JAR_SHA256,
     )
 
 _ORG_OW2_ASM_JAR_VERSION = "8.0.1"
 _ORG_OW2_ASM_JAR_SHA256 = "ca5b8d11569e53921b0e3486469e7c674361c79845dad3d514f38ab6e0c8c10a"
+
 def org_ow2_asm():
     http_jar(
         name = "org_ow2_asm",
@@ -129,7 +130,7 @@ def dwtj_rules_embed(name = "dwtj_rules_embed"):
         name = name,
         url = "https://github.com/dwtj/dwtj_rules_embed/archive/{}.tar.gz".format(_DWTJ_RULES_EMBED_COMMIT),
         sha256 = _DWTJ_RULES_EMBED_SHA256,
-        strip_prefix = "dwtj_rules_embed-{}".format(_DWTJ_RULES_EMBED_COMMIT)
+        strip_prefix = "dwtj_rules_embed-{}".format(_DWTJ_RULES_EMBED_COMMIT),
     )
 
 _BAZEL_SKYLIB_RELEASE_VERSION = "1.0.3"

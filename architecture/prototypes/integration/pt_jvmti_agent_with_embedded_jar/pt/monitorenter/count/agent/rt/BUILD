@@ -1,8 +1,8 @@
 load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_library")
 load(
     "@rules_cc//cc:defs.bzl",
-    "cc_library",
     "cc_import",
+    "cc_library",
     "cc_test",
 )
 
@@ -27,7 +27,6 @@ AGENT_RUNTIME_SYMBOLS_NAME_BASE = "pt_monitorenter_count_agent_rt"
 #  (The `nm` command can be used to list the symbols in an object file.)
 genrule(
     name = "agent_runtime_jar_obj",
-    tools = [":make_agent_runtime_jar_obj.sh"],
     srcs = [":agent_runtime.jar"],
     outs = ["agent_runtime.jar.o"],
     cmd_bash = ' \
@@ -36,13 +35,14 @@ genrule(
             "$(location :agent_runtime.jar)" \
             "$(location :agent_runtime.jar.o)" \
     '.format(AGENT_RUNTIME_SYMBOLS_NAME_BASE),
+    tools = [":make_agent_runtime_jar_obj.sh"],
 )
 
 genrule(
     name = "agent_runtime_jar_static_library",
     srcs = ["agent_runtime.jar.o"],
     outs = ["agent_runtime.jar.a"],
-    cmd_bash = 'ar rcs "$(location :agent_runtime.jar.a)" "$(location :agent_runtime.jar.o)"'
+    cmd_bash = 'ar rcs "$(location :agent_runtime.jar.a)" "$(location :agent_runtime.jar.o)"',
 )
 
 cc_import(
@@ -55,14 +55,14 @@ cc_library(
     name = "extract_embedded_jar",
     srcs = ["extract_embedded_jar.cc"],
     hdrs = ["extract_embedded_jar.h"],
-    deps = [":agent_runtime_jar_import"],
     visibility = ["//visibility:public"],
+    deps = [":agent_runtime_jar_import"],
 )
 
 cc_test(
     name = "extract_embedded_jar_test",
     srcs = ["extract_embedded_jar_test.cc"],
-    deps = ["extract_embedded_jar"],
     args = ['"$(location :agent_runtime.jar)"'],
     data = [":agent_runtime.jar"],
+    deps = ["extract_embedded_jar"],
 )

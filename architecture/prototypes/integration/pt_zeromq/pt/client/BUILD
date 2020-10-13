@@ -3,14 +3,14 @@ load("@dwtj_rules_java//graalvm:defs.bzl", "graalvm_native_image_binary")
 
 dwtj_java_binary(
     name = "client_java_binary",
-    main_class = "pt.client.Client",
     srcs = ["Client.java"],
+    main_class = "pt.client.Client",
 )
 
 graalvm_native_image_binary(
     name = "client_native",
     main_class = "pt.client.Client",
-    deps = [":client_java_binary"],
-    visibility = ["//visibility:public"],
     output = "client",
+    visibility = ["//visibility:public"],
+    deps = [":client_java_binary"],
 )

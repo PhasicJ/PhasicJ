@@ -11,10 +11,10 @@ local_repository(
 
 load(
     "@phasicj//bazel:external_repositories.bzl",
+    "apply_dwtj_remote_openjdk_repository",
     "bazel_skylib",
     "dwtj_rules_java",
     "io_bazel_rules_rust",
-    "apply_dwtj_remote_openjdk_repository",
 )
 
 # CONFIGURE `@bazel_skylib` ###################################################
@@ -23,7 +23,9 @@ load(
 # `rust_repositories()` macro below).
 
 bazel_skylib()
+
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
 bazel_skylib_workspace()
 
 # CONFIGURE `@io_bazel_rules_rust` ############################################

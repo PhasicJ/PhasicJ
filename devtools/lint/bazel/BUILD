@@ -3,7 +3,7 @@ load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
 markdown_library(
     name = "markdown",
-    srcs = glob(["*.md"])
+    srcs = glob(["*.md"]),
 )
 
 buildifier(

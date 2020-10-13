@@ -9,8 +9,8 @@ local_repository(
 
 load(
     "@phasicj//bazel:external_repositories.bzl",
-    "rules_jvm_external",
     "dwtj_rules_java",
+    "rules_jvm_external",
 )
 
 # CONFIGURE `@dwtj_rules_java` ################################################
@@ -20,8 +20,8 @@ dwtj_rules_java()
 load(
     "@dwtj_rules_java//java:repositories.bzl",
     "dwtj_local_openjdk_repository",
-    "remote_google_java_format_repository",
     "maven_error_prone_repository",
+    "remote_google_java_format_repository",
 )
 
 # CONFIGURE `@local_openjdk_repository` #######################################
@@ -40,7 +40,7 @@ remote_google_java_format_repository(
     name = "google_java_format",
 )
 
-load('@google_java_format//:defs.bzl', 'register_google_java_format_toolchain')
+load("@google_java_format//:defs.bzl", "register_google_java_format_toolchain")
 
 register_google_java_format_toolchain()
 
@@ -54,14 +54,14 @@ maven_install(
     artifacts = [
         "org.ow2.asm:asm:8.0.1",
     ],
+    # NOTE(dwtj): Fetching sources to help developers during development. They
+    #  aren't used during building or testing.
+    fetch_sources = True,
     repositories = [
         "https://jcenter.bintray.com/",
         "https://maven.google.com",
         "https://repo1.maven.org/maven2",
     ],
-    # NOTE(dwtj): Fetching sources to help developers during development. They
-    #  aren't used during building or testing.
-    fetch_sources = True,
 )
 
 # CONFIGURE `@error_prone` ####################################################
@@ -77,4 +77,5 @@ load(
 )
 
 fetch_error_prone_toolchain()
+
 register_error_prone_toolchain()

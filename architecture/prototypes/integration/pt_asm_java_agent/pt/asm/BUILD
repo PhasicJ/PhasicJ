@@ -13,8 +13,8 @@ dwtj_java_agent(
         "Printer.java",
     ],
     premain_class = "pt.asm.MyAgent",
-    deps = ["//third_party/maven:asm"],
     visibility = ["//visibility:public"],
+    deps = ["//third_party/maven:asm"],
 )
 
 dwtj_java_test(
