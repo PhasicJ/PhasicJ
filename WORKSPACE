@@ -97,7 +97,11 @@ register_local_markdownlint_toolchain()
 
 dwtj_rules_java()
 
-load("@dwtj_rules_java//java:repositories.bzl", "dwtj_local_openjdk_repository")
+load(
+    "@dwtj_rules_java//java:repositories.bzl",
+    "dwtj_local_openjdk_repository",
+    "remote_google_java_format_repository",
+)
 
 dwtj_local_openjdk_repository(
     name = "dwtj_local_openjdk",
@@ -106,6 +110,16 @@ dwtj_local_openjdk_repository(
 load("@dwtj_local_openjdk//:defs.bzl", "register_java_toolchains")
 
 register_java_toolchains()
+
+# CONFIGURE `@google_java_format` ##############################################
+
+remote_google_java_format_repository(
+    name = 'google_java_format',
+)
+
+load('@google_java_format//:defs.bzl', 'register_google_java_format_toolchain')
+
+register_google_java_format_toolchain()
 
 # CONFIGURE `@com_github_renaissance_benchmarks` ################################################
 
