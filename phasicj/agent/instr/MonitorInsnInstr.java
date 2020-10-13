@@ -24,7 +24,7 @@ import org.objectweb.asm.Type;
  *       {@link #instrument} function's output.
  * </ol>
  */
-class MonitorEnterInstrInstrumenter {
+class MonitorInsnInstr {
 
   static final int ASM_API_VERSION = Opcodes.ASM8;
   static final int ASM_DEFAULT_CLASS_WRITER_BEHAVIOR = 0;
@@ -57,10 +57,10 @@ class ClassInstrumenter extends ClassVisitor {
 }
 
 class MethodInstrumenter extends MethodVisitor {
-  static final String printMethodOwnerInternalName = "phasicj/agent/rt/ApplicationEvents";
-  static final String printMethodName = "monitorEnter";
-  static final String printMethodDescriptor = Type.getMethodType(Type.VOID_TYPE).getDescriptor();
-  static final boolean printMethodOwnerIsInterface = false;
+
+  private static final String applicationEventsInternalName = "phasicj/agent/rt/ApplicationEvents";
+  private static final boolean applicationEventsIsInterface = false;
+  private static final String voidMethodDescr = Type.getMethodType(Type.VOID_TYPE).getDescriptor();
 
   MethodInstrumenter(int api, MethodVisitor mv) {
     super(api, mv);
@@ -68,15 +68,23 @@ class MethodInstrumenter extends MethodVisitor {
 
   @Override
   public void visitInsn(int opcode) {
-    // Re-emit all instructions to delegate, but for `MONITORENTER` instructions, emit an
-    // `INVOKESTATIC` of the print method first.
+    // Re-emit all instructions to delegate, but for `MONITORENTER` and `MONITOREXIT` instructions,
+    // emit a appropriate `INVOKESTATIC` call first.
     if (opcode == Opcodes.MONITORENTER) {
       mv.visitMethodInsn(
           Opcodes.INVOKESTATIC,
-          printMethodOwnerInternalName,
-          printMethodName,
-          printMethodDescriptor,
-          printMethodOwnerIsInterface);
+          applicationEventsInternalName,
+          "monitorEnter",
+          voidMethodDescr,
+          applicationEventsIsInterface);
+    }
+    if (opcode == Opcodes.MONITOREXIT) {
+      mv.visitMethodInsn(
+          Opcodes.INVOKESTATIC,
+          applicationEventsInternalName,
+          "monitorExit",
+          voidMethodDescr,
+          applicationEventsIsInterface);
     }
     mv.visitInsn(opcode);
   }

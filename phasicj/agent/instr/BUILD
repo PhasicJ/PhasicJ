@@ -4,7 +4,7 @@ dwtj_java_library(
     name = "instr",
     srcs = [
         "Instrumenter.java",
-        "MonitorEnterInstrInstrumenter.java",
+        "MonitorInsnInstr.java",
     ],
     visibility = ["//phasicj/agent:__subpackages__"],
     deps = [
