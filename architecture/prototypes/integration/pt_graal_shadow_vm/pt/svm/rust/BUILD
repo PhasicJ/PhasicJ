@@ -13,7 +13,7 @@ graalvm_native_image_library(
     graal_isolate_header_output = "graal_isolate.h",
     header_output = "analysis.h",
     main_class = "pt.svm.Analysis",
-    shared_library_output = "libanalysis.so",
+    library_output = "libanalysis.so",
     deps = ["//pt/svm:analysis"],
 )
 

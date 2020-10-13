@@ -24,7 +24,7 @@ import org.objectweb.asm.Type;
  *       {@link #instrument} function's output.
  * </ol>
  */
-class MonitorInsnInstr {
+public class MonitorInsnInstrumenter {
 
   static final int ASM_API_VERSION = Opcodes.ASM8;
   static final int ASM_DEFAULT_CLASS_WRITER_BEHAVIOR = 0;

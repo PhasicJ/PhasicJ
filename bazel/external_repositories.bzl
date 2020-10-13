@@ -24,8 +24,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "01fe18649bc6e60e9fea05f63522901dfd47c9c4",
-    "sha256": "0660f72d9da33ef9fefa95545b132743c701be056f26907ed206f3038a7bf3ab",
+    "commit": "62ccfaeb641fae8b6f990936da299a6222f5dbde",
+    "sha256": "bb3c1c3aa5eeb858cd00d2f9c6097b49fc905ad58c58542fcf72b434afbc6950",
 }
 
 def dwtj_rules_java():
@@ -38,12 +38,27 @@ def dwtj_rules_java():
 
 # TODO(dwtj): Document this.
 # TODO(dwtj): Generalize this.
-def apply_dwtj_remote_openjdk_repository(name = None, dwtj_remote_openjdk_repository = None):
-    dwtj_remote_openjdk_repository(
+def apply_dwtj_remote_openjdk_repository(name, dwtj_remote_openjdk_repository_rule):
+    dwtj_remote_openjdk_repository_rule(
         name = name,
         url = "https://download.java.net/java/GA/jdk14/779bf45e88a44cbd9ea6621d33e33db1/36/GPL/openjdk-15_linux-x64_bin.tar.gz",
         sha256 = "bb67cadee687d7b486583d03c9850342afea4593be4f436044d785fba9508fb7",
         strip_prefix = "jdk-15",
+        os = "linux",
+    )
+
+_REMOTE_GRAALVM_VERSION = "20.2.0"
+_REMOTE_GRAALVM_ARCHIVE_SHA256 = "5db74b5b8888712d2ac3cd7ae2a8361c2aa801bc94c801f5839351aba5064e29"
+_REMOTE_GRAALVM_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "92b429939f12434575e4d586f79c5b686d322f29211d1608ed6055a97a35925c"
+
+def apply_remote_graalvm_repository(name, remote_graalvm_repository_rule):
+    remote_graalvm_repository_rule(
+        name = name,
+        url = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-{0}/graalvm-ce-java11-linux-amd64-{0}.tar.gz".format(_REMOTE_GRAALVM_VERSION),
+        sha256 = _REMOTE_GRAALVM_ARCHIVE_SHA256,
+        strip_prefix = "graalvm-ce-java11-{}".format(_REMOTE_GRAALVM_VERSION),
+        native_image_installable_jar_url = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-{0}/native-image-installable-svm-java11-linux-amd64-{0}.jar".format(_REMOTE_GRAALVM_VERSION),
+        native_image_installable_jar_sha256 = _REMOTE_GRAALVM_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256,
         os = "linux",
     )
 

@@ -7,7 +7,7 @@ cc_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//pt/svm/exec/embedded:analysis",
-        "@openjdk_linux_x64//cc/jni:headers",
-        "@openjdk_linux_x64//cc/jvmti:headers",
+        "@graalvm_linux_x64//cc/jni:headers",
+        "@graalvm_linux_x64//cc/jvmti:headers",
     ],
 )

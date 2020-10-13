@@ -1,6 +1,6 @@
 package phasicj.agent.instr.test.java_agent;
 
-import static phasicj.agent.instr.Instrumenter.instrument;
+import static phasicj.agent.instr.MonitorInsnInstrumenter.instrument;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;

@@ -5,7 +5,9 @@ load(
     "//bazel:external_repositories.bzl",
     "com_github_renaissance_benchmarks",
     "dwtj_rules_java",
+    "apply_remote_graalvm_repository",
     "org_ow2_asm",
+    "io_bazel_rules_rust",
 )
 
 # CONFIGURE `buildifier` FOR BAZEL FILE LINTING AND FORMATTING ################
@@ -99,20 +101,31 @@ dwtj_rules_java()
 
 load(
     "@dwtj_rules_java//java:repositories.bzl",
-    "dwtj_local_openjdk_repository",
-    "maven_error_prone_repository",
     "remote_google_java_format_repository",
+    "maven_error_prone_repository",
 )
 
-dwtj_local_openjdk_repository(
-    name = "dwtj_local_openjdk",
+load(
+    "@dwtj_rules_java//graalvm:repositories.bzl",
+    "remote_graalvm_repository",
 )
 
-load("@dwtj_local_openjdk//:defs.bzl", "register_java_toolchains")
+# CONFIGURE `@graalvm_linux_x64` ##############################################
+
+apply_remote_graalvm_repository(
+    "graalvm_linux_x64",
+    remote_graalvm_repository,
+)
+
+load("@graalvm_linux_x64//:defs.bzl", "register_java_toolchains")
 
 register_java_toolchains()
 
-# CONFIGURE `@google_java_format` ##############################################
+load("@graalvm_linux_x64//graalvm:defs.bzl", "register_graalvm_toolchains")
+
+register_graalvm_toolchains()
+
+# CONFIGURE `@google_java_format` #############################################
 
 remote_google_java_format_repository(
     name = "google_java_format",
@@ -122,7 +135,7 @@ load("@google_java_format//:defs.bzl", "register_google_java_format_toolchain")
 
 register_google_java_format_toolchain()
 
-# CONFIGURE `@com_github_renaissance_benchmarks` ################################################
+# CONFIGURE `@com_github_renaissance_benchmarks` ##############################
 
 com_github_renaissance_benchmarks()
 
@@ -130,7 +143,7 @@ com_github_renaissance_benchmarks()
 
 org_ow2_asm()
 
-# CONFIGURE `@rules_jvm_external` ##############################################
+# CONFIGURE `@rules_jvm_external` #############################################
 
 # NOTE(dwtj): These rules are a prerequisite of `maven_error_prone_repository`.
 
@@ -148,7 +161,7 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_ARCHIVE_INFO["tag"],
 )
 
-# CONFIGURE `@error_prone` #####################################################
+# CONFIGURE `@error_prone` ####################################################
 
 maven_error_prone_repository(
     name = "error_prone",
@@ -163,3 +176,15 @@ load(
 fetch_error_prone_toolchain()
 
 register_error_prone_toolchain()
+
+# CONFIGURE `@io_bazel_rules_rust #############################################
+
+io_bazel_rules_rust()
+
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()
+
+load("@io_bazel_rules_rust//:workspace.bzl", "rust_workspace")
+
+rust_workspace()
