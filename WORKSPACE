@@ -114,10 +114,10 @@ register_java_toolchains()
 # CONFIGURE `@google_java_format` ##############################################
 
 remote_google_java_format_repository(
-    name = 'google_java_format',
+    name = "google_java_format",
 )
 
-load('@google_java_format//:defs.bzl', 'register_google_java_format_toolchain')
+load("@google_java_format//:defs.bzl", "register_google_java_format_toolchain")
 
 register_google_java_format_toolchain()
 

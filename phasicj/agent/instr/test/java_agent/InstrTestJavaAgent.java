@@ -32,12 +32,18 @@ public class InstrTestJavaAgent {
     @Override
     public byte[] transform(
         ClassLoader classLoader,
-        String s,
-        Class<?> aClass,
+        String className,
+        Class<?> cls,
         ProtectionDomain protectionDomain,
         byte[] bytes)
         throws IllegalClassFormatException {
-      return instrument(bytes);
+      try {
+        return instrument(bytes);
+      } catch (Throwable t) {
+        System.err.println("Failed to transform class: " + className);
+        t.printStackTrace();
+        return null;
+      }
     }
   }
 }
