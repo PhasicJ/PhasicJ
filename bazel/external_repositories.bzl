@@ -41,7 +41,7 @@ def dwtj_rules_java():
 def apply_dwtj_remote_openjdk_repository(name, dwtj_remote_openjdk_repository_rule):
     dwtj_remote_openjdk_repository_rule(
         name = name,
-        url = "https://download.java.net/java/GA/jdk14/779bf45e88a44cbd9ea6621d33e33db1/36/GPL/openjdk-15_linux-x64_bin.tar.gz",
+        url = "https://download.java.net/java/GA/jdk15/779bf45e88a44cbd9ea6621d33e33db1/36/GPL/openjdk-15_linux-x64_bin.tar.gz",
         sha256 = "bb67cadee687d7b486583d03c9850342afea4593be4f436044d785fba9508fb7",
         strip_prefix = "jdk-15",
         os = "linux",
