@@ -1,3 +1,3 @@
 build --aspects @dwtj_rules_markdown//markdown:defs.bzl%markdownlint_aspect
-#build --aspects @dwtj_rules_java//java:aspects.bzl%google_java_format_aspect
-#build --aspects @dwtj_rules_java//java:aspects.bzl%error_prone_aspect
+build --aspects @dwtj_rules_java//java:aspects.bzl%google_java_format_aspect
+build --aspects @dwtj_rules_java//java:aspects.bzl%error_prone_aspect
