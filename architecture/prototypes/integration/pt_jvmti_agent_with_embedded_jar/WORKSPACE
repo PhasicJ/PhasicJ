@@ -8,7 +8,7 @@ local_repository(
 )
 
 load(
-    "@phasicj//bazel:external_repositories.bzl",
+    "@phasicj//bazel:external/repositories.bzl",
     "apply_dwtj_remote_openjdk_repository",
     "dwtj_rules_java",
     "rules_cc",

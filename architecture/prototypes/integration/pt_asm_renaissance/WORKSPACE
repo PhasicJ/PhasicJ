@@ -8,7 +8,7 @@ local_repository(
 )
 
 load(
-    "@phasicj//bazel:external_repositories.bzl",
+    "@phasicj//bazel:external/repositories.bzl",
     "com_github_renaissance_benchmarks",
     "dwtj_rules_java",
     "org_ow2_asm",

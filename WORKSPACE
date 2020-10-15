@@ -2,7 +2,7 @@ workspace(name = "phasicj")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load(
-    "//bazel:external_repositories.bzl",
+    "//bazel:external/repositories.bzl",
     "apply_dwtj_remote_openjdk_repository",
     "apply_remote_graalvm_repository",
     "com_github_renaissance_benchmarks",

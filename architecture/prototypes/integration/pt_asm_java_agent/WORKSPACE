@@ -8,7 +8,7 @@ local_repository(
 )
 
 load(
-    "@phasicj//bazel:external_repositories.bzl",
+    "@phasicj//bazel:external/repositories.bzl",
     "dwtj_rules_java",
     "rules_jvm_external",
 )
