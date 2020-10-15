@@ -11,3 +11,8 @@ buildifier(
     mode = "fix",
     verbose = True,
 )
+
+alias(
+    name = "bazel",
+    actual = ":buildifier",
+)
