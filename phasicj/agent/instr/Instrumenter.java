@@ -28,12 +28,12 @@ public class Instrumenter {
     return buf;
   }
 
-  @CEntryPoint(name = "phasicj_agent_instr_Instrumenter_free")
+  @CEntryPoint(name = "svm_free")
   public static void free(IsolateThread isolateThread, CCharPointer ptr) {
     UnmanagedMemory.free(ptr);
   }
 
-  @CEntryPoint(name = "phasicj_agent_instr_Instrumenter_instrument")
+  @CEntryPoint(name = "svm_instrument")
   public static void instrument(
       IsolateThread isolateThread,
       int inBufSize,
