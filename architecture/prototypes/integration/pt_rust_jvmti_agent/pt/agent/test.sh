@@ -2,12 +2,13 @@
 
 set -e
 
-export AGENT_PATH="$1"
-export EXECUTABLE_JAR="$2"
+export JAVA_EXEC="$1"
+export AGENT_PATH="$2"
+export EXECUTABLE_JAR="$3"
 
 AGENT_PATH="${PWD}/${AGENT_PATH}"
 
-java "-agentpath:${AGENT_PATH}" -jar "${EXECUTABLE_JAR}" | tee stdout.log
+"./${JAVA_EXEC}" "-agentpath:${AGENT_PATH}" -jar "${EXECUTABLE_JAR}" | tee stdout.log
 
 # NOTE(dwtj): These `grep` commands make sure that these strings appears
 #  somewhere in the above command's standard output. If one of them doesn't,

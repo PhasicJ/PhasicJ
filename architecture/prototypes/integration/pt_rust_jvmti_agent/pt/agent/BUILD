@@ -27,10 +27,12 @@ sh_test(
     name = "test",
     srcs = ["test.sh"],
     args = [
+        "$(location @openjdk_linux_x64//:bin/java)",
         "$(location :libptagent.so)",
         "$(location :MyApp.jar)",
     ],
     data = [
+        "@openjdk_linux_x64//:bin/java",
         ":MyApp.jar",
         ":libptagent.so",
     ],
