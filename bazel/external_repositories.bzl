@@ -127,13 +127,16 @@ def com_github_renaissance_benchmarks():
         sha256 = _RENAISSANCE_BENCHMARKS_JAR_SHA256,
     )
 
-_ORG_OW2_ASM_JAR_VERSION = "8.0.1"
-_ORG_OW2_ASM_JAR_SHA256 = "ca5b8d11569e53921b0e3486469e7c674361c79845dad3d514f38ab6e0c8c10a"
+_ORG_OW2_ASM_JAR_VERSION = "9.0"
+_ORG_OW2_ASM_JAR_SHA256 = "0df97574914aee92fd349d0cb4e00f3345d45b2c239e0bb50f0a90ead47888e0"
 
 def org_ow2_asm():
     http_jar(
         name = "org_ow2_asm",
-        url = "https://repository.ow2.org/nexus/content/repositories/releases/org/ow2/asm/asm/{0}/asm-{0}.jar".format(_ORG_OW2_ASM_JAR_VERSION),
+        urls = [
+            "https://repository.ow2.org/nexus/content/repositories/releases/org/ow2/asm/asm/{0}/asm-{0}.jar".format(_ORG_OW2_ASM_JAR_VERSION),
+            "https://repo1.maven.org/maven2/org/ow2/asm/asm/{0}/asm-{0}.jar".format(_ORG_OW2_ASM_JAR_VERSION),
+        ],
         sha256 = _ORG_OW2_ASM_JAR_SHA256,
     )
 
