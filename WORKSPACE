@@ -3,12 +3,12 @@ workspace(name = "phasicj")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load(
     "//bazel:external_repositories.bzl",
+    "apply_dwtj_remote_openjdk_repository",
+    "apply_remote_graalvm_repository",
     "com_github_renaissance_benchmarks",
     "dwtj_rules_java",
-    "apply_remote_graalvm_repository",
-    "apply_dwtj_remote_openjdk_repository",
-    "org_ow2_asm",
     "io_bazel_rules_rust",
+    "org_ow2_asm",
 )
 
 # CONFIGURE `buildifier` FOR BAZEL FILE LINTING AND FORMATTING ################
@@ -103,10 +103,9 @@ dwtj_rules_java()
 load(
     "@dwtj_rules_java//java:repositories.bzl",
     "dwtj_remote_openjdk_repository",
-    "remote_google_java_format_repository",
     "maven_error_prone_repository",
+    "remote_google_java_format_repository",
 )
-
 load(
     "@dwtj_rules_java//graalvm:repositories.bzl",
     "remote_graalvm_repository",

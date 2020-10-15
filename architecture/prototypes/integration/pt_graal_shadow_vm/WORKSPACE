@@ -9,10 +9,10 @@ local_repository(
 
 load(
     "@phasicj//bazel:external_repositories.bzl",
+    "apply_remote_graalvm_repository",
     "dwtj_rules_embed",
     "dwtj_rules_java",
     "io_bazel_rules_rust",
-    "apply_remote_graalvm_repository",
     "rules_cc",
 )
 
