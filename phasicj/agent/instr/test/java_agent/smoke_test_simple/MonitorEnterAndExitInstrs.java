@@ -1,5 +1,7 @@
 package phasicj.agent.instr.test.java_agent.smoke_test_simple;
 
+import phasicj.agent.rt.ApplicationEvents;
+
 class MonitorEnterAndExitInstrs {
 
   public static final int NUM_LOOPS = 5;
@@ -13,11 +15,13 @@ class MonitorEnterAndExitInstrs {
       }
     }
 
-    int numEnter = phasicj.agent.rt.ApplicationEvents.numMonitorEnterEvents();
-    int numExit = phasicj.agent.rt.ApplicationEvents.numMonitorExitEvents();
+    int numEnter = ApplicationEvents.numMonitorEnterEvents();
+    int numExit = ApplicationEvents.numMonitorExitEvents();
 
-    System.out.println("Number of MONITORENTER events: " + numEnter);
-    System.out.println("Number of MONITOREXIT events: " + numExit);
+    System.out.print("Number of MONITORENTER events: ");
+    System.out.println(numEnter);
+    System.out.print("Number of MONITOREXIT events: ");
+    System.out.println(numExit);
 
     if (numEnter < NUM_LOOPS || numExit < NUM_LOOPS) {
       System.err.println("An instruction event counter value was not as expected.");

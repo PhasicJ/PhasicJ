@@ -38,7 +38,12 @@ public class InstrTestJavaAgent {
         byte[] bytes)
         throws IllegalClassFormatException {
       try {
-        return instrument(bytes);
+        // Do not instrument classes in the `phasicj/agent/rt` package.
+        if (className.startsWith("phasicj/agent/rt/")) {
+          return null;
+        } else {
+          return instrument(bytes);
+        }
       } catch (Throwable t) {
         System.err.println("Failed to transform class: " + className);
         t.printStackTrace();

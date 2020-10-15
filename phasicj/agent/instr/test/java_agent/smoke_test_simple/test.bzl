@@ -1,5 +1,7 @@
 load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_test")
 
+JAVA_TEST_PACKAGE = "phasicj.agent.instr.test.java_agent.smoke_test_simple"
+
 def test(name):
     dwtj_java_test(
         name = name,
@@ -11,5 +13,5 @@ def test(name):
             "//third_party/asm",
         ],
         java_agents = {"//phasicj/agent/instr/test/java_agent": ""},
-        main_class = "phasicj.agent.instr.test.java_agent.smoke_test_simple." + name,
+        main_class = JAVA_TEST_PACKAGE + "." + name,
     )

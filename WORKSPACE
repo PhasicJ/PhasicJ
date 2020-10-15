@@ -6,6 +6,7 @@ load(
     "com_github_renaissance_benchmarks",
     "dwtj_rules_java",
     "apply_remote_graalvm_repository",
+    "apply_dwtj_remote_openjdk_repository",
     "org_ow2_asm",
     "io_bazel_rules_rust",
 )
@@ -101,6 +102,7 @@ dwtj_rules_java()
 
 load(
     "@dwtj_rules_java//java:repositories.bzl",
+    "dwtj_remote_openjdk_repository",
     "remote_google_java_format_repository",
     "maven_error_prone_repository",
 )
@@ -117,13 +119,22 @@ apply_remote_graalvm_repository(
     remote_graalvm_repository,
 )
 
-load("@graalvm_linux_x64//:defs.bzl", "register_java_toolchains")
-
-register_java_toolchains()
+# NOTE(dwtj): We use GraalVM as our Java compiler toolchain.
+register_toolchains("@graalvm_linux_x64//:java_compiler_toolchain")
 
 load("@graalvm_linux_x64//graalvm:defs.bzl", "register_graalvm_toolchains")
 
 register_graalvm_toolchains()
+
+# CONFIGURE `@openjdk_linux_x64` ##############################################
+
+apply_dwtj_remote_openjdk_repository(
+    "openjdk_linux_x64",
+    dwtj_remote_openjdk_repository,
+)
+
+# NOTE(dwtj): We use GraalVM as our Java runtime toolchain.
+register_toolchains("@openjdk_linux_x64//:java_runtime_toolchain")
 
 # CONFIGURE `@google_java_format` #############################################
 
