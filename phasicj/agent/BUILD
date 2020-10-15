@@ -1,5 +1,6 @@
 load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
 load("@dwtj_rules_java//graalvm:defs.bzl", "graalvm_native_image_library")
+load("//bazel:util/rust/rename_cdylib.bzl", "rename_cdylib")
 
 rust_library(
     name = "agent",
@@ -11,6 +12,16 @@ rust_library(
         ":svm",
         "@graalvm_linux_x64//rust/jvmti",
     ],
+)
+
+# NOTE(dwtj): Because of the behavior of `@rules_rust`, the `agent` target
+#  generates an output file which includes a hash value. This target exists to
+#  copy/rename this file to a consistent name.
+rename_cdylib(
+    name = "libpjagent_so",
+    src = ":agent",
+    out = "libpjagent.so",
+    visibility = ["//visibility:public"],
 )
 
 # NOTE(dwtj): I am currently assuming that one cannot (or at least should not)
