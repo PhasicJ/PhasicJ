@@ -33,7 +33,7 @@ public class Instrumenter {
     UnmanagedMemory.free(ptr);
   }
 
-  @CEntryPoint(name = "svm_instrument")
+  @CEntryPoint(name = "instr_instrument")
   public static void instrument(
       IsolateThread isolateThread,
       int inBufSize,

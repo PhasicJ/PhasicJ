@@ -1,30 +1,14 @@
-use jvmti::{
-    JavaVM,
-    jint,
-};
-use svm::svm_instrument;
+use svm::instr::instrument;
 
-#[no_mangle]
-pub extern fn Agent_OnLoad(
-    _vm: *mut JavaVM,
-    _options: *mut ::std::os::raw::c_char,
-    _reserved: *mut ::std::os::raw::c_void,
-) -> jint {
-    println!("Hello, from `Agent_OnLoad()`, implemented in Rust.");
-    return 0;
+pub fn on_load() {
+    println!("Hello, from `on_load()`, implemented in Rust.");
+    instrument();
 }
 
-#[no_mangle]
-pub extern fn Agent_OnAttach(
-    _vm: *mut JavaVM,
-    _options: *mut ::std::os::raw::c_char,
-    _reserved: *mut ::std::os::raw::c_void,
-) -> jint {
-    println!("Hello, from `Agent_OnAttach()`, implemented in Rust.");
-    return 0;
+pub fn on_attach() {
+    println!("Hello, from `on_attach()`, implemented in Rust.");
 }
 
-#[no_mangle]
-pub extern fn Agent_OnUnload(_vm: *mut JavaVM) {
-    println!("Hello, from `Agent_OnUnload()`, implemented in Rust.");
+pub fn on_unload() {
+    println!("Hello, from `on_unload()`, implemented in Rust.");
 }

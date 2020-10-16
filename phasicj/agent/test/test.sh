@@ -14,5 +14,5 @@ AGENT_PATH="${PWD}/${AGENT_PATH}"
 #  somewhere in the above command's standard output. If one of them doesn't,
 #  then `grep` will a non-zero exit code, and because `set -e` was set above,
 #  this will fail this Bazel test.
-grep 'Hello, from `Agent_OnLoad()`, implemented in Rust.' stdout.log
+grep 'Hello, from `on_load()`, implemented in Rust.' stdout.log
 grep 'Hello, from `phasicj.agent.test.TestApp`, implemented in Java.' stdout.log

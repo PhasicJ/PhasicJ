@@ -1,0 +1,20 @@
+# PhasicJ Agent Substrate VM Module
+
+Substrate VM (SVM) is the virtual machine (or alternatively, "runtime") used as
+the foundations for Java programs when compiled to native code using the
+GraalVM `native-image` tool.
+
+We have some Java code which we want to use from our native, Rust-implemented
+PhasicJ agent. We only want one copy of SVM to be included in the PhasicJ agent.
+This Bazel package is used for wrapping our `native-image`/SVM library.
+
+More specifically, this package has three purposes:
+
+- To combine and compile all of the PhasicJ agent's Java dependencies in a
+  single `native-image` invocation.
+- To use `bindgen` to generate unsafe bindings for this library.
+- To write some Rust code to wrap these unsafe bindings.
+
+Through these layers of adaptation, the PhasicJ agent should be able to call
+safe Rust code, which is built on unsafe Rust bindings, which are used to call
+our `native-image`-compiled Java code.
