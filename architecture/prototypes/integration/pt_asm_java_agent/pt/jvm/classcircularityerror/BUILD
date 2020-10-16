@@ -22,5 +22,4 @@ dwtj_java_test(
         ":my_agent": "",
     },
     main_class = "pt.MyTestApp",
-    deps = ["//third_party/maven:asm"],  # TODO(dwtj): Remove this once `deps` behavior is fixed.
 )
