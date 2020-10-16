@@ -1,5 +1,5 @@
 load(":test.bzl", "test")
 
-test("HelloWorld")
+test(name = "HelloWorld")
 
-test("MonitorEnterAndExitInstrs")
+test(name = "MonitorEnterAndExitInstrs")

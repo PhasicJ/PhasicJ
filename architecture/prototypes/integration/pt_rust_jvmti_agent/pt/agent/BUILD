@@ -32,8 +32,8 @@ sh_test(
         "$(location :MyApp.jar)",
     ],
     data = [
-        "@openjdk_linux_x64//:bin/java",
         ":MyApp.jar",
         ":libptagent.so",
+        "@openjdk_linux_x64//:bin/java",
     ],
 )
