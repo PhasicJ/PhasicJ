@@ -28,26 +28,54 @@ public class Instrumenter {
     return buf;
   }
 
-  @CEntryPoint(name = "svm_free")
+  @CEntryPoint(name = "svm_instr_free")
   public static void free(IsolateThread isolateThread, CCharPointer ptr) {
     UnmanagedMemory.free(ptr);
   }
 
-  @CEntryPoint(name = "instr_instrument")
-  public static void instrument(
+  /**
+   * Instruments and returns the given class file data.
+   *
+   * <p>This method will not write to `inBuf`. It will only read from it.
+   *
+   * <p>The given `outBufSize` is expected to point to an `int` which this method will overwrite.
+   *
+   * <p>The given `outBufPtr` is expected to point to a `char *` which this method will overwrite.
+   * This `char *` may be overwritten with the null pointer, indicating that no instrumentation
+   * should be performed. Otherwise, This `char *` will be overwritten with a buffer of memory
+   * managed by the SVM, specifically, allocated from `UnmanagedMemory.malloc()`.
+   *
+   * <p>The SVM will neither read from nor write to this output buffer until it is passed to `free`.
+   * This buffer should be passed to `free` with the same `IsolateThread` from which it was
+   * obtained.
+   *
+   * <p>Returns 0 if this method was successful and non-zero otherwise.
+   */
+  @CEntryPoint(name = "svm_instr_instrument")
+  public static int instrument(
       IsolateThread isolateThread,
       int inBufSize,
       CCharPointer inBuf,
       CIntPointer outBufSize,
       CCharPointerPointer outBufPtr) {
-    byte[] inBytes = makeByteArrayFrom(inBufSize, inBuf);
-    byte[] outBytes = MonitorInsnInstrumenter.instrument(inBytes);
-    if (outBytes == null) {
+
+    try {
+      byte[] inBytes = makeByteArrayFrom(inBufSize, inBuf);
+      byte[] outBytes = MonitorInsnInstrumenter.instrument(inBytes);
+
+      if (outBytes == null) {
+        outBufPtr.write(null);
+        outBufSize.write(0);
+      } else {
+        outBufPtr.write(makeCCharBufferFrom(outBytes));
+        outBufSize.write(outBytes.length);
+      }
+    } catch (Throwable t) {
       outBufPtr.write(null);
       outBufSize.write(0);
-    } else {
-      outBufPtr.write(makeCCharBufferFrom(outBytes));
-      outBufSize.write(outBytes.length);
+      return -1;
     }
+
+    return 0;
   }
 }

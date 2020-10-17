@@ -1,16 +1,6 @@
 load("@dwtj_rules_java//graalvm:defs.bzl", "graalvm_native_image_library")
+load("@rules_cc//cc:defs.bzl", "cc_import")
 load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
-
-rust_library(
-    name = "svm",
-    srcs = [
-        "instr.rs",
-        "lib.rs",
-    ],
-    edition = "2018",
-    visibility = ["//visibility:public"],
-    deps = ["svm_unsafe"],
-)
 
 # NOTE(dwtj): I am currently assuming that one cannot (or at least should not)
 #  link multiple `native-image` outputs together into one library. So, this
@@ -30,6 +20,17 @@ graalvm_native_image_library(
         "//phasicj/agent/instr",
         "//third_party/asm",
     ],
+    visibility = ["//phasicj/agent:__subpackages__"],
+)
+
+cc_import(
+    name = "svm_native_image_cc_import",
+    shared_library = "libsvm.so",
+    hdrs = [
+        "svm.h",
+        "graal_isolate.h",
+    ],
+    visibility = ["//phasicj/agent:__subpackages__"],
 )
 
 # TODO(dwtj): Consider rewriting this using a `@rules_rust` `bindgen` rule.
@@ -39,13 +40,13 @@ genrule(
         ":svm.h",
         ":graal_isolate.h",
     ],
-    outs = ["svm_unsafe.rs"],
+    outs = ["svm.rs"],
     cmd_bash = 'bindgen --output "$@" $(location :svm.h) -- -I`dirname "$(location graal_isolate.h)"`',
 )
 
 rust_library(
-    name = "svm_unsafe",
-    srcs = ["svm_unsafe.rs"],
+    name = "svm",
+    srcs = ["svm.rs"],
     edition = "2018",
     rustc_flags = [
         "-A",
@@ -53,4 +54,6 @@ rust_library(
         "-A",
         "non-upper-case-globals",
     ],
+    deps = [":svm_native_image_cc_import"],
+    visibility = ["//phasicj/agent:__subpackages__"],
 )

@@ -24,8 +24,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "eec013b23a6891dbd89c6a64882a2163e9e41994",
-    "sha256": "fbf13ad03f9a70350db28c626dbf2856651920ba0b5e2cb4176f0e51fffb2580",
+    "commit": "79e806ec4c555348ccd8f1c5ebe6e662513d96f4",
+    "sha256": "f1fe1a3aad4198e810507b8d39cb9e4b2f05ebfe8d5f6f3a5d034103caa9ffb5",
 }
 
 def dwtj_rules_java():
@@ -164,8 +164,8 @@ def bazel_skylib():
         sha256 = _BAZEL_SKYLIB_RELEASE_SHA256,
     )
 
-_RULES_RUST_COMMIT = "e64700dc9b8b3869bce4f77b78c33cb9d088cc4b"
-_RULES_RUST_SHA256 = "eb384450d3b89332b386173233daa66a71e13cf63fe6d9ee51bd09fba0eb41f2"
+_RULES_RUST_COMMIT = "726b1821508655432873619edd5abe10a6d73055"
+_RULES_RUST_SHA256 = "0ff801f659d3ae4fc279dbfc00412a1468e0e6d4b7ab0b614a1c9cfb9f5b2c8b"
 
 def io_bazel_rules_rust():
     http_archive(

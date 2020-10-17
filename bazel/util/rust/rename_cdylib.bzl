@@ -1,8 +1,9 @@
+load("//bazel:util/files/copy_file.bzl", "copy_file")
+
 def rename_cdylib(name, src, out, visibility = ["//visibility:__pkg__"]):
-    native.genrule(
+    copy_file(
         name = name,
-        srcs = [src],
-        outs = [out],
-        cmd = "cp $< $(@)",
+        src = src,
+        out = out,
         visibility = visibility,
     )

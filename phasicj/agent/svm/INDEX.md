@@ -10,11 +10,10 @@ This Bazel package is used for wrapping our `native-image`/SVM library.
 
 More specifically, this package has three purposes:
 
-- To combine and compile all of the PhasicJ agent's Java dependencies in a
+- To combine and compile all of the PhasicJ agent's Java dependencies with a
   single `native-image` invocation.
 - To use `bindgen` to generate unsafe bindings for this library.
-- To write some Rust code to wrap these unsafe bindings.
+- Possibly write some Rust code to wrap these unsafe bindings.
 
 Through these layers of adaptation, the PhasicJ agent should be able to call
-safe Rust code, which is built on unsafe Rust bindings, which are used to call
 our `native-image`-compiled Java code.
