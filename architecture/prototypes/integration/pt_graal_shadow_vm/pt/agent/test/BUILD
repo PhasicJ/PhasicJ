@@ -11,9 +11,9 @@ sh_test(
     name = "test",
     srcs = ["test.sh"],
     args = [
-        "$(location @graalvm_linux_x64//:bin/java)",
-        "$(location //pt/agent)",
-        "$(location :test_app.jar)",
+        "$(rootpath @graalvm_linux_x64//:bin/java)",
+        "$(rootpath //pt/agent)",
+        "$(rootpath :test_app.jar)",
     ],
     data = [
         ":test_app.jar",

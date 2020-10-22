@@ -27,9 +27,9 @@ sh_test(
     name = "test",
     srcs = ["test.sh"],
     args = [
-        "$(location @openjdk_linux_x64//:bin/java)",
-        "$(location :libptagent.so)",
-        "$(location :MyApp.jar)",
+        "$(rootpath @openjdk_linux_x64//:bin/java)",
+        "$(rootpath :libptagent.so)",
+        "$(rootpath :MyApp.jar)",
     ],
     data = [
         ":MyApp.jar",

@@ -30,10 +30,10 @@ genrule(
     srcs = [":agent_runtime.jar"],
     outs = ["agent_runtime.jar.o"],
     cmd_bash = ' \
-        "./$(location :make_agent_runtime_jar_obj.sh)" \
+        "./$(execpath :make_agent_runtime_jar_obj.sh)" \
             "{}" \
-            "$(location :agent_runtime.jar)" \
-            "$(location :agent_runtime.jar.o)" \
+            "$(execpath :agent_runtime.jar)" \
+            "$(execpath :agent_runtime.jar.o)" \
     '.format(AGENT_RUNTIME_SYMBOLS_NAME_BASE),
     tools = [":make_agent_runtime_jar_obj.sh"],
 )
@@ -42,7 +42,7 @@ genrule(
     name = "agent_runtime_jar_static_library",
     srcs = ["agent_runtime.jar.o"],
     outs = ["agent_runtime.jar.a"],
-    cmd_bash = 'ar rcs "$(location :agent_runtime.jar.a)" "$(location :agent_runtime.jar.o)"',
+    cmd_bash = 'ar rcs "$(execpath :agent_runtime.jar.a)" "$(execpath :agent_runtime.jar.o)"',
 )
 
 cc_import(

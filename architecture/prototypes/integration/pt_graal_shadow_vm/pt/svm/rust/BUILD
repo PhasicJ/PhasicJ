@@ -33,7 +33,7 @@ genrule(
         "graal_isolate.h",
     ],
     outs = ["analysis.rs"],
-    cmd_bash = 'bindgen --output "$@" $(location :analysis.h) -- -I`dirname "$(location graal_isolate.h)"`',
+    cmd_bash = 'bindgen --output "$@" $(execpath :analysis.h) -- -I`dirname "$(execpath graal_isolate.h)"`',
 )
 
 rust_library(
@@ -60,6 +60,6 @@ rust_binary(
 sh_test(
     name = "test",
     srcs = ["test.sh"],
-    args = ["$(location :myapp)"],
+    args = ["$(rootpath :myapp)"],
     data = [":myapp"],
 )

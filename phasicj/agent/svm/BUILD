@@ -41,7 +41,7 @@ genrule(
         ":graal_isolate.h",
     ],
     outs = ["svm.rs"],
-    cmd_bash = 'bindgen --output "$@" $(location :svm.h) -- -I`dirname "$(location graal_isolate.h)"`',
+    cmd_bash = 'bindgen --output "$@" $(execpath :svm.h) -- -I`dirname "$(execpath graal_isolate.h)"`',
 )
 
 rust_library(

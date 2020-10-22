@@ -22,6 +22,8 @@ dwtj_java_test(
         #  JARs. I tried modifying my Java rules to support $(location)
         #  expansion, but that gave me paths to these JARs at compile time, not
         #  at run time.
+        # TODO(dwtj): Consider trying $(location) expansion again with
+        #  $(rootpath) and $(execpath).
         "-Xbootclasspath/a:external/org_ow2_asm/jar/downloaded.jar:pt/agent/agent.jar",
     ],
     main_class = "org.renaissance.core.Launcher",
