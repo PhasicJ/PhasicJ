@@ -187,7 +187,7 @@ fetch_error_prone_toolchain()
 
 register_error_prone_toolchain()
 
-# CONFIGURE `@io_bazel_rules_rust #############################################
+# CONFIGURE `@io_bazel_rules_rust` ############################################
 
 io_bazel_rules_rust()
 
