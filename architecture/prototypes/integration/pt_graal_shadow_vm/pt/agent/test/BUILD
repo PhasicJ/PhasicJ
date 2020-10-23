@@ -11,13 +11,13 @@ sh_test(
     name = "test",
     srcs = ["test.sh"],
     args = [
-        "$(rootpath @graalvm_linux_x64//:bin/java)",
+        "$(rootpath @graalvm_linux_x64//jdk:bin/java)",
         "$(rootpath //pt/agent)",
         "$(rootpath :test_app.jar)",
     ],
     data = [
         ":test_app.jar",
         "//pt/agent",
-        "@graalvm_linux_x64//:bin/java",
+        "@graalvm_linux_x64//jdk:bin/java",
     ],
 )

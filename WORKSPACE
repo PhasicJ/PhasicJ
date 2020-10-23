@@ -119,7 +119,7 @@ apply_remote_graalvm_repository(
 )
 
 # NOTE(dwtj): We use GraalVM as our Java compiler toolchain.
-register_toolchains("@graalvm_linux_x64//:java_compiler_toolchain")
+register_toolchains("@graalvm_linux_x64//java:java_compiler_toolchain")
 
 load("@graalvm_linux_x64//graalvm:defs.bzl", "register_graalvm_toolchains")
 
@@ -133,7 +133,7 @@ apply_dwtj_remote_openjdk_repository(
 )
 
 # NOTE(dwtj): We use GraalVM as our Java runtime toolchain.
-register_toolchains("@openjdk_linux_x64//:java_runtime_toolchain")
+register_toolchains("@openjdk_linux_x64//java:java_runtime_toolchain")
 
 # CONFIGURE `@google_java_format` #############################################
 

@@ -30,13 +30,13 @@ sh_test(
     name = "agent_test",
     srcs = ["agent_test.sh"],
     args = [
-        "$(rootpath @openjdk_linux_x64//:bin/java)",
+        "$(rootpath @openjdk_linux_x64//jdk:bin/java)",
         "$(rootpath :agent)",
         "$(rootpath :my_bin.jar)",
     ],
     data = [
         ":agent",
         ":my_bin.jar",
-        "@openjdk_linux_x64//:bin/java",
+        "@openjdk_linux_x64//jdk:bin/java",
     ],
 )
