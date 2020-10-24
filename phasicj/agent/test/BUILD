@@ -13,12 +13,14 @@ sh_test(
     srcs = ["test.sh"],
     args = [
         "$(rootpath @openjdk_linux_x64//jdk:bin/java)",
+        #"$(rootpath @jdk_15_ga_slowdebug//jdk:bin/java)", # DEBUG
         "$(rootpath //phasicj/agent:libpjagent.so)",
         "$(rootpath :TestApp.jar)",
         "$(rootpath //phasicj/agent/svm:libsvm.so)",
     ],
     data = [
         "@openjdk_linux_x64//jdk:bin/java",
+        # "@jdk_15_ga_slowdebug//jdk:bin/java", # DEBUG
         ":TestApp.jar",
         # NOTE(dwtj): Just including `//phasicj/agent:agent` doesn't work. The
         #  `sh_test` rule doesn't include it in the test's runfiles. See

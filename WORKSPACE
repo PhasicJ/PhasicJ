@@ -105,6 +105,7 @@ load(
     "dwtj_remote_openjdk_repository",
     "maven_error_prone_repository",
     "remote_google_java_format_repository",
+    "remote_openjdk_source_repository",
 )
 load(
     "@dwtj_rules_java//graalvm:repositories.bzl",
@@ -132,8 +133,24 @@ apply_dwtj_remote_openjdk_repository(
     dwtj_remote_openjdk_repository,
 )
 
-# NOTE(dwtj): We use GraalVM as our Java runtime toolchain.
 register_toolchains("@openjdk_linux_x64//java:java_runtime_toolchain")
+
+# CONFIGURE `@jdk_15_ga_slowdebug` ############################################
+# This JDK may be helpful when debugging because it includes debug symbols.
+
+remote_openjdk_source_repository(
+    name = "jdk_15_ga_slowdebug",
+    url = "https://github.com/openjdk/jdk/archive/jdk-15-ga.tar.gz",
+    sha256 = "f86e3828e5e5988fb555a9f6c7b84603fb819bd05a381f241860205af309d812",
+    strip_prefix = "jdk-jdk-15-ga",
+    configure_args = [
+        "--quiet",
+        "--with-debug-level=slowdebug",
+        "--with-native-debug-symbols=internal",
+        "--disable-warnings-as-errors",
+    ],
+    build_configuration_name = "linux-x86_64-server-slowdebug",
+)
 
 # CONFIGURE `@google_java_format` #############################################
 
