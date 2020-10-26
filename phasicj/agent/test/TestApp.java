@@ -13,7 +13,14 @@ class TestApp {
       }
     }
 
+    int num = ApplicationEvents.numMonitorEnterEvents();
     System.out.print("phasicj.agent.rt.ApplicationEvents.numMonitorEnterEvents(): ");
-    System.out.println(ApplicationEvents.numMonitorEnterEvents());
+    System.out.println(num);
+
+    if (num > NUM_LOOPS) {
+      System.exit(0);
+    } else {
+      System.exit(-1);
+    }
   }
 }

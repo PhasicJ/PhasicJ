@@ -13,7 +13,7 @@ sh_test(
     srcs = ["test.sh"],
     args = [
         "$(rootpath @openjdk_linux_x64//jdk:bin/java)",
-        #"$(rootpath @jdk_15_ga_slowdebug//jdk:bin/java)", # DEBUG
+        # "$(rootpath @jdk_15_ga_slowdebug//jdk:bin/java)", # DEBUG
         "$(rootpath //phasicj/agent:libpjagent.so)",
         "$(rootpath :TestApp.jar)",
         "$(rootpath //phasicj/agent/svm:libsvm.so)",

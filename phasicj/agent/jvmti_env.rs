@@ -18,6 +18,11 @@ use ::jvmti::{
     jlong,
     jvmtiError_JVMTI_ERROR_NONE as JVMTI_ERROR_NONE,
     jvmtiEventCallbacks,
+    jvmtiPhase_JVMTI_PHASE_ONLOAD as JVMTI_PHASE_ONLOAD,
+    jvmtiPhase_JVMTI_PHASE_PRIMORDIAL as JVMTI_PHASE_PRIMORDIAL,
+    jvmtiPhase_JVMTI_PHASE_START as JVMTI_PHASE_START,
+    jvmtiPhase_JVMTI_PHASE_LIVE as JVMTI_PHASE_LIVE,
+    jvmtiPhase_JVMTI_PHASE_DEAD as JVMTI_PHASE_DEAD,
 };
 use std::convert::TryInto;
 
@@ -38,6 +43,17 @@ pub fn get_phase(env: &mut jvmtiEnv) -> jvmtiPhase {
         let f = (**env).GetPhase.unwrap();
         jvmti_check(f(env, phase.as_mut_ptr()));
         return phase.assume_init();
+    }
+}
+
+pub fn get_phase_str(env: &mut jvmtiEnv) -> &'static str {
+    match get_phase(env) {
+        JVMTI_PHASE_ONLOAD => "OnLoad",
+        JVMTI_PHASE_PRIMORDIAL => "Primordial",
+        JVMTI_PHASE_LIVE => "Live",
+        JVMTI_PHASE_START => "Start",
+        JVMTI_PHASE_DEAD => "Dead",
+        _ => panic!("Unfamiliar JVMTI phase.")
     }
 }
 

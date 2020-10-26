@@ -13,8 +13,7 @@ export AGENT_PATH="${PWD}/${AGENT_PATH}"
 #  `SVM_PATH` contains spaces?
 export SVM_PATH="${PWD}/$(dirname $SVM_PATH)"
 
-# TODO(dwtj): Don't clobber an existing `LD_LIBRARY_PATH`.
-export LD_LIBRARY_PATH="$SVM_PATH"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SVM_PATH"
 
 export CLASS_PATH="${EXECUTABLE_JAR}"
 
@@ -28,4 +27,3 @@ export CLASS_PATH="${EXECUTABLE_JAR}"
 #  then `grep` will a non-zero exit code, and because `set -e` was set above,
 #  this will fail this Bazel test.
 grep 'Hello, from `phasicj.agent.test.TestApp`, implemented in Java.' stdout.log > /dev/null
-grep 'phasicj.agent.rt.ApplicationEvents.numMonitorEnterEvents(): 5' stdout.log > /dev/null

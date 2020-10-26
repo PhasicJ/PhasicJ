@@ -42,6 +42,7 @@ public class InstrTestJavaAgent {
         if (className.startsWith("phasicj/agent/rt/")) {
           return null;
         } else {
+          System.out.println(className);
           return instrument(bytes);
         }
       } catch (Throwable t) {

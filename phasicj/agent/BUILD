@@ -4,20 +4,20 @@ load("//bazel:util/rust/rename_cdylib.bzl", "rename_cdylib")
 rust_library(
     name = "agent",
     srcs = [
-        "lib.rs",
         "agent.rs",
-        "jvmti_env.rs",
         "jvmti_entrypoints.rs",
+        "jvmti_env.rs",
         "jvmti_events.rs",
         "jvmti_setup.rs",
+        "lib.rs",
     ],
     crate_type = "cdylib",
     edition = "2018",
     visibility = ["//visibility:public"],
     deps = [
+        "//phasicj/agent/rt:phasicj_agent_rt_jar_embed",
         "//phasicj/agent/svm",
         "//phasicj/agent/svm:svm_native_image_cc_import",
-        "//phasicj/agent/rt:phasicj_agent_rt_jar_embed",
         "@graalvm_linux_x64//rust/jvmti",
     ],
 )
