@@ -14,6 +14,13 @@ dwtj_java_library(
     visibility = ["//phasicj/agent:__subpackages__"],
 )
 
+dwtj_java_library(
+    name = "java_lang_object_amendment",
+    srcs = ["JavaLangObjectAmendment.java"],
+    deps = [":rt"],
+    visibility = ["//phasicj/agent:__subpackages__"],
+)
+
 cargo_build_script(
     name = "do_nothing_cargo_build_script",
     srcs = ["do_nothing_cargo_build_script.rs"],
@@ -33,8 +40,8 @@ rust_library(
         "rt.jar.sha1",
     ],
     edition = "2018",
-    deps = [":do_nothing_cargo_build_script"],
     visibility = ["//phasicj/agent:__subpackages__"],
+    deps = [":do_nothing_cargo_build_script"],
 )
 
 rust_test(

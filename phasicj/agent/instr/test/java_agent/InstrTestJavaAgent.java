@@ -1,13 +1,12 @@
 package phasicj.agent.instr.test.java_agent;
 
-import static phasicj.agent.instr.MonitorInsnInstrumenter.instrument;
-
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.security.ProtectionDomain;
+import phasicj.agent.instr.MonitorInsnInstrumenter;
 
-public class InstrTestJavaAgent {
+public final class InstrTestJavaAgent {
 
   // NOTE(dwtj): For now we don't allow re-transformations. I don't yet have any idea why we should
   //  or shouldn't disallow re-transformations. We disallow it here just out of an over-abundance of
@@ -22,6 +21,8 @@ public class InstrTestJavaAgent {
   static class InstrTestTransformer implements ClassFileTransformer {
 
     private static final InstrTestTransformer singletonInstance = new InstrTestTransformer();
+    private static final MonitorInsnInstrumenter instrumenter =
+        new MonitorInsnInstrumenter("phasicj/agent/rt/ApplicationEvents");
 
     private InstrTestTransformer() {}
 
@@ -43,7 +44,7 @@ public class InstrTestJavaAgent {
           return null;
         } else {
           System.out.println(className);
-          return instrument(bytes);
+          return instrumenter.instrument(bytes);
         }
       } catch (Throwable t) {
         System.err.println("Failed to transform class: " + className);

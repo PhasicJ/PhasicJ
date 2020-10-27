@@ -9,11 +9,14 @@ markdown_library(
 dwtj_java_library(
     name = "instr",
     srcs = [
+        "Amendment.java",
+        "AsmConfig.java",
         "Instrumenter.java",
         "MonitorInsnInstrumenter.java",
     ],
     visibility = ["//phasicj/agent:__subpackages__"],
     deps = [
         "//third_party/asm",
+        "//third_party/asm:asm_commons",
     ],
 )

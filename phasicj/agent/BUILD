@@ -5,6 +5,7 @@ rust_library(
     name = "agent",
     srcs = [
         "agent.rs",
+        "jni_env.rs",
         "jvmti_entrypoints.rs",
         "jvmti_env.rs",
         "jvmti_events.rs",

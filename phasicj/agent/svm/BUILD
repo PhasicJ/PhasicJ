@@ -15,21 +15,27 @@ graalvm_native_image_library(
     header_output = "svm.h",
     image_name = "phasicj_agent_svm",
     library_output = "libsvm.so",
-    native_image_options = ["--no-fallback"],
-    deps = [
-        "//phasicj/agent/instr",
-        "//third_party/asm",
+    native_image_options = [
+        "--no-fallback",
+        # TODO(dwtj): Consider moving this into a `resource-config.json` file, possibly in the JAR
+        #  which holds this class.
+        "-H:IncludeResources=phasicj/agent/rt/JavaLangObjectAmendment.class",
     ],
     visibility = ["//phasicj/agent:__subpackages__"],
+    deps = [
+        "//phasicj/agent/instr",
+        "//phasicj/agent/rt:java_lang_object_amendment",
+        "//third_party/asm",
+    ],
 )
 
 cc_import(
     name = "svm_native_image_cc_import",
-    shared_library = "libsvm.so",
     hdrs = [
-        "svm.h",
         "graal_isolate.h",
+        "svm.h",
     ],
+    shared_library = "libsvm.so",
     visibility = ["//phasicj/agent:__subpackages__"],
 )
 
@@ -54,6 +60,6 @@ rust_library(
         "-A",
         "non-upper-case-globals",
     ],
-    deps = [":svm_native_image_cc_import"],
     visibility = ["//phasicj/agent:__subpackages__"],
+    deps = [":svm_native_image_cc_import"],
 )

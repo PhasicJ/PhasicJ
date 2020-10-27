@@ -49,7 +49,6 @@ fn expect_jvmti_environment_provides_all_required_capabilities(env: &mut jvmtiEn
     let capa: jvmtiCapabilities = get_potential_capabilities(env);
     expect_capability(capa.can_generate_all_class_hook_events());
     expect_capability(capa.can_generate_early_class_hook_events());
-    expect_capability(capa.can_generate_early_vmstart());
 }
 
 fn add_all_required_capabilities(env: &mut jvmtiEnv) {
@@ -65,16 +64,6 @@ fn add_all_required_capabilities(env: &mut jvmtiEnv) {
     capa.set_can_generate_all_class_hook_events(1);
     capa.set_can_generate_early_class_hook_events(1);
 
-    // NOTE(dwty): By requesting early VMStart events, we essentially shorten
-    //  the primordial phase. If the VMStart event is "late", then the
-    //  primordial phase lasts at least until the VM is able to load classes
-    //  outside of the `java.base` module. Otherwise, if the VMStart event is
-    //  "early", then even during the start phase, the VM may not be able to
-    //  load classes outside of `java.base`. See [JVMTI#VMStart][1] for more
-    //  information.
-    //
-    //  [1]: https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMStart
-    capa.set_can_generate_early_vmstart(1);
     add_capabilities(env, &capa);
 }
 

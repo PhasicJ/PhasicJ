@@ -26,66 +26,97 @@ import org.objectweb.asm.Type;
  */
 public class MonitorInsnInstrumenter {
 
-  static final int ASM_API_VERSION = Opcodes.ASM8;
-  static final int ASM_DEFAULT_CLASS_WRITER_BEHAVIOR = 0;
-  static final int ASM_DEFAULT_CLASS_READER_PARSING_BEHAVIOR = 0;
+  private final Amendment[] amendments;
+  private final String eventHandlerClass;
 
-  public static byte[] instrument(byte[] classFileBuffer) {
-    final var writer = new ClassWriter(ASM_DEFAULT_CLASS_WRITER_BEHAVIOR);
-    final var instrumenter = new ClassInstrumenter(ASM_API_VERSION, writer);
+  public MonitorInsnInstrumenter(String eventHandlerClass, Amendment... amendments) {
+    this.eventHandlerClass = eventHandlerClass;
+    this.amendments = amendments;
+  }
+
+  public byte[] instrument(byte[] classFileBuffer) {
+    final var writer = new ClassWriter(AsmConfig.DEFAULT_CLASS_WRITER_BEHAVIOR);
+    final var instrumenter = new ClassInstrumenter(AsmConfig.API_VERSION, writer);
     final var reader = new ClassReader(classFileBuffer);
-    reader.accept(instrumenter, ASM_DEFAULT_CLASS_READER_PARSING_BEHAVIOR);
+    reader.accept(instrumenter, AsmConfig.DEFAULT_CLASS_READER_PARSING_BEHAVIOR);
     // TODO(dwtj): Optimize this such that we return `null` if no actual instrumentation was
     //  performed. One possible approach: add a flag to `ClassInstrumenter`, make
     //  `MethodInstrumenter` an inner class of `ClassInstrumenter`, and change the
     //  `MethodInstrumenter` to set this flag.
     return writer.toByteArray();
   }
-}
 
-class ClassInstrumenter extends ClassVisitor {
-  ClassInstrumenter(int api, ClassVisitor cv) {
-    super(api, cv);
-  }
+  /** Warning: This class is not thread safe. E.g., the {@link #className} field. */
+  class ClassInstrumenter extends ClassVisitor {
 
-  @Override
-  public MethodVisitor visitMethod(
-      int access, String name, String descriptor, String signature, String[] exceptions) {
-    var delegateTo = cv.visitMethod(access, name, descriptor, signature, exceptions);
-    return new MethodInstrumenter(api, delegateTo);
-  }
-}
+    private String className;
 
-class MethodInstrumenter extends MethodVisitor {
-
-  private static final String applicationEventsInternalName = "phasicj/agent/rt/ApplicationEvents";
-  private static final boolean applicationEventsIsInterface = false;
-  private static final String voidMethodDescr = Type.getMethodType(Type.VOID_TYPE).getDescriptor();
-
-  MethodInstrumenter(int api, MethodVisitor mv) {
-    super(api, mv);
-  }
-
-  @Override
-  public void visitInsn(int opcode) {
-    // Re-emit all instructions to delegate, but for `MONITORENTER` and `MONITOREXIT` instructions,
-    // emit a appropriate `INVOKESTATIC` call first.
-    if (opcode == Opcodes.MONITORENTER) {
-      mv.visitMethodInsn(
-          Opcodes.INVOKESTATIC,
-          applicationEventsInternalName,
-          "monitorEnter",
-          voidMethodDescr,
-          applicationEventsIsInterface);
+    ClassInstrumenter(int api, ClassVisitor cv) {
+      super(api, cv);
     }
-    if (opcode == Opcodes.MONITOREXIT) {
-      mv.visitMethodInsn(
-          Opcodes.INVOKESTATIC,
-          applicationEventsInternalName,
-          "monitorExit",
-          voidMethodDescr,
-          applicationEventsIsInterface);
+
+    @Override
+    public void visit(
+        int version,
+        int access,
+        String name,
+        String signature,
+        String superName,
+        String[] interfaces) {
+      className = name;
+      super.visit(version, access, name, signature, superName, interfaces);
     }
-    mv.visitInsn(opcode);
+
+    @Override
+    public MethodVisitor visitMethod(
+        int access, String name, String descriptor, String signature, String[] exceptions) {
+      var delegateTo = cv.visitMethod(access, name, descriptor, signature, exceptions);
+      return new MethodInstrumenter(api, delegateTo);
+    }
+
+    // NOTE(dwtj): Amendments are not instrumented. They are copied without modification.
+    @Override
+    public void visitEnd() {
+      for (Amendment a : amendments) {
+        if (this.className.equals(a.classToAmend)) {
+          a.getClassMembersAmendment().accept(this);
+        }
+      }
+      super.visitEnd();
+    }
+  }
+
+  class MethodInstrumenter extends MethodVisitor {
+
+    private final boolean applicationEventsIsInterface = false;
+    private final String voidMethodDescr = Type.getMethodType(Type.VOID_TYPE).getDescriptor();
+
+    MethodInstrumenter(int api, MethodVisitor mv) {
+      super(api, mv);
+    }
+
+    @Override
+    public void visitInsn(int opcode) {
+      // Re-emit all instructions to delegate, but for `MONITORENTER` and `MONITOREXIT`
+      // instructions,
+      // emit a appropriate `INVOKESTATIC` call first.
+      if (opcode == Opcodes.MONITORENTER) {
+        mv.visitMethodInsn(
+            Opcodes.INVOKESTATIC,
+            eventHandlerClass,
+            "phasicj$agent$rt$monitorEnter",
+            voidMethodDescr,
+            applicationEventsIsInterface);
+      }
+      if (opcode == Opcodes.MONITOREXIT) {
+        mv.visitMethodInsn(
+            Opcodes.INVOKESTATIC,
+            eventHandlerClass,
+            "phasicj$agent$rt$monitorExit",
+            voidMethodDescr,
+            applicationEventsIsInterface);
+      }
+      mv.visitInsn(opcode);
+    }
   }
 }

@@ -6,11 +6,11 @@ public class ApplicationEvents {
   private static final AtomicInteger monitorEnterCounter = new AtomicInteger(0);
   private static final AtomicInteger monitorExitCounter = new AtomicInteger(0);
 
-  public static void monitorEnter() {
+  public static void phasicj$agent$rt$monitorEnter() {
     monitorEnterCounter.incrementAndGet();
   }
 
-  public static void monitorExit() {
+  public static void phasicj$agent$rt$monitorExit() {
     monitorExitCounter.incrementAndGet();
   }
 

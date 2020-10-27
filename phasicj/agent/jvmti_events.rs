@@ -16,6 +16,7 @@ use ::jvmti::{
 };
 use ::std::ffi;
 use crate::jvmti_env;
+use crate::jni_env;
 use ::svm::{
     graal_isolatethread_t,
 };
@@ -30,22 +31,38 @@ pub fn get_initial_agent_callbacks(env: &mut jvmtiEnv) -> jvmtiEventCallbacks {
     };
 }
 
+fn enableInstrumentation(env: *mut JNIEnv) {
+    let class_name = ffi::CString::new("java/lang/Object").unwrap();
+    let method_name = ffi::CString::new("phasicj$agent$rt$enableInstrumentation").unwrap();
+    let method_signature = ffi::CString::new("()V").unwrap();
+    unsafe {
+        let java_lang_object_class = jni_env::find_class(env, class_name.as_ptr());
+        let enable_instr_method = jni_env::get_static_method_id(
+            env,
+            java_lang_object_class,
+            method_name.as_ptr(),
+            method_signature.as_ptr(),
+        );
+        jni_env::call_static_void_method(env, java_lang_object_class, enable_instr_method);
+    }
+}
+
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMStart
 #[no_mangle]
-unsafe extern "C" fn pj_vm_start(_env: *mut jvmtiEnv, _jni_env: *mut JNIEnv) {
-    println!("`jvmti_events::vm_start()`, implemented in Rust.");
+unsafe extern "C" fn pj_vm_start(_env: *mut jvmtiEnv, jni_env: *mut JNIEnv) {
+    enableInstrumentation(jni_env);
 }
 
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMDeath
 #[no_mangle]
 unsafe extern "C" fn pj_vm_init(_env: *mut jvmtiEnv, _jni_env: *mut JNIEnv, _: jthread) {
-    println!("`jvmti_events::vm_init()`, implemented in Rust.");
+    // Nothing needed here yet.
 }
 
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMDeath
 #[no_mangle]
 unsafe extern "C" fn pj_vm_death(_env: *mut jvmtiEnv, _jni_env: *mut JNIEnv) {
-    println!("`jvmti_events::vm_death()`, implemented in Rust.");
+    // Nothing needed here yet.
 }
 
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#ClassFileLoadHook
@@ -66,30 +83,9 @@ unsafe extern "C" fn pj_class_file_load_hook(
     //  expects standard UTF-8. Thus, this conversion will fail for some
     //  class names.
     let class_name = ffi::CStr::from_ptr(name).to_str().ok().unwrap();
-    println!("{}: {}", jvmti_env::get_phase_str(&mut *jvmti_env), class_name);
 
     // Don't instrument our runtime classes.
     if class_name.starts_with("phasicj/agent/rt/") {
-        return;
-    }
-
-    // NOTE(dwtj): As a temporary workaround for a crash, we currently don't
-    //  instrument any classes during either the primordial or start phases.
-    //
-    //  Here's what I currently think is causing the crash. During the
-    //  primordial and start phases, the VM cannot necessarily access classes
-    //  outside of the `java.base` module. (This problem is alluded to in the
-    //  JVMTI documentation for the [`VMStart` event][1].) Without this
-    //  workaround, our instrumentation adds direct calls from primordial
-    //  classes to the PhasicJ runtime. So, when these early classes are
-    //  instrumented and run early, then the calls to the runtime fail with a
-    //  `NoClassDefFoundError`.
-    //
-    //  [1]: https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMStart
-
-    // TODO(dwtj): Find a better workaround.
-    let phase = jvmti_env::get_phase(&mut *jvmti_env);
-    if phase == JVMTI_PHASE_PRIMORDIAL || phase == JVMTI_PHASE_START {
         return;
     }
 

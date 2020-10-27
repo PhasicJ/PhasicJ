@@ -9,6 +9,7 @@ load(
     "dwtj_rules_java",
     "io_bazel_rules_rust",
     "org_ow2_asm",
+    "org_ow2_asm_commons",
 )
 
 # CONFIGURE `buildifier` FOR BAZEL FILE LINTING AND FORMATTING ################
@@ -169,6 +170,10 @@ com_github_renaissance_benchmarks()
 # CONFIGURE `@org_ow2_asm` ################################################
 
 org_ow2_asm()
+
+# CONFIGURE `@org_ow2_asm_commons` ########################################
+
+org_ow2_asm_commons()
 
 # CONFIGURE `@rules_jvm_external` #############################################
 

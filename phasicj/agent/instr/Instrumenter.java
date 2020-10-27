@@ -2,6 +2,8 @@ package phasicj.agent.instr;
 
 // NOTE(dwtj): These GraalVM types are available implicitly when compiling using `javac` provided
 //  with the GraalVM distribution or from `graal-sdk`.
+import java.io.IOException;
+import java.io.InputStream;
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.UnmanagedMemory;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
@@ -10,6 +12,34 @@ import org.graalvm.nativeimage.c.type.CCharPointerPointer;
 import org.graalvm.nativeimage.c.type.CIntPointer;
 
 public class Instrumenter {
+
+  private static MonitorInsnInstrumenter getInstrumenter() {
+    return new MonitorInsnInstrumenter("java/lang/Object", getJavaLangObjectAmendment());
+  }
+
+  private static final String JAVA_LANG_OBJECT_AMENDMENT_RESOURCE_NAME =
+      "phasicj/agent/rt/JavaLangObjectAmendment.class";
+
+  private static Amendment getJavaLangObjectAmendment() {
+    InputStream amendmentClass =
+        ClassLoader.getSystemResourceAsStream(JAVA_LANG_OBJECT_AMENDMENT_RESOURCE_NAME);
+    if (amendmentClass == null) {
+      String msg =
+          "Failed to get a system resource named " + JAVA_LANG_OBJECT_AMENDMENT_RESOURCE_NAME;
+      throw new RuntimeException(msg);
+    }
+
+    try {
+      return new Amendment(
+          "java/lang/Object",
+          "phasicj$agent$rt$",
+          amendmentClass.readAllBytes(),
+          "phasicj/agent/rt/JavaLangObjectAmendment");
+    } catch (IOException ex) {
+      // TODO(dwtj): Consider handling this better.
+      throw new RuntimeException(ex);
+    }
+  }
 
   // TODO(dwtj): Figure out how to remove this unnecessary array allocation and 0-initialization.
   private static byte[] makeByteArrayFrom(int numBytes, CCharPointer bytePtr) {
@@ -61,7 +91,10 @@ public class Instrumenter {
 
     try {
       byte[] inBytes = makeByteArrayFrom(inBufSize, inBuf);
-      byte[] outBytes = MonitorInsnInstrumenter.instrument(inBytes);
+      // TODO(dwtj): Consider reusing a statically initialized instrumenter. Re-loading the system
+      //  resource for every class instrumentation is bad. But be careful about silencing
+      //  exceptions which arise during initialization.
+      byte[] outBytes = getInstrumenter().instrument(inBytes);
 
       if (outBytes == null) {
         outBufPtr.write(null);
@@ -71,6 +104,8 @@ public class Instrumenter {
         outBufSize.write(outBytes.length);
       }
     } catch (Throwable t) {
+      System.err.println("An error occurred while instrumenting a class.");
+      t.printStackTrace();
       outBufPtr.write(null);
       outBufSize.write(0);
       return -1;
