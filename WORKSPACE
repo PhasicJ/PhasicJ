@@ -3,7 +3,6 @@ workspace(name = "phasicj")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load(
     "//bazel:external/repositories.bzl",
-    "apply_dwtj_remote_openjdk_repository",
     "apply_remote_graalvm_repository",
     "com_github_renaissance_benchmarks",
     "dwtj_rules_java",
@@ -103,7 +102,7 @@ dwtj_rules_java()
 
 load(
     "@dwtj_rules_java//java:repositories.bzl",
-    "dwtj_remote_openjdk_repository",
+    "known_openjdk_repository",
     "maven_error_prone_repository",
     "remote_google_java_format_repository",
     "remote_openjdk_source_repository",
@@ -129,10 +128,7 @@ register_graalvm_toolchains()
 
 # CONFIGURE `@openjdk_linux_x64` ##############################################
 
-apply_dwtj_remote_openjdk_repository(
-    "openjdk_linux_x64",
-    dwtj_remote_openjdk_repository,
-)
+known_openjdk_repository("openjdk_linux_x64")
 
 register_toolchains("@openjdk_linux_x64//java:java_runtime_toolchain")
 

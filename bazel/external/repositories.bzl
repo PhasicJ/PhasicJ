@@ -24,10 +24,9 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "b32b891cc2b262145abfb027b6354984f5d61a5d",
-    "sha256": "d5c068cf11d0215eadaae507b3e1084d5a2c51b977a59ee0c94416404722dfd7",
+    "commit": "299307bd1e83e1b7df32ad4433b75bbac21dde6c",
+    "sha256": "b68eb40dfdc993c54e6247b552db238856c0fb38af7ac9f47d49bf2e4542403b",
 }
-
 
 def dwtj_rules_java():
     http_archive(
@@ -35,17 +34,6 @@ def dwtj_rules_java():
         url = "https://github.com/dwtj/dwtj_rules_java/archive/{}.tar.gz".format(_DWTJ_RULES_JAVA_ARCHIVE_INFO["commit"]),
         strip_prefix = "dwtj_rules_java-{}".format(_DWTJ_RULES_JAVA_ARCHIVE_INFO["commit"]),
         sha256 = _DWTJ_RULES_JAVA_ARCHIVE_INFO["sha256"],
-    )
-
-# TODO(dwtj): Document this.
-# TODO(dwtj): Generalize this.
-def apply_dwtj_remote_openjdk_repository(name, dwtj_remote_openjdk_repository_rule):
-    dwtj_remote_openjdk_repository_rule(
-        name = name,
-        url = "https://download.java.net/java/GA/jdk15/779bf45e88a44cbd9ea6621d33e33db1/36/GPL/openjdk-15_linux-x64_bin.tar.gz",
-        sha256 = "bb67cadee687d7b486583d03c9850342afea4593be4f436044d785fba9508fb7",
-        strip_prefix = "jdk-15",
-        os = "linux",
     )
 
 _REMOTE_GRAALVM_VERSION = "20.2.0"

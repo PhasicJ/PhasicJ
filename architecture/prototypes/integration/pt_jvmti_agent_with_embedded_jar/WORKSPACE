@@ -9,7 +9,6 @@ local_repository(
 
 load(
     "@phasicj//bazel:external/repositories.bzl",
-    "apply_dwtj_remote_openjdk_repository",
     "dwtj_rules_java",
     "rules_cc",
 )
@@ -20,14 +19,13 @@ dwtj_rules_java()
 
 load(
     "@dwtj_rules_java//java:repositories.bzl",
-    "dwtj_remote_openjdk_repository",
+    "known_openjdk_repository",
 )
 
 # CONFIGURE REMOTE OPENJDK ####################################################
 
-apply_dwtj_remote_openjdk_repository(
+known_openjdk_repository(
     "openjdk_linux_x64",
-    dwtj_remote_openjdk_repository,
 )
 
 load("@openjdk_linux_x64//java:defs.bzl", "register_java_toolchains")

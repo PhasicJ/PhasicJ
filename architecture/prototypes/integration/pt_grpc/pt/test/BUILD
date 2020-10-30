@@ -8,6 +8,6 @@ sh_test(
     data = [
         "//pt/my_client",
         "//pt/my_server",
-        "@dwtj_local_openjdk//jdk:bin/java",
+        "@openjdk_linux_x64//jdk:bin/java",
     ],
 )

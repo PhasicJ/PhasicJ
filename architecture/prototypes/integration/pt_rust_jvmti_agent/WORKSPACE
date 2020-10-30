@@ -9,7 +9,6 @@ local_repository(
 
 load(
     "@phasicj//bazel:external/repositories.bzl",
-    "apply_dwtj_remote_openjdk_repository",
     "bazel_skylib",
     "dwtj_rules_java",
     "io_bazel_rules_rust",
@@ -42,11 +41,10 @@ rust_workspace()
 
 dwtj_rules_java()
 
-load("@dwtj_rules_java//java:repositories.bzl", "dwtj_remote_openjdk_repository")
+load("@dwtj_rules_java//java:repositories.bzl", "known_openjdk_repository")
 
-apply_dwtj_remote_openjdk_repository(
+known_openjdk_repository(
     "openjdk_linux_x64",
-    dwtj_remote_openjdk_repository,
 )
 
 load("@openjdk_linux_x64//java:defs.bzl", "register_java_toolchains")

@@ -33,23 +33,19 @@ rules_proto_toolchains()
 
 dwtj_rules_java()
 
-load("@dwtj_rules_java//java:repositories.bzl", "dwtj_local_openjdk_repository")
+load("@dwtj_rules_java//java:repositories.bzl", "known_openjdk_repository")
 
-dwtj_local_openjdk_repository(
-    name = "dwtj_local_openjdk",
+known_openjdk_repository(
+    name = "openjdk_linux_x64",
 )
 
-load("@dwtj_local_openjdk//java:defs.bzl", "register_java_toolchains")
+load("@openjdk_linux_x64//java:defs.bzl", "register_java_toolchains")
 
 register_java_toolchains()
 
 # CONFIGURE `@rules_java`
 
 rules_java()
-
-#load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
-#rules_java_dependencies()
-#rules_java_toolchains()
 
 # CONFIGURE `@rules_cc` #######################################################
 
