@@ -5,8 +5,8 @@ dwtj_java_binary(
     name = "TestApp",
     srcs = ["TestApp.java"],
     main_class = "phasicj.agent.test.TestApp",
-    deps = ["//phasicj/agent/rt"],
     output_jar = "TestApp.jar",
+    deps = ["//phasicj/agent/rt"],
 )
 
 test(

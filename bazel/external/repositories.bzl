@@ -138,7 +138,7 @@ def org_ow2_asm_commons():
         urls = [
             "https://repository.ow2.org/nexus/content/repositories/releases/org/ow2/asm/asm-commons/{0}/asm-commons-{0}.jar".format(_ORG_OW2_ASM_COMMONS_JAR_VERSION),
             "https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/{0}/asm-commons-{0}.jar".format(_ORG_OW2_ASM_COMMONS_JAR_VERSION),
-        ]
+        ],
     )
 
 _DWTJ_RULES_EMBED_SHA256 = "40069df3088f7df175d6fba7f53a1475aa284a32c971443c81966bb743da77a6"

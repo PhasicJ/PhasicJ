@@ -17,8 +17,8 @@ dwtj_java_library(
 dwtj_java_library(
     name = "java_lang_object_amendment",
     srcs = ["JavaLangObjectAmendment.java"],
-    deps = [":rt"],
     visibility = ["//phasicj/agent:__subpackages__"],
+    deps = [":rt"],
 )
 
 cargo_build_script(

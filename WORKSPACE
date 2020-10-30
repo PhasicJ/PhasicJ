@@ -145,16 +145,16 @@ known_openjdk_repository(
 
 remote_openjdk_source_repository(
     name = "openjdk_15_ga_slowdebug",
-    url = "https://github.com/openjdk/jdk/archive/jdk-15-ga.tar.gz",
-    sha256 = "f86e3828e5e5988fb555a9f6c7b84603fb819bd05a381f241860205af309d812",
-    strip_prefix = "jdk-jdk-15-ga",
+    build_configuration_name = "linux-x86_64-server-slowdebug",
     configure_args = [
         "--quiet",
         "--with-debug-level=slowdebug",
         "--with-native-debug-symbols=internal",
         "--disable-warnings-as-errors",
     ],
-    build_configuration_name = "linux-x86_64-server-slowdebug",
+    sha256 = "f86e3828e5e5988fb555a9f6c7b84603fb819bd05a381f241860205af309d812",
+    strip_prefix = "jdk-jdk-15-ga",
+    url = "https://github.com/openjdk/jdk/archive/jdk-15-ga.tar.gz",
 )
 
 # CONFIGURE `@google_java_format` #############################################

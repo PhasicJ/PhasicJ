@@ -9,7 +9,7 @@ def test(name, java_exec):
             "$(rootpath //phasicj/agent/svm:libsvm.so)",
         ],
         data = [
-            "{}".format(java_exec),
+            java_exec,
             ":TestApp.jar",
             # NOTE(dwtj): Just including `//phasicj/agent:agent` doesn't work. The
             #  `sh_test` rule doesn't include it in the test's runfiles. See
