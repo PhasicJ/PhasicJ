@@ -132,11 +132,19 @@ known_openjdk_repository("openjdk_linux_x64")
 
 register_toolchains("@openjdk_linux_x64//java:java_runtime_toolchain")
 
-# CONFIGURE `@jdk_15_ga_slowdebug` ############################################
+# CONFIGURE `@openjdk_11_linux_x64` ###########################################
+
+known_openjdk_repository(
+    name = "openjdk_11_linux_x64",
+    provider = "adoptopenjdk",
+    version = "11.0.9+11.1",
+)
+
+# CONFIGURE `@openjdk_15_ga_slowdebug` ########################################
 # This JDK may be helpful when debugging because it includes debug symbols.
 
 remote_openjdk_source_repository(
-    name = "jdk_15_ga_slowdebug",
+    name = "openjdk_15_ga_slowdebug",
     url = "https://github.com/openjdk/jdk/archive/jdk-15-ga.tar.gz",
     sha256 = "f86e3828e5e5988fb555a9f6c7b84603fb819bd05a381f241860205af309d812",
     strip_prefix = "jdk-jdk-15-ga",
