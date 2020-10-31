@@ -224,3 +224,9 @@ rust_repositories()
 load("@io_bazel_rules_rust//:workspace.bzl", "rust_workspace")
 
 rust_workspace()
+
+# CONFIGURE cargo-raze ########################################################
+
+load("//third_party/cargo:crates.bzl", "raze_fetch_remote_crates")
+
+raze_fetch_remote_crates()
