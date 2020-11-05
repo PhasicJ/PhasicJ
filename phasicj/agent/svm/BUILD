@@ -46,13 +46,13 @@ genrule(
         ":svm.h",
         ":graal_isolate.h",
     ],
-    outs = ["svm.rs"],
+    outs = ["svm_raw.rs"],
     cmd_bash = 'bindgen --output "$@" $(execpath :svm.h) -- -I`dirname "$(execpath graal_isolate.h)"`',
 )
 
 rust_library(
-    name = "svm",
-    srcs = ["svm.rs"],
+    name = "svm_raw",
+    srcs = ["svm_raw.rs"],
     edition = "2018",
     rustc_flags = [
         "-A",
@@ -60,6 +60,13 @@ rust_library(
         "-A",
         "non-upper-case-globals",
     ],
-    visibility = ["//phasicj/agent:__subpackages__"],
     deps = [":svm_native_image_cc_import"],
+)
+
+rust_library(
+    name = "svm",
+    srcs = ["lib.rs"],
+    deps = [":svm_raw"],
+    edition = "2018",
+    visibility = ["//phasicj/agent:__subpackages__"],
 )

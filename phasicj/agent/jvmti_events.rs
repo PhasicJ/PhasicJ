@@ -19,6 +19,7 @@ use crate::jvmti_env;
 use crate::jni_env;
 use ::svm::{
     graal_isolatethread_t,
+    create_graal_isolate_thread,
 };
 
 pub fn get_initial_agent_callbacks(env: &mut jvmtiEnv) -> jvmtiEventCallbacks {
@@ -92,20 +93,7 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // TODO(dwtj): Creating a new Graal Isolate for each instrumentation seems
     //  wasteful. Consider reusing them. Either have one global one with all
     //  threads attached or have one isolate per thread.
-
-    // First create a Graal Isolate for our call to the SVM.
-    let create_isolate_params = ptr::null_mut();
-    let isolate_ptr = ptr::null_mut();
-    let mut isolate_thread_ptr: MaybeUninit<*mut graal_isolatethread_t> = MaybeUninit::uninit();
-    let err = ::svm::graal_create_isolate(
-        create_isolate_params,
-        isolate_ptr,
-        isolate_thread_ptr.as_mut_ptr(),
-    );
-    if err != 0 {
-        panic!("Failed to create Graal isolate during PhasicJ Agent `ClassFileLoadHook` event.");
-    }
-    let isolate_thread_ptr = isolate_thread_ptr.assume_init();
+    let isolate_thread_ptr: *mut graal_isolatethread_t = create_graal_isolate_thread();
 
     // NOTE(dwtj): During our call to `instr_instrument()` SVM allocates memory
     //  for the `svmBuf` using `UnmanagedMemory.malloc()`. We are responsible
