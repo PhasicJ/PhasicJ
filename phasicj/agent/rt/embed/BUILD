@@ -5,7 +5,6 @@ load(
 )
 load("//bazel:util/files/hash_file.bzl", "sha1_hash_file")
 load("//bazel:util/files/copy_file.bzl", "copy_file")
-load("//bazel/util/rust/cargo_build_scripts:do_nothing.bzl", "do_nothing_cargo_build_script")
 
 # NOTE(dwtj): We copy this file to abreviate its usage in this `BUILD` file and
 #  to make the `include_bytes!` macro not need to look any further than this
@@ -15,8 +14,6 @@ copy_file(
     src = "//phasicj/agent/rt:rt.jar",
     out = "rt.jar",
 )
-
-do_nothing_cargo_build_script()
 
 sha1_hash_file(
     name = "rt_jar_sha1",
@@ -32,8 +29,11 @@ rust_library(
         "rt.jar.sha1",
     ],
     edition = "2018",
+    rustc_env = {
+        "RT_JAR_EXEC_PATH": "$(location rt.jar)",
+        "RT_JAR_SHA1_EXEC_PATH": "$(location rt.jar.sha1)",
+    },
     visibility = ["//phasicj/agent:__subpackages__"],
-    deps = [":do_nothing_cargo_build_script"],
 )
 
 rust_test(

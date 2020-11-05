@@ -21,6 +21,7 @@ rust_test(
     rustc_env = {
         "TEST_CLASS_EXEC_PATH": "$(execpath :TestClass.class)"
     },
+    edition = "2018",
     deps = ["//phasicj/agent/svm"],
     data = [":TestClass.class"],
 )
