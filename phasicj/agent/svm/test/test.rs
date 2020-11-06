@@ -1,12 +1,13 @@
 #![cfg(test)]
 
-use svm::{
+use ::svm::raw::{
     svm_instr_instrument,
     svm_instr_free,
     graal_isolatethread_t,
-    create_graal_isolate_thread,
     graal_tear_down_isolate,
 };
+
+use svm::create_graal_isolate_thread;
 
 #[test]
 fn instrument_test_class() {

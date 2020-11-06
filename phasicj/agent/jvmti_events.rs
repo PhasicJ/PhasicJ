@@ -17,9 +17,8 @@ use ::jvmti::{
 use ::std::ffi;
 use crate::jvmti_env;
 use crate::jni_env;
-use ::svm::{
+use ::svm::raw::{
     graal_isolatethread_t,
-    create_graal_isolate_thread,
 };
 
 pub fn get_initial_agent_callbacks(env: &mut jvmtiEnv) -> jvmtiEventCallbacks {
@@ -93,7 +92,7 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // TODO(dwtj): Creating a new Graal Isolate for each instrumentation seems
     //  wasteful. Consider reusing them. Either have one global one with all
     //  threads attached or have one isolate per thread.
-    let isolate_thread_ptr: *mut graal_isolatethread_t = create_graal_isolate_thread();
+    let isolate_thread_ptr: *mut graal_isolatethread_t = ::svm::create_graal_isolate_thread();
 
     // NOTE(dwtj): During our call to `instr_instrument()` SVM allocates memory
     //  for the `svmBuf` using `UnmanagedMemory.malloc()`. We are responsible
@@ -106,7 +105,7 @@ unsafe extern "C" fn pj_class_file_load_hook(
     let mut svmBufSize: MaybeUninit<raw::c_int> = MaybeUninit::uninit();
     let mut svmBuf: MaybeUninit<*mut raw::c_char> = MaybeUninit::uninit();
 
-    let err = ::svm::svm_instr_instrument(
+    let err = ::svm::raw::svm_instr_instrument(
         isolate_thread_ptr,
         inBufSize,
         inBuf,
@@ -145,10 +144,10 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // Free the SVM-allocated memory that we got from our call to
     // `svm_instr_instrument()`.
     let svmBuf: *mut raw::c_char = mem::transmute(svmBuf);
-    ::svm::svm_instr_free(isolate_thread_ptr, svmBuf);
+    ::svm::raw::svm_instr_free(isolate_thread_ptr, svmBuf);
 
     // Tear down the Graal isolate which we created just to handle this event.
-    let err = ::svm::graal_tear_down_isolate(isolate_thread_ptr);
+    let err = ::svm::raw::graal_tear_down_isolate(isolate_thread_ptr);
     if err != 0 {
         panic!("During PhasicJ class instrumentation, failed to tear down a Graal isolate for an unknown reason.");
     }
