@@ -92,7 +92,7 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // TODO(dwtj): Creating a new Graal Isolate for each instrumentation seems
     //  wasteful. Consider reusing them. Either have one global one with all
     //  threads attached or have one isolate per thread.
-    let isolate_thread_ptr: *mut graal_isolatethread_t = ::svm::create_graal_isolate_thread();
+    let (_, isolate_thread_ptr) = ::svm::new_graal_isolate_thread().unwrap();
 
     // NOTE(dwtj): During our call to `instr_instrument()` SVM allocates memory
     //  for the `svmBuf` using `UnmanagedMemory.malloc()`. We are responsible

@@ -1,30 +1,32 @@
 #![cfg(test)]
 
-use ::svm::raw::{
-    svm_instr_instrument,
-    svm_instr_free,
-    graal_isolatethread_t,
-    graal_tear_down_isolate,
-};
+use svm::Svm;
 
-use svm::create_graal_isolate_thread;
+// [JVMS 15 §4.1]https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-4.html#jvms-4.1
+const JVM_CLASS_FILE_MAGIC_NUMBER: [u8; 4] = [0xCA, 0xFE, 0xBA, 0xBE];
 
 #[test]
 fn instrument_test_class() {
-    // NOTE(dwtj): We go up four directories because this macro searches
-    //  for the file to include relative to this source file.
-    let test_class = include_bytes!(concat!("../../../../", env!("TEST_CLASS_EXEC_PATH")));
-    assert!(test_class.len() > 0);
-
+    let mut isolate_thread = Svm::new().expect("Failed to create a new `Svm` instance.");
+    let mut test_class = get_test_class();
     unsafe {
-        let isolate_thread_ptr = create_graal_isolate_thread();
+        let instrumented = isolate_thread.instrument(test_class.as_mut_slice()).expect("Failed to instrument a test class.");
 
-        // TODO(dwtj): Call `svm_instr_instrument()` with `test_class`.
-        // TODO(dwtj): Check that the returned instrumented class has more bytes
-        //  than the original class.
-        // TODO(dwtj): Consider other ways to validate the instrumented bytes.
+        assert!(test_class.len() < instrumented.len());
+        assert_eq!(&JVM_CLASS_FILE_MAGIC_NUMBER, &instrumented.as_slice()[..4]);
 
-        let err = graal_tear_down_isolate(isolate_thread_ptr);
-        assert!(err == 0);
+        isolate_thread.free_svm_class(instrumented).expect("Failed to free an `SvmClass`.");
     }
+}
+
+fn get_test_class() -> Vec<u8> {
+    // NOTE(dwtj): The `include_bytes!()` macro searches for a file relative to
+    //  this source file. Thus, to find our desired file, we go up four
+    //  directories to the Bazel execroot (i.e. the directory from which Bazel
+    //  actions are executed). We then concatenate an environment variable's
+    //  value to find the desired test class file.
+    let test_class = include_bytes!(concat!("../../../../", env!("TEST_CLASS_EXEC_PATH")));
+    let mut buffer = vec![0; test_class.len()];
+    buffer.clone_from_slice(test_class);
+    return buffer;
 }
