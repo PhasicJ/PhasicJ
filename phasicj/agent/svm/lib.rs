@@ -34,7 +34,7 @@ pub struct SvmClass {
 }
 
 impl SvmClass {
-    pub fn len(&self) -> usize {
+    pub fn size(&self) -> usize {
         self.size
     }
 
@@ -59,6 +59,8 @@ impl Svm {
         }
     }
 
+    // TODO(dwtj): Figure out how to make the `class` slice immutable. We need
+    //  a guarantee from the SVM interface that it won't modify these bytes.
     pub unsafe fn instrument(&mut self, class: &mut [u8]) -> Result<SvmClass, ()> {
         let inBufSize: os::raw::c_int = class.len().try_into().unwrap();
         let inBuf: *mut os::raw::c_char = mem::transmute(class.as_mut_ptr());

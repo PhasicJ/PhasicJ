@@ -2,6 +2,7 @@ use ::std::convert::TryInto;
 use ::std::os::raw;
 use ::std::mem;
 use ::std::ptr;
+use ::std::slice;
 use ::std::mem::MaybeUninit;
 use ::jvmti::jvmtiEventCallbacks;
 use ::jvmti::{
@@ -20,6 +21,7 @@ use crate::jni_env;
 use ::svm::raw::{
     graal_isolatethread_t,
 };
+use ::svm::Svm;
 
 pub fn get_initial_agent_callbacks(env: &mut jvmtiEnv) -> jvmtiEventCallbacks {
     return jvmtiEventCallbacks {
@@ -92,31 +94,16 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // TODO(dwtj): Creating a new Graal Isolate for each instrumentation seems
     //  wasteful. Consider reusing them. Either have one global one with all
     //  threads attached or have one isolate per thread.
-    let (_, isolate_thread_ptr) = ::svm::new_graal_isolate_thread().unwrap();
 
-    // NOTE(dwtj): During our call to `instr_instrument()` SVM allocates memory
-    //  for the `svmBuf` using `UnmanagedMemory.malloc()`. We are responsible
-    //  for freeing it by calling `instr_free()`.
-    let inBufSize: raw::c_int = class_data_len.try_into().unwrap();
-    let inBuf: *mut raw::c_char = mem::transmute(class_data);
+    let mut svm = Svm::new().expect("Failed to create a new `Svm` instance.");
 
-    // TODO(dwtj): Could/should I make this simpler by just initializing these
-    //  to 0 and `ptr::null()`, respectively?
-    let mut svmBufSize: MaybeUninit<raw::c_int> = MaybeUninit::uninit();
-    let mut svmBuf: MaybeUninit<*mut raw::c_char> = MaybeUninit::uninit();
+    // NOTE(dwtj): During our call to `instrument()` SVM allocates memory. This
+    //  memory is wrapped by our `SvmClass`. We are reponsible for manually
+    //  freeing this memory by calling `Svm::free_svm_class()`.
+    // TODO(dwtj): Consider implementing a safer design.
 
-    let err = ::svm::raw::svm_instr_instrument(
-        isolate_thread_ptr,
-        inBufSize,
-        inBuf,
-        svmBufSize.as_mut_ptr(),
-        svmBuf.as_mut_ptr(),
-    );
-    if err != 0 {
-        panic!("Class instrumentation by PhasicJ agent failed for an unknown reason: {}", class_name);
-    }
-
-    let svmBufSize: jint = svmBufSize.assume_init();
+    let class: &mut [u8] = slice::from_raw_parts_mut(mem::transmute(class_data), class_data_len.try_into().unwrap());
+    let instrumented_class = svm.instrument(class).expect("Failed to instrument a class.");
 
     // NOTE(dwtj): According to [this callback's documentation][1], this JVMTI
     //  callback's out-pointer, `new_class_data`, needs to be allocated via the
@@ -132,28 +119,30 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // Allocate some JVMTI-managed memory that can be returned via
     // the `new_class_data` pointer.
     let mut jvmtiBuf: MaybeUninit<*mut raw::c_uchar> = MaybeUninit::uninit();
-    jvmti_env::allocate(&mut *jvmti_env, svmBufSize.into(), jvmtiBuf.as_mut_ptr());
+    let bufSize: usize = instrumented_class.size();
+    jvmti_env::allocate(
+        &mut *jvmti_env,
+        bufSize.try_into().unwrap(),
+        jvmtiBuf.as_mut_ptr()
+    );
+    let jvmtiBuf: *mut raw::c_uchar = jvmtiBuf.assume_init();
 
     // Copy binary data from the SVM-managed memory into our newly allocated
     // JVMTI-managed memory. (To please the Rust compiler, we use transmute to
-    // cast these bytes from `c_uchar` to `c_char` and back to `c_uchar`.)
-    let svmBuf: *mut raw::c_uchar = mem::transmute(svmBuf.assume_init());
-    let jvmtiBuf: *mut raw::c_uchar = jvmtiBuf.assume_init();
-    ptr::copy_nonoverlapping(svmBuf, jvmtiBuf, svmBufSize.try_into().unwrap());
-
-    // Free the SVM-allocated memory that we got from our call to
-    // `svm_instr_instrument()`.
-    let svmBuf: *mut raw::c_char = mem::transmute(svmBuf);
-    ::svm::raw::svm_instr_free(isolate_thread_ptr, svmBuf);
-
-    // Tear down the Graal isolate which we created just to handle this event.
-    let err = ::svm::raw::graal_tear_down_isolate(isolate_thread_ptr);
-    if err != 0 {
-        panic!("During PhasicJ class instrumentation, failed to tear down a Graal isolate for an unknown reason.");
+    // cast these bytes to `c_uchar`.)
+    {
+        let svmClassBuf: *const raw::c_uchar = mem::transmute(instrumented_class.as_slice().as_ptr());
+        ptr::copy_nonoverlapping(
+            svmClassBuf,
+            jvmtiBuf,
+            instrumented_class.size()
+        );
     }
+
+    svm.free_svm_class(instrumented_class);
 
     // Return the SVM-instrumented class data which we copied into a JVMTI-
     // allocated buffer via out-pointers.
-    *new_class_data_len = svmBufSize;
+    *new_class_data_len = bufSize.try_into().unwrap();
     *new_class_data = jvmtiBuf;
 }

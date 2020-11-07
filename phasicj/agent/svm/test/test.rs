@@ -12,7 +12,7 @@ fn instrument_test_class() {
     unsafe {
         let instrumented = isolate_thread.instrument(test_class.as_mut_slice()).expect("Failed to instrument a test class.");
 
-        assert!(test_class.len() < instrumented.len());
+        assert!(test_class.as_slice().len() < instrumented.size());
         assert_eq!(&JVM_CLASS_FILE_MAGIC_NUMBER, &instrumented.as_slice()[..4]);
 
         isolate_thread.free_svm_class(instrumented).expect("Failed to free an `SvmClass`.");
