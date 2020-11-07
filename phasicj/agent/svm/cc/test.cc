@@ -3,7 +3,8 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
-#include "phasicj/agent/svm/svm.h"
+#include <dlfcn.h>
+#include "phasicj/agent/svm/svm_dynamic.h"
 
 namespace fs = std::filesystem;
 
@@ -30,11 +31,30 @@ bool starts_with_magic_number(int size, char* class_data) {
     return true;
 }
 
+constexpr int DLOPEN_DEFAULT_MODE = 0;
+
+void* non_null(void* ptr) {
+    assert(ptr != nullptr);
+    return ptr;
+}
+
+// NOTE(dwtj): `argv[1]` is the file path to the SVM lib; `argv[2]` is the file
+//  path to the Java test class to instrument.
 int main(int argc, char** argv) {
+    assert(argc == 3);
+
+    // Open the svm library using `dlopen()` and get function pointers to its
+    //  relevant symbols using `dlsym()`.
+    char* svm_lib_path_str = argv[1];
+    cerr << "Loading svm library: " << svm_lib_path_str << endl;
+    void* svm_lib = dlopen(svm_lib_path_str, DLOPEN_DEFAULT_MODE);
+    auto graal_create_isolate_fn = (graal_create_isolate_fn_t) non_null(dlsym(svm_lib, "graal_create_isolate"));
+    auto graal_detach_all_threads_and_tear_down_isolate_fn = (graal_detach_all_threads_and_tear_down_isolate_fn_t) non_null(dlsym(svm_lib, "graal_detach_all_threads_and_tear_down_isolate"));
+    auto svm_instr_instrument_fn = (svm_instr_instrument_fn_t) non_null(dlsym(svm_lib, "svm_instr_instrument"));
+    auto svm_instr_free_fn = (svm_instr_free_fn_t) non_null(dlsym(svm_lib, "svm_instr_free"));
 
     // Create a path to the class file.
-    assert(argc == 2);
-    char* class_path_str = argv[1];
+    char* class_path_str = argv[2];
     cerr << "Instrumenting test class file: " << class_path_str << endl;
     fs::path class_file_path(class_path_str);
     assert(fs::exists(class_file_path));
@@ -61,19 +81,21 @@ int main(int argc, char** argv) {
     graal_isolate_t* isolate = nullptr;
     graal_isolatethread_t* thread = nullptr;
 
-    assert(graal_create_isolate(params, &isolate, &thread) == 0);
+    assert((*graal_create_isolate_fn)(params, &isolate, &thread) == 0);
     assert(isolate != nullptr);
     assert(thread != nullptr);
 
     // Use this Graal isolate & thread to instrument the test class.
     int out_buf_size = 0;
     char* out_buf = nullptr;
-    svm_instr_instrument(thread, in_buf_size, (char* ) in_buf, &out_buf_size, &out_buf);
+    (*svm_instr_instrument_fn)(thread, in_buf_size, (char* ) in_buf, &out_buf_size, &out_buf);
     assert(starts_with_magic_number(out_buf_size, out_buf));
 
     // Free SVM memory.
-    svm_instr_free(thread, out_buf);
+    (*svm_instr_free_fn)(thread, out_buf);
 
     // Destroy the Graal isolate & isolate thread.
-    assert(graal_detach_all_threads_and_tear_down_isolate(thread) == 0);
+    assert((*graal_detach_all_threads_and_tear_down_isolate_fn)(thread) == 0);
+
+    cerr << "Test passed." << endl;
 }

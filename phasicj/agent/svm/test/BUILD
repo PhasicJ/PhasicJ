@@ -13,8 +13,7 @@ genrule(
     cmd = '''"$(location @graalvm_linux_x64//jdk:bin/jar)" -xf "$<" && mv "phasicj/agent/svm/test/SvmTestClass.class" "$@"''',
     tools = ["@graalvm_linux_x64//jdk:bin/jar"],
     visibility = [
-        "//phasicj/agent/svm/cc:__pkg__",
-        "//phasicj/agent/svm/rust:__pkg__",
+        "//phasicj/agent/svm:__subpackages__",
     ],
 )
 

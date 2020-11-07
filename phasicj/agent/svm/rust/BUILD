@@ -6,31 +6,24 @@ load(
 
 alias(
     name = "rust",
-    actual = "svm",
+    actual = "phasicj_agent_svm_rust",
     visibility = ["//phasicj/agent:__subpackages__"],
-)
-
-rust_library(
-    name = "svm",
-    srcs = ["lib.rs"],
-    deps = [":svm_raw"],
-    edition = "2018",
 )
 
 # TODO(dwtj): Consider rewriting this using a `@rules_rust` `bindgen` rule.
 genrule(
-    name = "svm_bindgen",
+    name = "svm_dynamic_bindgen",
     srcs = [
-        "//phasicj/agent/svm:svm.h",
-        "//phasicj/agent/svm:graal_isolate.h",
+        "//phasicj/agent/svm:svm_dynamic.h",
+        "//phasicj/agent/svm:graal_isolate_dynamic.h",
     ],
-    outs = ["svm_raw.rs"],
-    cmd_bash = 'bindgen --output "$@" $(execpath //phasicj/agent/svm:svm.h) -- -I`dirname "$(execpath //phasicj/agent/svm:graal_isolate.h)"`',
+    outs = ["svm_dynamic.rs"],
+    cmd_bash = 'bindgen --output "$@" $(execpath //phasicj/agent/svm:svm_dynamic.h) -- -I`dirname "$(execpath //phasicj/agent/svm:graal_isolate_dynamic.h)"`',
 )
 
 rust_library(
     name = "svm_raw",
-    srcs = ["svm_raw.rs"],
+    srcs = ["svm_dynamic.rs"],
     edition = "2018",
     rustc_flags = [
         "-A",
@@ -38,21 +31,39 @@ rust_library(
         "-A",
         "non-upper-case-globals",
     ],
-    deps = ["//phasicj/agent/svm/cc"],
+    visibility = ["//phasicj/agent/svm:__subpackages__"],
+)
+
+rust_library(
+    name = "phasicj_agent_svm_rust",
+    srcs = [
+        "lib.rs",
+        "svm_function_types.rs",
+    ],
+    deps = [
+        "//third_party/cargo:libloading",
+        "//phasicj/agent/svm/rust:svm_raw",
+    ],
+    edition = "2018",
 )
 
 rust_test(
     name = "test",
     srcs = ["test.rs"],
-    rustc_env = {
-        "SVM_TEST_CLASS_EXEC_PATH": "$(execpath //phasicj/agent/svm/test:SvmTestClass.class)"
-    },
-    edition = "2018",
-    deps = [
-        ":svm",
-        "//phasicj/agent/svm/rust/embed",
+    data = [
+        "//phasicj/agent/svm:libsvm.so",
+        "//phasicj/agent/svm/test:SvmTestClass.class",
     ],
-    # NOTE(dwtj): This data isn't used at run-time. It is used at compile-time
-    #  to embed these bytes into the test binary.
-    data = ["//phasicj/agent/svm/test:SvmTestClass.class"],
+    rustc_env = {
+        # NOTE(dwtj): This file is read at test run-time.
+        "SVM_LIBRARY_FILE_PATH": "$(rootpath //phasicj/agent/svm:libsvm.so)",
+
+        # NOTE(dwtj): This file is read at compile-time and its bytes are
+        #  embedded in the test executable.
+        "SVM_TEST_CLASS_FILE_PATH": "$(execpath //phasicj/agent/svm/test:SvmTestClass.class)",
+    },
+    deps = [
+        ":phasicj_agent_svm_rust",
+    ],
+    edition = "2018",
 )

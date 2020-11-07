@@ -110,10 +110,43 @@ pub fn set_event_notification_mode(env: &mut jvmtiEnv, mode: jvmtiEventMode, eve
     }
 }
 
+// [JVMTI#AddToBootstrapClassLoaderSearch](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#AddToBootstrapClassLoaderSearch)
 pub fn add_to_bootstrap_class_loader_search(env: &mut jvmtiEnv, segment: *const i8) {
     unsafe {
         let f = (**env).AddToBootstrapClassLoaderSearch.unwrap();
         jvmti_check(f(env, segment));
+    }
+}
+
+// [JVMTI#GetEnvironmentLocalStorage](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#GetEnvironmentLocalStorage)
+pub fn get_environment_local_storage(env: &mut jvmtiEnv, data_ptr: *mut *mut raw::c_void) {
+    unsafe {
+        let f = (**env).GetEnvironmentLocalStorage.unwrap();
+        jvmti_check(f(env, data_ptr));
+    }
+}
+
+// [JVMTI#SetEnvironmentLocalStorage](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#SetEnvironmentLocalStorage)
+pub fn set_environment_local_storage(env: &mut jvmtiEnv, data: *mut raw::c_void) {
+    unsafe {
+        let f = (**env).SetEnvironmentLocalStorage.unwrap();
+        jvmti_check(f(env, data));
+    }
+}
+
+// [JVMTI#GetThreadLocalStorage](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#GetThreadLocalStorage)
+pub fn get_thread_local_storage(env: &mut jvmtiEnv, thread: jthread, data_ptr: *mut *mut raw::c_void) {
+    unsafe {
+        let f = (**env).GetThreadLocalStorage.unwrap();
+        jvmti_check(f(env, thread, data_ptr));
+    }
+}
+
+// [JVMTI#SetThreadLocalStorage](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#SetThreadLocalStorage)
+pub fn set_thread_local_storage(env: &mut jvmtiEnv, thread: jthread, data: *mut raw::c_void) {
+    unsafe {
+        let f = (**env).SetThreadLocalStorage.unwrap();
+        jvmti_check(f(env, thread, data));
     }
 }
 

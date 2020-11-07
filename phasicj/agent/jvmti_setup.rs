@@ -33,7 +33,9 @@ use ::phasicj_agent_rt_jar_embed::{
 pub fn setup(jvm: &mut JavaVM) {
     unsafe{
         let env: *mut jvmtiEnv = get_env(jvm);
-        configure_jvmti_env(&mut *env);
+        let env = &mut *env;
+        configure_jvmti_env(env);
+        write_embedded_svm_lib_to_default_temp_path();
     }
 }
 

@@ -9,8 +9,9 @@ graalvm_native_image_library(
     name = "svm_native_image",
     dynamic_header_output = "svm_dynamic.h",
     graal_isolate_dynamic_header_output = "graal_isolate_dynamic.h",
-    graal_isolate_header_output = "graal_isolate.h",
-    header_output = "svm.h",
+    # NOTE(dwtj): The non-dynamic headers aren't currently being used.
+    graal_isolate_header_output = "_graal_isolate.h",
+    header_output = "_svm.h",
     image_name = "phasicj_agent_svm",
     library_output = "libsvm.so",
     native_image_options = [

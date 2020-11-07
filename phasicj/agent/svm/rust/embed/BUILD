@@ -44,6 +44,15 @@ rust_library(
 rust_test(
     name = "test",
     srcs = ["test.rs"],
+    rustc_env = {
+        "SVM_TEST_CLASS_EXEC_PATH": "$(execpath //phasicj/agent/svm/test:SvmTestClass.class)"
+    },
+    deps = [
+        ":phasicj_agent_svm_rust_embed",
+        "//phasicj/agent/svm/rust",
+    ],
+    # NOTE(dwtj): This data isn't used at run-time. It is used at compile-time
+    #  to embed these bytes into the test binary.
+    data = ["//phasicj/agent/svm/test:SvmTestClass.class"],
     edition = "2018",
-    deps = ["phasicj_agent_svm_rust_embed"],
 )

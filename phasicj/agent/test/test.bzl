@@ -6,7 +6,6 @@ def test(name, java_exec):
             "$(rootpath {})".format(java_exec),
             "$(rootpath //phasicj/agent:libpjagent.so)",
             "$(rootpath :TestApp.jar)",
-            "$(rootpath //phasicj/agent/svm:libsvm.so)",
         ],
         data = [
             java_exec,
@@ -15,6 +14,5 @@ def test(name, java_exec):
             #  `sh_test` rule doesn't include it in the test's runfiles. See
             #  [bazelbuild/bazel#6783](https://github.com/bazelbuild/bazel/issues/6783).
             "//phasicj/agent:libpjagent.so",
-            "//phasicj/agent/svm:libsvm.so",
         ],
     )

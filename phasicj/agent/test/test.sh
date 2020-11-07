@@ -5,15 +5,8 @@ set -e
 export JAVA_EXEC="$1"
 export AGENT_PATH="$2"
 export EXECUTABLE_JAR="$3"
-export SVM_PATH="$4"
 
 export AGENT_PATH="${PWD}/${AGENT_PATH}"
-
-# TODO(dwtj): Make sure that this is quoted correctly. Does this work right if
-#  `SVM_PATH` contains spaces?
-export SVM_PATH="${PWD}/$(dirname $SVM_PATH)"
-
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SVM_PATH"
 
 export CLASS_PATH="${EXECUTABLE_JAR}"
 

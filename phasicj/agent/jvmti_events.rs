@@ -16,7 +16,8 @@ use ::jvmti::{
 use ::std::ffi;
 use crate::jvmti_env;
 use crate::jni_env;
-use ::svm::Svm;
+use ::phasicj_agent_svm_rust::SvmIsolateThread;
+use ::phasicj_agent_svm_rust_embed as svm_embed;
 
 pub fn get_initial_agent_callbacks() -> jvmtiEventCallbacks {
     return jvmtiEventCallbacks {
@@ -90,7 +91,8 @@ unsafe extern "C" fn pj_class_file_load_hook(
     //  wasteful. Consider reusing them. Either have one global one with all
     //  threads attached or have one isolate per thread.
 
-    let mut svm = Svm::new().expect("Failed to create a new `Svm` instance.");
+    let library_path = svm_embed::svm_default_temp_file_path();
+    let mut svm = SvmIsolateThread::new_from_library_path(&library_path).expect("Failed to create a new `Svm` instance.");
 
     // NOTE(dwtj): During our call to `instrument()` SVM allocates memory. This
     //  memory is wrapped by our `SvmClass`. We are reponsible for manually
@@ -98,7 +100,7 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // TODO(dwtj): Consider implementing a safer design.
 
     let class: &mut [u8] = slice::from_raw_parts_mut(mem::transmute(class_data), class_data_len.try_into().unwrap());
-    let instrumented_class = svm.instrument(class).expect("Failed to instrument a class.");
+    let instrumented_class = svm.svm_instr_instrument(class).expect("Failed to instrument a class.");
 
     // NOTE(dwtj): According to [this callback's documentation][1], this JVMTI
     //  callback's out-pointer, `new_class_data`, needs to be allocated via the
@@ -134,7 +136,7 @@ unsafe extern "C" fn pj_class_file_load_hook(
         );
     }
 
-    svm.free_svm_class(instrumented_class).expect("Failed to free an `SvmClass`.");
+    svm.svm_instr_free(instrumented_class).expect("Failed to free an `SvmClass`.");
 
     // Return the SVM-instrumented class data which we copied into a JVMTI-
     // allocated buffer via out-pointers.
