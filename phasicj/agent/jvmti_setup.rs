@@ -68,7 +68,7 @@ fn add_all_required_capabilities(env: &mut jvmtiEnv) {
 }
 
 fn set_all_event_callbacks(env: &mut jvmtiEnv) {
-    let cb = jvmti_events::get_initial_agent_callbacks(env);
+    let cb = jvmti_events::get_initial_agent_callbacks();
     set_event_callbacks(env, &cb);
 }
 

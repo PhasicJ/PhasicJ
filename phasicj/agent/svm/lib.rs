@@ -1,18 +1,10 @@
-pub mod raw {
-    // TODO(dwtj): Remove these re-exports.
-    pub use ::svm_raw::{
-        graal_isolatethread_t,
-        graal_isolate_t,
-        svm_instr_instrument,
-        svm_instr_free,
-        graal_create_isolate,
-        graal_detach_thread,
-        graal_tear_down_isolate,
-    };
-}
 use ::svm_raw::{
+    graal_isolate_t,
+    graal_isolatethread_t,
     graal_create_isolate,
     graal_tear_down_isolate,
+    svm_instr_instrument,
+    svm_instr_free,
 };
 use ::std::convert::TryInto;
 use ::std::ptr;
@@ -44,8 +36,8 @@ impl SvmClass {
 }
 
 pub struct Svm {
-    isolate_ptr: *mut raw::graal_isolate_t,
-    isolate_thread_ptr: *mut raw::graal_isolatethread_t,
+    isolate_ptr: *mut graal_isolate_t,
+    isolate_thread_ptr: *mut graal_isolatethread_t,
 }
 
 impl Svm {
@@ -70,7 +62,7 @@ impl Svm {
         let mut svmBufSize: MaybeUninit<os::raw::c_int> = MaybeUninit::uninit();
         let mut svmBuf: MaybeUninit<*mut os::raw::c_char> = MaybeUninit::uninit();
 
-        let err = raw::svm_instr_instrument(
+        let err = svm_instr_instrument(
             self.isolate_thread_ptr,
             inBufSize,
             inBuf,
@@ -91,16 +83,16 @@ impl Svm {
         // TODO(dwtj): Consider changing the interface of `svm_instr_free()` to
         //  return an error code and forwarding this error.
         let ptr: *mut i8 = mem::transmute(svm_class.ptr);
-        raw::svm_instr_free(self.isolate_thread_ptr, ptr);
+        svm_instr_free(self.isolate_thread_ptr, ptr);
         Ok(())
     }
 }
 
 // TODO(dwtj): Remove `pub` once this is no longer used by `jvmti_events.rs`.
-pub unsafe fn new_graal_isolate_thread() -> Result<(*mut raw::graal_isolate_t, *mut raw::graal_isolatethread_t), ()> {
+pub unsafe fn new_graal_isolate_thread() -> Result<(*mut graal_isolate_t, *mut graal_isolatethread_t), ()> {
     let create_isolate_params = ptr::null_mut();
-    let mut isolate_ptr: MaybeUninit<*mut raw::graal_isolate_t> = MaybeUninit::uninit();
-    let mut isolate_thread_ptr: MaybeUninit<*mut raw::graal_isolatethread_t> = MaybeUninit::uninit();
+    let mut isolate_ptr: MaybeUninit<*mut graal_isolate_t> = MaybeUninit::uninit();
+    let mut isolate_thread_ptr: MaybeUninit<*mut graal_isolatethread_t> = MaybeUninit::uninit();
     let err = graal_create_isolate(
         create_isolate_params,
         isolate_ptr.as_mut_ptr(),

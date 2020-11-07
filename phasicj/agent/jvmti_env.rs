@@ -37,6 +37,7 @@ pub fn get_env(jvm: &mut JavaVM) -> *mut jvmtiEnv {
     }
 }
 
+// [JVMTI#GetPhase](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#GetPhase)
 pub fn get_phase(env: &mut jvmtiEnv) -> jvmtiPhase {
     let mut phase: MaybeUninit<jvmtiPhase> = MaybeUninit::uninit();
     unsafe {
@@ -46,6 +47,7 @@ pub fn get_phase(env: &mut jvmtiEnv) -> jvmtiPhase {
     }
 }
 
+// [JVMTI#GetPhase](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#GetPhase)
 pub fn get_phase_str(env: &mut jvmtiEnv) -> &'static str {
     match get_phase(env) {
         JVMTI_PHASE_ONLOAD => "OnLoad",
@@ -57,6 +59,7 @@ pub fn get_phase_str(env: &mut jvmtiEnv) -> &'static str {
     }
 }
 
+// [JVMTI#Allocate](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#Allocate)
 pub unsafe fn allocate(env: &mut jvmtiEnv, size: jlong, mem_ptr: *mut *mut raw::c_uchar) {
     let f = (**env).Allocate.unwrap();
     jvmti_check(f(env, size, mem_ptr));

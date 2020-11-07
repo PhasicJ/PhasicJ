@@ -12,18 +12,13 @@ use ::jvmti::{
     jclass,
     jobject,
     jthread,
-    jvmtiPhase_JVMTI_PHASE_PRIMORDIAL as JVMTI_PHASE_PRIMORDIAL,
-    jvmtiPhase_JVMTI_PHASE_START as JVMTI_PHASE_START,
 };
 use ::std::ffi;
 use crate::jvmti_env;
 use crate::jni_env;
-use ::svm::raw::{
-    graal_isolatethread_t,
-};
 use ::svm::Svm;
 
-pub fn get_initial_agent_callbacks(env: &mut jvmtiEnv) -> jvmtiEventCallbacks {
+pub fn get_initial_agent_callbacks() -> jvmtiEventCallbacks {
     return jvmtiEventCallbacks {
         VMStart: Some(pj_vm_start),
         VMInit: Some(pj_vm_init),
@@ -33,7 +28,7 @@ pub fn get_initial_agent_callbacks(env: &mut jvmtiEnv) -> jvmtiEventCallbacks {
     };
 }
 
-fn enableInstrumentation(env: *mut JNIEnv) {
+fn enable_instrumentation(env: *mut JNIEnv) {
     let class_name = ffi::CString::new("java/lang/Object").unwrap();
     let method_name = ffi::CString::new("phasicj$agent$rt$enableInstrumentation").unwrap();
     let method_signature = ffi::CString::new("()V").unwrap();
@@ -52,7 +47,7 @@ fn enableInstrumentation(env: *mut JNIEnv) {
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMStart
 #[no_mangle]
 unsafe extern "C" fn pj_vm_start(_env: *mut jvmtiEnv, jni_env: *mut JNIEnv) {
-    enableInstrumentation(jni_env);
+    enable_instrumentation(jni_env);
 }
 
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMDeath
@@ -118,31 +113,31 @@ unsafe extern "C" fn pj_class_file_load_hook(
 
     // Allocate some JVMTI-managed memory that can be returned via
     // the `new_class_data` pointer.
-    let mut jvmtiBuf: MaybeUninit<*mut raw::c_uchar> = MaybeUninit::uninit();
-    let bufSize: usize = instrumented_class.size();
+    let mut jvmti_buf: MaybeUninit<*mut raw::c_uchar> = MaybeUninit::uninit();
+    let buf_size: usize = instrumented_class.size();
     jvmti_env::allocate(
         &mut *jvmti_env,
-        bufSize.try_into().unwrap(),
-        jvmtiBuf.as_mut_ptr()
+        buf_size.try_into().unwrap(),
+        jvmti_buf.as_mut_ptr()
     );
-    let jvmtiBuf: *mut raw::c_uchar = jvmtiBuf.assume_init();
+    let jvmti_buf: *mut raw::c_uchar = jvmti_buf.assume_init();
 
     // Copy binary data from the SVM-managed memory into our newly allocated
     // JVMTI-managed memory. (To please the Rust compiler, we use transmute to
     // cast these bytes to `c_uchar`.)
     {
-        let svmClassBuf: *const raw::c_uchar = mem::transmute(instrumented_class.as_slice().as_ptr());
+        let svm_class_buf: *const raw::c_uchar = mem::transmute(instrumented_class.as_slice().as_ptr());
         ptr::copy_nonoverlapping(
-            svmClassBuf,
-            jvmtiBuf,
+            svm_class_buf,
+            jvmti_buf,
             instrumented_class.size()
         );
     }
 
-    svm.free_svm_class(instrumented_class);
+    svm.free_svm_class(instrumented_class).expect("Failed to free an `SvmClass`.");
 
     // Return the SVM-instrumented class data which we copied into a JVMTI-
     // allocated buffer via out-pointers.
-    *new_class_data_len = bufSize.try_into().unwrap();
-    *new_class_data = jvmtiBuf;
+    *new_class_data_len = buf_size.try_into().unwrap();
+    *new_class_data = jvmti_buf;
 }
