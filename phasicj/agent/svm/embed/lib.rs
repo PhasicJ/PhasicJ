@@ -30,11 +30,13 @@ pub fn svm_default_temp_file_path() -> path::PathBuf {
     return path;
 }
 
-pub fn write_svm(file_path: &path::Path) -> Result<(), io::Error> {
-    let mut parent_path = file_path.parent().expect("Parent directory doesn't exist.");
-    fs::create_dir_all(parent_path)?;
-    let mut file = fs::File::create(file_path)?;
-    file.write_all(svm())?;
-    file.sync_all()?;
+pub fn write_svm_file_if_missing(file_path: &path::Path) -> Result<(), io::Error> {
+    if !file_path.exists() {
+        let mut parent_path = file_path.parent().expect("Parent directory doesn't exist.");
+        fs::create_dir_all(parent_path)?;
+        let mut file = fs::File::create(file_path)?;
+        file.write_all(svm())?;
+        file.sync_all()?;
+    }
     Ok(())
 }

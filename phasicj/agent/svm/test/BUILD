@@ -22,7 +22,10 @@ rust_test(
         "TEST_CLASS_EXEC_PATH": "$(execpath :TestClass.class)"
     },
     edition = "2018",
-    deps = ["//phasicj/agent/svm"],
+    deps = [
+        "//phasicj/agent/svm",
+        "//phasicj/agent/svm/embed",
+    ],
     data = [":TestClass.class"],
 )
 

@@ -6,6 +6,12 @@ load(
 load("//bazel:util/files/hash_file.bzl", "sha1_hash_file")
 load("//bazel:util/files/copy_file.bzl", "copy_file")
 
+alias(
+    name = "embed",
+    actual = ":phasicj_agent_svm_embed",
+    visibility = ["//phasicj/agent:__subpackages__"],
+)
+
 # NOTE(dwtj): We copy this file to abreviate its usage in this `BUILD` file and
 #  to make the `include_bytes!` macro not need to look any further than this
 #  package.

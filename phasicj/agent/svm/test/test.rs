@@ -1,12 +1,18 @@
 #![cfg(test)]
 
-use svm::Svm;
+use ::svm::Svm;
+use ::phasicj_agent_svm_embed::{
+    svm_default_temp_file_path,
+    write_svm_file_if_missing,
+};
 
 // [JVMS 15 §4.1]https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-4.html#jvms-4.1
 const JVM_CLASS_FILE_MAGIC_NUMBER: [u8; 4] = [0xCA, 0xFE, 0xBA, 0xBE];
 
 #[test]
 fn instrument_test_class() {
+    write_svm_file_if_missing(&svm_default_temp_file_path()).expect("Failed to write SVM library to temp file path.");
+
     let mut isolate_thread = Svm::new().expect("Failed to create a new `Svm` instance.");
     let mut test_class = get_test_class();
     unsafe {

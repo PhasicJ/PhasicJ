@@ -18,6 +18,7 @@ rust_library(
     deps = [
         "//phasicj/agent/rt/embed:phasicj_agent_rt_jar_embed",
         "//phasicj/agent/svm",
+        "//phasicj/agent/svm/embed",
         "//phasicj/agent/svm:svm_native_image_cc_import",
         "@graalvm_linux_x64//rust/jvmti",
     ],
