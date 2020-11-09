@@ -23,11 +23,13 @@ pub fn rt_jar_default_temp_file_path() -> path::PathBuf {
     return path;
 }
 
-pub fn write_rt_jar(file_path: &path::Path) -> Result<(), io::Error> {
-    let mut parent_path = file_path.parent().expect("Parent directory doesn't exist.");
-    fs::create_dir_all(parent_path)?;
-    let mut file = fs::File::create(file_path)?;
-    file.write_all(rt_jar())?;
-    file.sync_all()?;
+pub fn write_rt_jar_file_if_missing(file_path: &path::Path) -> Result<(), io::Error> {
+    if !file_path.exists() {
+        let mut parent_path = file_path.parent().expect("Parent directory doesn't exist.");
+        fs::create_dir_all(parent_path)?;
+        let mut file = fs::File::create(file_path)?;
+        file.write_all(rt_jar())?;
+        file.sync_all()?;
+    }
     Ok(())
 }

@@ -27,7 +27,7 @@ use crate::jvmti_env::{
 
 use ::phasicj_agent_rt_jar_embed::{
     rt_jar_default_temp_file_path,
-    write_rt_jar,
+    write_rt_jar_file_if_missing,
 };
 
 pub fn setup(jvm: &mut JavaVM) {
@@ -82,7 +82,7 @@ fn set_all_event_notification_modes(env: &mut jvmtiEnv) {
 
 fn add_embedded_jar_to_bootstrap_class_loader_search(env: &mut jvmtiEnv) {
     let path = rt_jar_default_temp_file_path();
-    write_rt_jar(&path).unwrap();
+    write_rt_jar_file_if_missing(&path).unwrap();
 
     let path = ffi::CString::new(path.to_str().unwrap()).unwrap();
     let path = path.into_raw();
