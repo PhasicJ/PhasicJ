@@ -1,6 +1,6 @@
 #![cfg(test)]
 
-use ::phasicj_agent_svm_embed::{
+use ::phasicj_agent_svm_rust_embed::{
     svm,
     svm_sha1_hash,
 };

@@ -1,32 +1,21 @@
-load("@io_bazel_rules_rust//rust:rust.bzl", "rust_test")
 load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_library")
 
 dwtj_java_library(
-    name = "test_class_jar",
-    srcs = ["TestClass.java"],
-    output_jar = "test_class.jar",
+    name = "svm_test_class_jar",
+    srcs = ["SvmTestClass.java"],
+    output_jar = "svm_test_class.jar",
 )
 
 genrule(
-    name = "test_class_unjar",
-    srcs = ["test_class.jar"],
-    outs = ["TestClass.class"],
-    cmd = '''"$(location @graalvm_linux_x64//jdk:bin/jar)" -xf "$<" && mv "phasicj/agent/svm/test/TestClass.class" "$@"''',
+    name = "svm_test_class_unjar",
+    srcs = ["svm_test_class.jar"],
+    outs = ["SvmTestClass.class"],
+    cmd = '''"$(location @graalvm_linux_x64//jdk:bin/jar)" -xf "$<" && mv "phasicj/agent/svm/test/SvmTestClass.class" "$@"''',
     tools = ["@graalvm_linux_x64//jdk:bin/jar"],
-)
-
-rust_test(
-    name = "test_svm",
-    srcs = ["test.rs"],
-    rustc_env = {
-        "TEST_CLASS_EXEC_PATH": "$(execpath :TestClass.class)"
-    },
-    edition = "2018",
-    deps = [
-        "//phasicj/agent/svm",
-        "//phasicj/agent/svm/embed",
+    visibility = [
+        "//phasicj/agent/svm/cc:__pkg__",
+        "//phasicj/agent/svm/rust:__pkg__",
     ],
-    data = [":TestClass.class"],
 )
 
 # TODO(dwtj): Consider adding a test where `java.lang.Object` is instrumented.

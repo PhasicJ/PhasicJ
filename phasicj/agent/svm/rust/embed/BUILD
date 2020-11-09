@@ -8,7 +8,7 @@ load("//bazel:util/files/copy_file.bzl", "copy_file")
 
 alias(
     name = "embed",
-    actual = ":phasicj_agent_svm_embed",
+    actual = ":phasicj_agent_svm_rust_embed",
     visibility = ["//phasicj/agent:__subpackages__"],
 )
 
@@ -28,7 +28,7 @@ sha1_hash_file(
 )
 
 rust_library(
-    name = "phasicj_agent_svm_embed",
+    name = "phasicj_agent_svm_rust_embed",
     srcs = ["lib.rs"],
     data = [
         "libsvm.so",
@@ -39,12 +39,11 @@ rust_library(
         "SVM_EXEC_PATH": "$(execpath :libsvm.so)",
         "SVM_SHA1_EXEC_PATH": "$(execpath :libsvm.so.sha1)",
     },
-    visibility = ["//phasicj/agent:__subpackages__"],
 )
 
 rust_test(
     name = "test",
     srcs = ["test.rs"],
     edition = "2018",
-    deps = ["phasicj_agent_svm_embed"],
+    deps = ["phasicj_agent_svm_rust_embed"],
 )

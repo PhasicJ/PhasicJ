@@ -93,8 +93,8 @@ fn add_embedded_jar_to_bootstrap_class_loader_search(env: &mut jvmtiEnv) {
 }
 
 fn write_embedded_svm_lib_to_default_temp_path() {
-    let path = ::phasicj_agent_svm_embed::svm_default_temp_file_path();
-    ::phasicj_agent_svm_embed::write_svm_file_if_missing(&path).unwrap();
+    let path = ::phasicj_agent_svm_rust_embed::svm_default_temp_file_path();
+    ::phasicj_agent_svm_rust_embed::write_svm_file_if_missing(&path).unwrap();
 }
 
 fn expect_capability(capa: c_uint) {

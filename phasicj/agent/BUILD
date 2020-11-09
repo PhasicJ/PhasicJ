@@ -17,9 +17,9 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         "//phasicj/agent/rt/embed:phasicj_agent_rt_jar_embed",
-        "//phasicj/agent/svm",
-        "//phasicj/agent/svm/embed",
-        "//phasicj/agent/svm:svm_native_image_cc_import",
+        "//phasicj/agent/svm/rust",
+        "//phasicj/agent/svm/rust/embed",
+        "//phasicj/agent/svm/cc",
         "@graalvm_linux_x64//rust/jvmti",
     ],
 )

@@ -1,7 +1,7 @@
 #![cfg(test)]
 
 use ::svm::Svm;
-use ::phasicj_agent_svm_embed::{
+use ::phasicj_agent_svm_rust_embed::{
     svm_default_temp_file_path,
     write_svm_file_if_missing,
 };
@@ -31,7 +31,7 @@ fn get_test_class() -> Vec<u8> {
     //  directories to the Bazel execroot (i.e. the directory from which Bazel
     //  actions are executed). We then concatenate an environment variable's
     //  value to find the desired test class file.
-    let test_class = include_bytes!(concat!("../../../../", env!("TEST_CLASS_EXEC_PATH")));
+    let test_class = include_bytes!(concat!("../../../../", env!("SVM_TEST_CLASS_EXEC_PATH")));
     let mut buffer = vec![0; test_class.len()];
     buffer.clone_from_slice(test_class);
     return buffer;

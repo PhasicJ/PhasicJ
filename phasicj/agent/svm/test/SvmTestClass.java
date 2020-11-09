@@ -1,8 +1,8 @@
 package phasicj.agent.svm.test;
 
-public class TestClass {
+public class SvmTestClass {
   public static void main(String[] args) {
-    synchronized (TestClass.class) {
+    synchronized (SvmTestClass.class) {
       System.out.println("Hello, world!");
     }
   }
