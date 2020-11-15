@@ -1,5 +1,9 @@
 load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
-load("//bazel:util/rust/rename_cdylib.bzl", "rename_cdylib")
+load("//bazel:util/files/copy_file.bzl", "copy_file")
+
+package(
+    default_visibility = ["//visibility:public"],
+)
 
 rust_library(
     name = "agent",
@@ -14,22 +18,33 @@ rust_library(
     ],
     crate_type = "cdylib",
     edition = "2018",
-    visibility = ["//visibility:public"],
     deps = [
         "//phasicj/agent/rt/embed:phasicj_agent_rt_jar_embed",
         "//phasicj/agent/svm/rust",
         "//phasicj/agent/svm/rust/embed",
-        "//phasicj/agent/svm/cc",
         "@graalvm_linux_x64//rust/jvmti",
     ],
 )
 
 # NOTE(dwtj): Because of the behavior of `@rules_rust`, the `agent` target
-#  generates an output file which includes a hash value. This target exists to
-#  copy/rename this file to a consistent name.
-rename_cdylib(
+#  generates an output file which includes a hash value. These targets exists
+#  to copy this file to a known (platform-specific) name.
+copy_file(
     name = "libpjagent_so",
     src = ":agent",
     out = "libpjagent.so",
-    visibility = ["//visibility:public"],
+)
+
+copy_file(
+    name = "libjpagent_dylib",
+    src = ":agent",
+    out = "libpjagent.dylib",
+)
+
+alias(
+    name = "libpjagent",
+    actual = select({
+        "@bazel_tools//src/conditions:linux_x86_64": "libpjagent.so",
+        "@bazel_tools//src/conditions:darwin": "libpjagent.dylib",
+    }),
 )

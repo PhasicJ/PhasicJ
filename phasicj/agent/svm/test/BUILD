@@ -10,8 +10,8 @@ genrule(
     name = "svm_test_class_unjar",
     srcs = ["svm_test_class.jar"],
     outs = ["SvmTestClass.class"],
-    cmd = '''"$(location @graalvm_linux_x64//jdk:bin/jar)" -xf "$<" && mv "phasicj/agent/svm/test/SvmTestClass.class" "$@"''',
-    tools = ["@graalvm_linux_x64//jdk:bin/jar"],
+    cmd_bash = '''"$(location //third_party/openjdk:jar)" -xf "$<" && mv "phasicj/agent/svm/test/SvmTestClass.class" "$@"''',
+    tools = ["//third_party/openjdk:jar"],
     visibility = [
         "//phasicj/agent/svm:__subpackages__",
     ],

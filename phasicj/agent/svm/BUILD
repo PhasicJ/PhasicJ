@@ -1,4 +1,5 @@
 load("@dwtj_rules_java//graalvm:defs.bzl", "graalvm_native_image_library")
+load("//bazel:util/files/copy_file.bzl", "copy_file")
 
 # NOTE(dwtj): I am currently assuming that one cannot (or at least should not)
 #  link multiple `native-image` outputs together into one library. So, this
@@ -26,4 +27,19 @@ graalvm_native_image_library(
         "//phasicj/agent/rt:java_lang_object_amendment",
         "//third_party/asm",
     ],
+)
+
+copy_file(
+    name = "copy_so_to_dylib",
+    src = "libsvm.so",
+    out = "libsvm.dylib",
+)
+
+alias(
+    name = "svm",
+    actual = select({
+        "@bazel_tools//src/conditions:linux_x86_64": "libsvm.so",
+        "@bazel_tools//src/conditions:darwin": "libsvm.dylib",
+    }),
+    visibility = ["//phasicj/agent:__subpackages__"],
 )

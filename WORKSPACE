@@ -3,7 +3,8 @@ workspace(name = "phasicj")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load(
     "//bazel:external/repositories.bzl",
-    "apply_remote_graalvm_repository",
+    "apply_remote_graalvm_linux_repository",
+    "apply_remote_graalvm_macos_repository",
     "com_github_renaissance_benchmarks",
     "dwtj_rules_java",
     "io_bazel_rules_rust",
@@ -114,7 +115,7 @@ load(
 
 # CONFIGURE `@graalvm_linux_x64` ##############################################
 
-apply_remote_graalvm_repository(
+apply_remote_graalvm_linux_repository(
     "graalvm_linux_x64",
     remote_graalvm_repository,
 )
@@ -122,9 +123,23 @@ apply_remote_graalvm_repository(
 # NOTE(dwtj): We use GraalVM as our Java compiler toolchain.
 register_toolchains("@graalvm_linux_x64//java:java_compiler_toolchain")
 
-load("@graalvm_linux_x64//graalvm:defs.bzl", "register_graalvm_toolchains")
+load("@graalvm_linux_x64//graalvm:defs.bzl", register_graalvm_linux_toolchains = "register_graalvm_toolchains")
 
-register_graalvm_toolchains()
+register_graalvm_linux_toolchains()
+
+# CONFIGURE `@graalvm_macos_x64` ##############################################
+
+apply_remote_graalvm_macos_repository(
+    "graalvm_macos_x64",
+    remote_graalvm_repository,
+)
+
+# NOTE(dwtj): We use GraalVM as our Java compiler toolchain.
+register_toolchains("@graalvm_macos_x64//java:java_compiler_toolchain")
+
+load("@graalvm_macos_x64//graalvm:defs.bzl", register_graalvm_macos_toolchains = "register_graalvm_toolchains")
+
+register_graalvm_macos_toolchains()
 
 # CONFIGURE `@openjdk_linux_x64` ##############################################
 
@@ -132,12 +147,30 @@ known_openjdk_repository("openjdk_linux_x64")
 
 register_toolchains("@openjdk_linux_x64//java:java_runtime_toolchain")
 
+# CONFIGURE `@openjdk_macos_x64` ##############################################
+
+known_openjdk_repository(
+    "openjdk_macos_x64",
+    os = "macos",
+)
+
+register_toolchains("@openjdk_macos_x64//java:java_runtime_toolchain")
+
 # CONFIGURE `@openjdk_11_linux_x64` ###########################################
 
 known_openjdk_repository(
     name = "openjdk_11_linux_x64",
     provider = "adoptopenjdk",
     version = "11.0.9+11.1",
+)
+
+# CONFIGURE `@openjdk_11_macos_x64` ###########################################
+
+known_openjdk_repository(
+    name = "openjdk_11_macos_x64",
+    provider = "adoptopenjdk",
+    version = "11.0.9+11.1",
+    os = "macos",
 )
 
 # CONFIGURE `@openjdk_15_ga_slowdebug` ########################################

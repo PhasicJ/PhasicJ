@@ -3,9 +3,14 @@ use ::std::fs;
 use ::std::path;
 use ::std::io::Write;
 
-// TODO(dwtj): Make this portable.
+#[cfg(target_os = "linux")]
 macro_rules! svm_file_name {
     () => { "libsvm.so" };
+}
+
+#[cfg(target_os = "macos")]
+macro_rules! svm_file_name {
+    () => { "libsvm.dylib" };
 }
 
 pub fn svm() -> &'static [u8] {

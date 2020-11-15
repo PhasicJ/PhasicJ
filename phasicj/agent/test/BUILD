@@ -10,13 +10,13 @@ dwtj_java_binary(
 )
 
 test(
-    name = "test_with_openjdk_linux_x64",
-    java_exec = "@openjdk_linux_x64//jdk:bin/java",
+    name = "test",
+    java_exec = "//third_party/openjdk:java",
 )
 
 test(
-    name = "test_with_openjdk_11_linux_x64",
-    java_exec = "@openjdk_11_linux_x64//jdk:bin/java",
+    name = "test_with_openjdk_11",
+    java_exec = "//third_party/openjdk/jdk11:java",
 )
 
 # NOTE(dwtj): This may be useful for debugging: this JVM has debug symbols.

@@ -24,8 +24,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "299307bd1e83e1b7df32ad4433b75bbac21dde6c",
-    "sha256": "b68eb40dfdc993c54e6247b552db238856c0fb38af7ac9f47d49bf2e4542403b",
+    "commit": "6d14ce7df1db7731bce81c05ce8c24e368f2dba8",
+    "sha256": "1430d98f11ac6a3ac89960fc83bf5af49f733d997fe8e752244879f3a5d9e0f9",
 }
 
 def dwtj_rules_java():
@@ -37,18 +37,34 @@ def dwtj_rules_java():
     )
 
 _REMOTE_GRAALVM_VERSION = "20.2.0"
-_REMOTE_GRAALVM_ARCHIVE_SHA256 = "5db74b5b8888712d2ac3cd7ae2a8361c2aa801bc94c801f5839351aba5064e29"
-_REMOTE_GRAALVM_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "92b429939f12434575e4d586f79c5b686d322f29211d1608ed6055a97a35925c"
+_REMOTE_GRAALVM_LINUX_ARCHIVE_SHA256 = "5db74b5b8888712d2ac3cd7ae2a8361c2aa801bc94c801f5839351aba5064e29"
+_REMOTE_GRAALVM_LINUX_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "92b429939f12434575e4d586f79c5b686d322f29211d1608ed6055a97a35925c"
 
-def apply_remote_graalvm_repository(name, remote_graalvm_repository_rule):
+def apply_remote_graalvm_linux_repository(name, remote_graalvm_repository_rule):
     remote_graalvm_repository_rule(
         name = name,
         url = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-{0}/graalvm-ce-java11-linux-amd64-{0}.tar.gz".format(_REMOTE_GRAALVM_VERSION),
-        sha256 = _REMOTE_GRAALVM_ARCHIVE_SHA256,
+        sha256 = _REMOTE_GRAALVM_LINUX_ARCHIVE_SHA256,
         strip_prefix = "graalvm-ce-java11-{}".format(_REMOTE_GRAALVM_VERSION),
         native_image_installable_jar_url = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-{0}/native-image-installable-svm-java11-linux-amd64-{0}.jar".format(_REMOTE_GRAALVM_VERSION),
-        native_image_installable_jar_sha256 = _REMOTE_GRAALVM_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256,
+        native_image_installable_jar_sha256 = _REMOTE_GRAALVM_LINUX_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256,
         os = "linux",
+        cpu = "x64",
+    )
+
+_REMOTE_GRAALVM_DARWIN_X64_ARCHIVE_SHA256 = "e9df2caace6f90fcfbc623c184ef1bbb053de20eb4cf5b002d708c609340ba7a"
+_REMOTE_GRAALVM_DARWIN_X64_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "d60c321d6e680028f37954121eeebff0839a0a49a4436e5b41c636c3dd951de3"
+
+def apply_remote_graalvm_macos_repository(name, remote_graalvm_repository_rule):
+    remote_graalvm_repository_rule(
+        name = name,
+        url = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-{0}/graalvm-ce-java11-darwin-amd64-{0}.tar.gz".format(_REMOTE_GRAALVM_VERSION),
+        sha256 = _REMOTE_GRAALVM_DARWIN_X64_ARCHIVE_SHA256,
+        strip_prefix = "graalvm-ce-java11-{}/Contents/Home".format(_REMOTE_GRAALVM_VERSION),
+        native_image_installable_jar_url = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-{0}/native-image-installable-svm-java11-darwin-amd64-{0}.jar".format(_REMOTE_GRAALVM_VERSION),
+        native_image_installable_jar_sha256 = _REMOTE_GRAALVM_DARWIN_X64_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256,
+        os = "macos",
+        cpu = "x64",
     )
 
 _RULES_JAVA_RELEASE = "0.1.1"
