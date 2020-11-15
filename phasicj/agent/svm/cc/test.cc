@@ -31,8 +31,6 @@ bool starts_with_magic_number(int size, char* class_data) {
     return true;
 }
 
-constexpr int DLOPEN_DEFAULT_MODE = 0;
-
 void* non_null(void* ptr) {
     assert(ptr != nullptr);
     return ptr;
@@ -46,17 +44,26 @@ int main(int argc, char** argv) {
     // Open the svm library using `dlopen()` and get function pointers to its
     //  relevant symbols using `dlsym()`.
     char* svm_lib_path_str = argv[1];
-    cerr << "Loading svm library: " << svm_lib_path_str << endl;
-    void* svm_lib = dlopen(svm_lib_path_str, DLOPEN_DEFAULT_MODE);
+
+    fs::path svm_lib_path(svm_lib_path_str);
+    cerr << "Loading svm library (relative path): " << svm_lib_path << endl;
+    assert(fs::exists(svm_lib_path));
+
+    void* svm_lib = dlopen(svm_lib_path.c_str(), RTLD_NOW);
+    if (svm_lib == nullptr) {
+        cerr << "`dlopen()` failed: " << dlerror() << endl;
+        return 1;
+    }
+
     auto graal_create_isolate_fn = (graal_create_isolate_fn_t) non_null(dlsym(svm_lib, "graal_create_isolate"));
     auto graal_detach_all_threads_and_tear_down_isolate_fn = (graal_detach_all_threads_and_tear_down_isolate_fn_t) non_null(dlsym(svm_lib, "graal_detach_all_threads_and_tear_down_isolate"));
     auto svm_instr_instrument_fn = (svm_instr_instrument_fn_t) non_null(dlsym(svm_lib, "svm_instr_instrument"));
     auto svm_instr_free_fn = (svm_instr_free_fn_t) non_null(dlsym(svm_lib, "svm_instr_free"));
 
     // Create a path to the class file.
-    char* class_path_str = argv[2];
-    cerr << "Instrumenting test class file: " << class_path_str << endl;
-    fs::path class_file_path(class_path_str);
+    char* class_file_str = argv[2];
+    fs::path class_file_path(class_file_str);
+    cerr << "Instrumenting test class file: " << class_file_path << endl;
     assert(fs::exists(class_file_path));
 
     // Load the test class from the file system.
