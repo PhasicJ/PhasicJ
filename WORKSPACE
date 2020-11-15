@@ -75,20 +75,20 @@ http_archive(
 # This dependency is used to add `markdownlint` actions during `bazel build`.
 
 # This version was chosen because it was the latest as of 2020-07-06.
-DWTJ_RULES_MARKDOWN_COMMIT = "c555fe9dca1782c123ec8eda1fdba11345e9e5e7"
+DWTJ_RULES_MARKDOWN_COMMIT = "f65f338a9e7ed15fe7b2630c7e1cbf47e81a2837"
 
-DWTJ_RULES_MARKDOWN_SHA256 = "f5ed694d7a3998e68f2d3648263e59d8dfd5a815f985909c343a94f6c534ed10"
+DWTJ_RULES_MARKDOWN_SHA256 = "ff905bbb200aa6a5195e435c433e9b463aa60a4765e93315a37e3b9bcbc9bd04"
 
 http_archive(
     name = "dwtj_rules_markdown",
     sha256 = DWTJ_RULES_MARKDOWN_SHA256,
     strip_prefix = "dwtj_rules_markdown-{}".format(DWTJ_RULES_MARKDOWN_COMMIT),
-    url = "https://github.com/dwtj/dwtj_rules_markdown/archive/{}.zip".format(DWTJ_RULES_MARKDOWN_COMMIT),
+    url = "https://github.com/dwtj/dwtj_rules_markdown/archive/{}.tar.gz".format(DWTJ_RULES_MARKDOWN_COMMIT),
 )
 
-load("@dwtj_rules_markdown//markdown:defs.bzl", "local_markdownlint_external_repository")
+load("@dwtj_rules_markdown//markdown:repositories.bzl", "local_markdownlint_repository")
 
-local_markdownlint_external_repository(
+local_markdownlint_repository(
     name = "local_markdownlint",
     config = "//:.markdownlint.json",
 )
