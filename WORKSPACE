@@ -106,7 +106,6 @@ load(
     "known_openjdk_repository",
     "maven_error_prone_repository",
     "remote_google_java_format_repository",
-    "remote_openjdk_source_repository",
 )
 load(
     "@dwtj_rules_java//graalvm:repositories.bzl",
@@ -171,23 +170,6 @@ known_openjdk_repository(
     provider = "adoptopenjdk",
     version = "11.0.9+11.1",
     os = "macos",
-)
-
-# CONFIGURE `@openjdk_15_ga_slowdebug` ########################################
-# This JDK may be helpful when debugging because it includes debug symbols.
-
-remote_openjdk_source_repository(
-    name = "openjdk_15_ga_slowdebug",
-    build_configuration_name = "linux-x86_64-server-slowdebug",
-    configure_args = [
-        "--quiet",
-        "--with-debug-level=slowdebug",
-        "--with-native-debug-symbols=internal",
-        "--disable-warnings-as-errors",
-    ],
-    sha256 = "f86e3828e5e5988fb555a9f6c7b84603fb819bd05a381f241860205af309d812",
-    strip_prefix = "jdk-jdk-15-ga",
-    url = "https://github.com/openjdk/jdk/archive/jdk-15-ga.tar.gz",
 )
 
 # CONFIGURE `@google_java_format` #############################################

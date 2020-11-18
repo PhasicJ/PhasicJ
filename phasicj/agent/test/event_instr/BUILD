@@ -25,9 +25,3 @@ test(
     name = "test_with_openjdk_11",
     java_exec = "//third_party/openjdk/jdk11:java",
 )
-
-# NOTE(dwtj): This may be useful for debugging: this JVM has debug symbols.
-# test(
-#     name = "test_with_openjdk_15_ga_slowdebug",
-#     java_exec = "@openjdk_15_ga_slowdebug//jdk:bin/java",
-# )

@@ -1,4 +1,4 @@
-load("@dwtj_rules_java//graalvm:defs.bzl", "graalvm_native_image_library")
+load("@dwtj_rules_java//experimental/graalvm:defs.bzl", "graalvm_native_image_library")
 load("//bazel:util/files/copy_file.bzl", "copy_file")
 
 # NOTE(dwtj): I am currently assuming that one cannot (or at least should not)
