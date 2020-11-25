@@ -1,0 +1,44 @@
+workspace(name = "pt_rules_docker")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+local_repository(
+    name = "phasicj",
+    path = "../../../..",
+)
+
+load("@phasicj//bazel:external/repositories.bzl", "bazel_skylib")
+
+# CONFIGURE `@bazel_skylib` ###################################################
+
+bazel_skylib()
+
+# CONFIGURE `@io_bazel_rules_docker` ##########################################
+
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "1698624e878b0607052ae6131aa216d45ebb63871ec497f26c67455b34119c80",
+    strip_prefix = "rules_docker-0.15.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz"],
+)
+
+load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
+
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+# CONFIGURE `@fedora` CONTAINER REPOSITORY ####################################
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+container_pull(
+    name = "fedora",
+    registry = "registry.fedoraproject.org",
+    repository = "fedora",
+    # Fedora 33 as of 2020-11-24.
+    digest = "sha256:d0a84038959b1be3021cb7ffb6dae386d13a27c39519a2185eab5c4069e71295",
+    tag = "33",
+)

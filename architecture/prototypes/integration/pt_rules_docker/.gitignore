@@ -1,0 +1,4 @@
+bazel-bin
+bazel-out
+bazel-pt_rules_docker
+bazel-testlogs
