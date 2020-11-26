@@ -7,19 +7,16 @@
 #
 # This script is meant to be executed from the root of the PhasicJ workspace.
 #
-# This CI container is meant to have three volumes mounted into it. Within the
-# container, the three mount points are
+# This CI container is meant to have three mount points.
 #
 # 1. `/mnt/phasicj`
 # 2. `~/.cache/bazel`
 # 3. `~/.cache/bazelisk`
 #
-# The first of these is mapped to this PhasicJ workspace (read-only). The
-# other two are mapped to the developer's Bazel and Bazelisk cache directories
-# (read-write). Thus, if `bazel` is run within the container, it will modify
-# these cache directories outside of the container.
-
-# TODO(dwtj): Don't use the host's cache directories. Use empty podman volumes.
+# Within the inspected container, the first of these is mapped to this PhasicJ
+# workspace (read-only) via a bind mount. The other two are mapped to the
+# Podman volumes `phasicj_ci_bazel_cache` and `phasicj_ci_bazelisk_cache`,
+# respecitvely.
 
 CONTAINERFILE_DIR="devtools/ci/linux/oci"
 
@@ -48,9 +45,9 @@ inspect_container()
         --rm \
         --privileged \
         -it \
-        -v .:/mnt/phasicj:ro \
-        -v ~/.cache/bazel:/root/.cache/bazel \
-        -v ~/.cache/bazelisk:/root/.cache/bazelisk \
+        --mount type=bind,source=.,destination=/mnt/phasicj,ro=true \
+        --mount type=volume,source=phasicj_ci_bazel_cache,destination=/root/.cache/bazel \
+        --mount type=volume,source=phasicj_ci_bazelisk_cache,destination=/root/.cache/bazelisk \
         phasicj_ci_dev \
         bash
 }
