@@ -1,0 +1,34 @@
+FROM registry.fedoraproject.org/fedora:33
+
+RUN dnf update --assumeyes
+
+ARG phasicj_workspace_dir="/mnt/phasicj"
+ARG bazel_cache_dir="/root/.cache/bazel"
+ARG bazelisk_cache_dir="/root/.cache/bazel"
+
+ENV PHASICJ_WORKSPACE_DIR="$phasicj_workspace_dir"
+ENV BAZEL_CACHE_DIR="$bazel_cache_dir"
+ENV BAZELISK_CACHE_DIR="$bazelisk_cache_dir"
+
+ARG bazelisk_url="https://github.com/bazelbuild/bazelisk/releases/download/v1.7.4/bazelisk-linux-amd64"
+ARG bazelisk_sha256_file="bazelisk-linux-amd64.sha256"
+
+WORKDIR /container/setup
+
+COPY install_dnf_dependencies.sh .
+RUN ./install_dnf_dependencies.sh
+
+COPY install_npm_dependencies.sh .
+RUN ./install_npm_dependencies.sh
+
+COPY install_cargo_dependencies.sh .
+RUN ./install_cargo_dependencies.sh
+
+COPY install_bazelisk.sh "$bazelisk_sha256_file" .
+RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
+
+COPY ci.sh .
+
+WORKDIR "$phasicj_workspace_dir"
+
+CMD /container/ci.sh
