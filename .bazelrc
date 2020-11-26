@@ -1,3 +1,5 @@
+build --experimental_convenience_symlinks=ignore
+test  --experimental_convenience_symlinks=ignore
 build --aspects @dwtj_rules_markdown//markdown:aspects.bzl%markdownlint_aspect
 build --aspects @dwtj_rules_java//java:aspects.bzl%google_java_format_aspect
 build --aspects @dwtj_rules_java//java:aspects.bzl%error_prone_aspect
