@@ -10,7 +10,12 @@ load(
     "io_bazel_rules_rust",
     "org_ow2_asm",
     "org_ow2_asm_commons",
+    "rules_cc",
 )
+
+# CONFIGURE `@rules_cc` #######################################################
+
+rules_cc()
 
 # CONFIGURE `buildifier` FOR BAZEL FILE LINTING AND FORMATTING ################
 #
