@@ -29,6 +29,8 @@ RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
 
 COPY ci.sh /container/ci.sh
 
+# Ensure that the workspace/workdir exists (even if it is empty).
+RUN mkdir -p "$phasicj_workspace_dir"
 WORKDIR "$phasicj_workspace_dir"
 
 CMD /container/ci.sh
