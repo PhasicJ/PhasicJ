@@ -27,7 +27,7 @@ RUN ./install_cargo_dependencies.sh
 COPY install_bazelisk.sh "$bazelisk_sha256_file" .
 RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
 
-COPY ci.sh .
+COPY ci.sh /container/ci.sh
 
 WORKDIR "$phasicj_workspace_dir"
 
