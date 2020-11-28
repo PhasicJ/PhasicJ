@@ -14,7 +14,7 @@ assert_env_var_dir_exists()
     fi
 
     if [ ! -d "$VAR_VALUE" ]; then
-        echo "ERROR: Environment variable's value is not a directory: ${VAR_NAME}=${VAR_VALUE}"
+        echo "ERROR: Environment variable's value is expected to be a directory, but it's not: ${VAR_NAME}=${VAR_VALUE}"
         exit 1
     fi
 }
@@ -22,18 +22,27 @@ assert_env_var_dir_exists()
 check_test_environment()
 {
     # Check that container volume mounts appear to be mounted.
-    assert_env_var_dir_exists "PHASICJ_WORKSPACE_DIR"
-    assert_env_var_dir_exists "BAZEL_CACHE_DIR"
-    assert_env_var_dir_exists "BAZELISK_CACHE_DIR"
+    assert_env_var_dir_exists "PHASICJ_WORKSPACE_MOUNT_POINT"
+    assert_env_var_dir_exists "BAZEL_CACHE_MOUNT_POINT"
+    assert_env_var_dir_exists "BAZELISK_CACHE_MOUNT_POINT"
 
-    # Check that the PhasicJ volume mount appears to be the root of the project.
-    if [ ! -f "$PHASICJ_WORKSPACE_DIR/.phasicj_workspace_root" ]; then
+    # Check that all of the mounts points appear to be mounted correctly.
+    if [ ! -f "$PHASICJ_WORKSPACE_MOUNT_POINT/.phasicj_workspace_root" ]; then
         echo "ERROR: The PhasicJ workspace directory doesn't contain an expected file: $PHASICJ_WORKSPACE_DIR/.phasicj_workspace_root is missing. Was the workspace directory mounted wrong?"
+        exit 1
     fi
-
-    # TODO(dwtj): Check that the Bazel cache directory appears to be mounted correctly.
-
-    # TODO(dwtj): Check that the Bazelisk cache directory appears to be mounted correctly.
+    if [ ! -f "$BAZEL_CACHE_MOUNT_POINT/.bazel_cache_volume_root" ]; then
+        echo "ERROR: The Bazel cache directory doesn't contain an expected file."
+        exit 1
+    fi
+    if [ ! -f "$BAZELISK_CACHE_MOUNT_POINT/.bazelisk_cache_volume_root" ]; then
+        echo "ERROR: The Bazelisk cache directory doesn't contain an expected file."
+        exit 1
+    fi
+    if [ ! -f "$MSMTP_CONFIG_MOUNT_POINT/config" ]; then
+        echo "ERROR: The msmtp config directory doesn't contain an expected file."
+        exit 1
+    fi
 }
 
 check_test_environment

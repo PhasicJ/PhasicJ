@@ -1,18 +1,37 @@
 FROM registry.fedoraproject.org/fedora:33
 
+# Update Base Fedora Image ####################################################
 RUN dnf update --assumeyes
 
-ARG phasicj_workspace_dir="/mnt/phasicj"
-ARG bazel_cache_dir="/root/.cache/bazel"
-ARG bazelisk_cache_dir="/root/.cache/bazel"
+# Define Some Build Image Constants ###########################################
+ARG phasicj_workspace_mount_point="/mnt/phasicj"
+ARG bazel_cache_mount_point="/root/.cache/bazel"
+ARG bazelisk_cache_mount_point="/root/.cache/bazelisk"
+ARG msmtp_config_mount_point="/root/.config/msmtp"
 
-ENV PHASICJ_WORKSPACE_DIR="$phasicj_workspace_dir"
-ENV BAZEL_CACHE_DIR="$bazel_cache_dir"
-ENV BAZELISK_CACHE_DIR="$bazelisk_cache_dir"
+# Also make these constants available as environment variables.
+ENV PHASICJ_WORKSPACE_MOUNT_POINT="$phasicj_workspace_mount_point"
+ENV BAZEL_CACHE_MOUNT_POINT="$bazel_cache_mount_point"
+ENV BAZELISK_CACHE_MOUNT_POINT="$bazelisk_cache_mount_point"
+ENV MSMTP_CONFIG_MOUNT_POINT="$msmtp_config_mount_point"
 
 ARG bazelisk_url="https://github.com/bazelbuild/bazelisk/releases/download/v1.7.4/bazelisk-linux-amd64"
 ARG bazelisk_sha256_file="bazelisk-linux-amd64.sha256"
 
+# Declare Cache Mount Points ##################################################
+
+# NOTE(dwtj): We use `touch` to make files to help the CI script detect whether
+# an appropriate cache volume was mounted. Newly instantiated volumes mounted
+# should be populated with this file.
+RUN mkdir -p "$bazel_cache_mount_point"
+RUN touch "${bazel_cache_mount_point}/.bazel_cache_volume_root"
+VOLUME "$bazel_cache_mount_point"
+
+RUN mkdir -p "$bazelisk_cache_mount_point"
+RUN touch "${bazelisk_cache_mount_point}/.bazelisk_cache_volume_root"
+VOLUME "$bazelisk_cache_mount_point"
+
+# Install dependencies ########################################################
 WORKDIR /container/setup
 
 COPY install_dnf_dependencies.sh .
@@ -27,10 +46,16 @@ RUN ./install_cargo_dependencies.sh
 COPY install_bazelisk.sh "$bazelisk_sha256_file" .
 RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
 
+# Configure Email Send ########################################################
+# NOTE(dwtj): The msmtp config is expected to contain secrets, so we don't
+# include it in the image build. It needs to be mounted at container run-time.
+COPY mailrc ~/.mailrc
+
+# Setup the default CI command ################################################
 COPY ci.sh /container/ci.sh
 
-# Ensure that the workspace/workdir exists (even if it is empty).
-RUN mkdir -p "$phasicj_workspace_dir"
-WORKDIR "$phasicj_workspace_dir"
+# Ensure that the PhasicJ workspace/workdir exists (even if it is empty).
+RUN mkdir -p "$phasicj_workspace_mount_point"
+WORKDIR "$phasicj_workspace_mount_point"
 
 CMD /container/ci.sh

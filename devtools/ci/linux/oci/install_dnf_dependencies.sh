@@ -11,4 +11,6 @@ dnf install --assumeyes \
     java-latest-openjdk-devel \
     cargo \
     zlib-static \
-    perl-Digest-SHA
+    perl-Digest-SHA \
+    mailx \
+    msmtp
