@@ -1,0 +1,2 @@
+[phasicj_macos_ci]
+<my_macos_ci_host> ansible_ssh_user=<my_admin_user>
