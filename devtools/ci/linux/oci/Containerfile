@@ -49,7 +49,13 @@ RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
 # Configure Email Send ########################################################
 # NOTE(dwtj): The msmtp config is expected to contain secrets, so we don't
 # include it in the image build. It needs to be mounted at container run-time.
-COPY mailrc ~/.mailrc
+COPY config/user/mailrc /root/.mailrc
+
+# Configure SSH Server ########################################################
+COPY config/etc/ssh/sshd_config.d/* /etc/ssh/sshd_config.d
+
+# Configure the User's SSH Login ##############################################
+COPY config/user/ssh /root/.ssh
 
 # Setup the default CI command ################################################
 COPY ci.sh /container/ci.sh

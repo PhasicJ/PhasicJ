@@ -46,3 +46,9 @@ check_test_environment()
 }
 
 check_test_environment
+
+# Create any ssh host keys which don't already exist.
+ssh-keygen -A
+
+# Run the SSH server, but don't daemonize it (i.e. detach from the terminal).
+/usr/sbin/sshd -D

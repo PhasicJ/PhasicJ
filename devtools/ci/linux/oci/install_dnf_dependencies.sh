@@ -13,4 +13,7 @@ dnf install --assumeyes \
     zlib-static \
     perl-Digest-SHA \
     mailx \
-    msmtp
+    msmtp \
+    openssh-server
+
+dnf clean all
