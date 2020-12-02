@@ -26,7 +26,7 @@
 # 4. The volume named `phasicj_ci_dev_bazelisk_cache` is used.
 # 5. The volume named `phasicj_ci_dev_etc_ssh` is used.
 
-CONTAINERFILE_DIR="devtools/ci/linux/oci"
+CONTAINERFILE_DIR="devtools/ci/linux/oci/fedora"
 
 check_environment()
 {

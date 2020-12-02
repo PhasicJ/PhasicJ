@@ -4,17 +4,20 @@ FROM registry.fedoraproject.org/fedora:33
 RUN dnf update --assumeyes
 
 # Define Some Build Image Constants ###########################################
+
+# Declare customizable mount points as build arguments.
 ARG phasicj_workspace_mount_point="/mnt/phasicj"
 ARG bazel_cache_mount_point="/root/.cache/bazel"
 ARG bazelisk_cache_mount_point="/root/.cache/bazelisk"
 ARG msmtp_config_mount_point="/root/.config/msmtp"
 
-# Also make these constants available as environment variables.
+# Make these customizable mount points environment variables.
 ENV PHASICJ_WORKSPACE_MOUNT_POINT="$phasicj_workspace_mount_point"
 ENV BAZEL_CACHE_MOUNT_POINT="$bazel_cache_mount_point"
 ENV BAZELISK_CACHE_MOUNT_POINT="$bazelisk_cache_mount_point"
 ENV MSMTP_CONFIG_MOUNT_POINT="$msmtp_config_mount_point"
 
+# Specify Bazelisk download URL & hash.
 ARG bazelisk_url="https://github.com/bazelbuild/bazelisk/releases/download/v1.7.4/bazelisk-linux-amd64"
 ARG bazelisk_sha256_file="bazelisk-linux-amd64.sha256"
 
@@ -34,16 +37,10 @@ VOLUME "$bazelisk_cache_mount_point"
 # Install dependencies ########################################################
 WORKDIR /container/setup
 
-COPY install_dnf_dependencies.sh .
+COPY setup/* .
 RUN ./install_dnf_dependencies.sh
-
-COPY install_npm_dependencies.sh .
 RUN ./install_npm_dependencies.sh
-
-COPY install_cargo_dependencies.sh .
 RUN ./install_cargo_dependencies.sh
-
-COPY install_bazelisk.sh "$bazelisk_sha256_file" .
 RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
 
 # Configure Email Send ########################################################
@@ -57,11 +54,11 @@ COPY config/etc/ssh/sshd_config.d/* /etc/ssh/sshd_config.d
 # Configure the User's SSH Login ##############################################
 COPY config/user/ssh /root/.ssh
 
-# Setup the default CI command ################################################
-COPY ci.sh /container/ci.sh
+# Setup the default run command ###############################################
+COPY run/default.sh /container/run/default.sh
 
 # Ensure that the PhasicJ workspace/workdir exists (even if it is empty).
 RUN mkdir -p "$phasicj_workspace_mount_point"
 WORKDIR "$phasicj_workspace_mount_point"
 
-CMD /container/ci.sh
+CMD /container/run/default.sh
