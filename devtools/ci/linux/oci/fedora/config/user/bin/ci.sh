@@ -16,8 +16,15 @@ unset GIT_DIR
 # this hard-coded value.
 cd "/root/phasicj.build"
 
-git fetch edge
+git fetch edge 2> /dev/null
+
 git checkout "ci/$PHASICJ_CI_TASK_ID"
 
+echo
+echo '# bazel build //... ####################################################'
+echo
 bazel build //...
+echo
+echo '# bazel test //... #####################################################'
+echo
 bazel test //...

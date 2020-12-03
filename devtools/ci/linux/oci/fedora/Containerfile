@@ -54,7 +54,9 @@ RUN git clone --bare "$phasicj_edge_repo_origin" "$phasicj_edge_repo_dir"
 COPY config/user/git/hooks/* "$phasicj_edge_repo_dir/hooks/"
 VOLUME "$phasicj_edge_repo_dir"
 
-RUN git clone --origin edge "$phasicj_edge_repo_dir" "$phasicj_build_repo_dir"
+RUN git clone --origin edge "$phasicj_edge_repo_dir" "$phasicj_build_repo_dir" && \
+    cd "$phasicj_build_repo_dir" && \
+    git config advice.detachedHead false
 VOLUME "$phasicj_build_repo_dir"
 
 # Configure Email Send ########################################################
