@@ -39,11 +39,11 @@ ENV SSH_AUTHORIZED_KEYS_FILE="$ssh_authorized_keys_file"
 # cloned.
 ARG phasicj_edge_repo_origin="https://github.com/dwtj/phasicj.git"
 
-# Declare Cache Mount Points ##################################################
+# Create Initial Contents of Cache Volumes ####################################
 
-# NOTE(dwtj): We use `touch` to make files to help the CI script detect whether
-# an appropriate cache volume was mounted. Newly instantiated volumes mounted
-# should be populated with this file.
+# NOTE(dwtj): We use `touch` to make empty files to help run scripts detect
+# whether these cache volumes have been mounted appropriately.
+
 RUN mkdir -p "$bazel_cache_mount_point" && touch "${bazel_cache_mount_point}/.bazel_cache_volume_root"
 VOLUME "$bazel_cache_mount_point"
 
@@ -67,7 +67,10 @@ COPY config/etc/ssh/sshd_config.d/* /etc/ssh/sshd_config.d
 # Configure the User's SSH Login ##############################################
 COPY config/user/ssh /root/.ssh
 
-# Setup the default run command ###############################################
+# Configure Edge Git Repo Hooks ###############################################
+copy config/user/git/hooks/* "$phasicj_edge_repo_mount_point/hooks"
+
+# Setup the Default Run Command ###############################################
 COPY run/default.sh /container/run/default.sh
 
 WORKDIR /root
