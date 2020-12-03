@@ -56,8 +56,8 @@ run_container()
         --privileged \
         -it \
         --mount type=bind,source="$CONTAINERFILE_DIR/secrets/msmtp",destination=/root/.config/msmtp,ro=true \
-        --mount type=volume,source=phasicj_ci_dev_edge_repo,destination=/root/phasicj.git,ro=true \
-        --mount type=volume,source=phasicj_ci_dev_build_repo,destination=/root/phasicj.build,ro=true \
+        --mount type=volume,source=phasicj_ci_dev_edge_repo,destination=/root/phasicj.git \
+        --mount type=volume,source=phasicj_ci_dev_build_repo,destination=/root/phasicj.build \
         --mount type=volume,source=phasicj_ci_dev_bazel_cache,destination=/root/.cache/bazel \
         --mount type=volume,source=phasicj_ci_dev_bazelisk_cache,destination=/root/.cache/bazelisk \
         --mount type=volume,source=phasicj_ci_dev_etc_ssh,destination=/etc/ssh \
