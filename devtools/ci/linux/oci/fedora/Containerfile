@@ -3,37 +3,6 @@ FROM registry.fedoraproject.org/fedora:33
 # Update Base Fedora Image ####################################################
 RUN dnf update --assumeyes
 
-# Define Some Build Image Constants ###########################################
-
-# Declare customizable mount points as build arguments.
-ARG phasicj_workspace_mount_point="/mnt/phasicj"
-ARG bazel_cache_mount_point="/root/.cache/bazel"
-ARG bazelisk_cache_mount_point="/root/.cache/bazelisk"
-ARG msmtp_config_mount_point="/root/.config/msmtp"
-
-# Make these customizable mount points environment variables.
-ENV PHASICJ_WORKSPACE_MOUNT_POINT="$phasicj_workspace_mount_point"
-ENV BAZEL_CACHE_MOUNT_POINT="$bazel_cache_mount_point"
-ENV BAZELISK_CACHE_MOUNT_POINT="$bazelisk_cache_mount_point"
-ENV MSMTP_CONFIG_MOUNT_POINT="$msmtp_config_mount_point"
-
-# Specify Bazelisk download URL & hash.
-ARG bazelisk_url="https://github.com/bazelbuild/bazelisk/releases/download/v1.7.4/bazelisk-linux-amd64"
-ARG bazelisk_sha256_file="bazelisk-linux-amd64.sha256"
-
-# Declare Cache Mount Points ##################################################
-
-# NOTE(dwtj): We use `touch` to make files to help the CI script detect whether
-# an appropriate cache volume was mounted. Newly instantiated volumes mounted
-# should be populated with this file.
-RUN mkdir -p "$bazel_cache_mount_point"
-RUN touch "${bazel_cache_mount_point}/.bazel_cache_volume_root"
-VOLUME "$bazel_cache_mount_point"
-
-RUN mkdir -p "$bazelisk_cache_mount_point"
-RUN touch "${bazelisk_cache_mount_point}/.bazelisk_cache_volume_root"
-VOLUME "$bazelisk_cache_mount_point"
-
 # Install dependencies ########################################################
 WORKDIR /container/setup
 
@@ -41,7 +10,51 @@ COPY setup/* .
 RUN ./install_dnf_dependencies.sh
 RUN ./install_npm_dependencies.sh
 RUN ./install_cargo_dependencies.sh
+
+# Download, verify, and install Bazelisk.
+ARG bazelisk_url="https://github.com/bazelbuild/bazelisk/releases/download/v1.7.4/bazelisk-linux-amd64"
+ARG bazelisk_sha256_file="bazelisk-linux-amd64.sha256"
 RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
+
+# Define Some Build Image Constants ###########################################
+
+# Declare customizable mount points as build arguments.
+ARG phasicj_edge_repo_mount_point="/root/phasicj.git"
+ARG phasicj_build_repo_mount_point="/root/phasicj.build"
+ARG bazel_cache_mount_point="/root/.cache/bazel"
+ARG bazelisk_cache_mount_point="/root/.cache/bazelisk"
+ARG msmtp_config_mount_point="/root/.config/msmtp"
+
+# Make these customizable mount points environment variables.
+ENV PHASICJ_EDGE_REPO_MOUNT_POINT="$phasicj_edge_repo_mount_point"
+ENV PHASICJ_BUILD_REPO_MOUNT_POINT="$phasicj_build_repo_mount_point"
+ENV BAZEL_CACHE_MOUNT_POINT="$bazel_cache_mount_point"
+ENV BAZELISK_CACHE_MOUNT_POINT="$bazelisk_cache_mount_point"
+ENV MSMTP_CONFIG_MOUNT_POINT="$msmtp_config_mount_point"
+
+ARG ssh_authorized_keys_file="/root/.ssh/authorized_keys"
+ENV SSH_AUTHORIZED_KEYS_FILE="$ssh_authorized_keys_file"
+
+# Specify the PhasicJ repository from which the edge repository should be
+# cloned.
+ARG phasicj_edge_repo_origin="https://github.com/dwtj/phasicj.git"
+
+# Declare Cache Mount Points ##################################################
+
+# NOTE(dwtj): We use `touch` to make files to help the CI script detect whether
+# an appropriate cache volume was mounted. Newly instantiated volumes mounted
+# should be populated with this file.
+RUN mkdir -p "$bazel_cache_mount_point" && touch "${bazel_cache_mount_point}/.bazel_cache_volume_root"
+VOLUME "$bazel_cache_mount_point"
+
+RUN mkdir -p "$bazelisk_cache_mount_point" && touch "${bazelisk_cache_mount_point}/.bazelisk_cache_volume_root"
+VOLUME "$bazelisk_cache_mount_point"
+
+RUN git clone --bare "$phasicj_edge_repo_origin" "$phasicj_edge_repo_mount_point"
+VOLUME "$phasicj_edge_repo_mount_point"
+
+RUN git clone "$phasicj_edge_repo_mount_point" "$phasicj_build_repo_mount_point"
+VOLUME "$phasicj_build_repo_mount_point"
 
 # Configure Email Send ########################################################
 # NOTE(dwtj): The msmtp config is expected to contain secrets, so we don't
@@ -57,8 +70,6 @@ COPY config/user/ssh /root/.ssh
 # Setup the default run command ###############################################
 COPY run/default.sh /container/run/default.sh
 
-# Ensure that the PhasicJ workspace/workdir exists (even if it is empty).
-RUN mkdir -p "$phasicj_workspace_mount_point"
-WORKDIR "$phasicj_workspace_mount_point"
+WORKDIR /root
 
 CMD /container/run/default.sh

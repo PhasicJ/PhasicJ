@@ -14,6 +14,7 @@ dnf install --assumeyes \
     perl-Digest-SHA \
     mailx \
     msmtp \
-    openssh-server
+    openssh-server \
+    git
 
 dnf clean all

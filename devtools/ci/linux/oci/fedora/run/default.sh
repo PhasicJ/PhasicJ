@@ -42,31 +42,47 @@ assert_file_is_not_empty()
 check_test_environment()
 {
     # Check that container volume mounts appear to be mounted.
-    assert_env_var_dir_exists "PHASICJ_WORKSPACE_MOUNT_POINT"
+    assert_env_var_dir_exists "PHASICJ_EDGE_REPO_MOUNT_POINT"
+    assert_env_var_dir_exists "PHASICJ_BUILD_REPO_MOUNT_POINT"
     assert_env_var_dir_exists "BAZEL_CACHE_MOUNT_POINT"
     assert_env_var_dir_exists "BAZELISK_CACHE_MOUNT_POINT"
+    assert_env_var_dir_exists "MSMTP_CONFIG_MOUNT_POINT"
 
-    # Check that all of the mounts points appear to be mounted correctly.
-    if [ ! -f "$PHASICJ_WORKSPACE_MOUNT_POINT/.phasicj_workspace_root" ]; then
-        echo "ERROR: The PhasicJ workspace directory doesn't contain an expected file: $PHASICJ_WORKSPACE_DIR/.phasicj_workspace_root is missing. Was the workspace directory mounted wrong?"
-        exit 1
-    fi
-    if [ ! -f "$BAZEL_CACHE_MOUNT_POINT/.bazel_cache_volume_root" ]; then
-        echo "ERROR: The Bazel cache directory doesn't contain an expected file."
-        exit 1
-    fi
-    if [ ! -f "$BAZELISK_CACHE_MOUNT_POINT/.bazelisk_cache_volume_root" ]; then
-        echo "ERROR: The Bazelisk cache directory doesn't contain an expected file."
-        exit 1
-    fi
-    if [ ! -f "$MSMTP_CONFIG_MOUNT_POINT/config" ]; then
-        echo "ERROR: The msmtp config directory doesn't contain an expected file."
+    # For each required mount point, check that the mounts point appears to be
+    # mounted correctly by superficially checking its contents.
+    file_path="$PHASICJ_EDGE_REPO_MOUNT_POINT/HEAD"
+    if [ ! -f "$file_path" ]; then
+        echo "ERROR: The PhasicJ edge Git repository doesn't contain an expected file: $file_path is missing. Was the PhasicJ edge repository volume mounted wrong?"
         exit 1
     fi
 
-    SSH_AUTHORIZED_KEYS_PATH="/root/.ssh/authorized_keys"
-    assert_file_exists "$SSH_AUTHORIZED_KEYS_PATH"
-    assert_file_is_not_empty "$SSH_AUTHORIZED_KEYS_PATH"
+    file_path="$PHASICJ_BUILD_REPO_MOUNT_POINT/.phasicj_workspace_root"
+    if [ ! -f "$file_path" ]; then
+        echo "ERROR: The PhasicJ build Git repository doesn't contain an expected file: $file_path is missing. Was the PhasicJ build repository volume mounted wrong?"
+        exit 1
+    fi
+
+    file_path="$BAZEL_CACHE_MOUNT_POINT/.bazel_cache_volume_root"
+    if [ ! -f "$file_path" ]; then
+        echo "ERROR: The Bazel cache directory doesn't contain an expected file: $file_path is missing. Was the Bazel cache volume mounted wrong?"
+        exit 1
+    fi
+
+    file_path="$BAZELISK_CACHE_MOUNT_POINT/.bazelisk_cache_volume_root"
+    if [ ! -f "$file_path" ]; then
+        echo "ERROR: The Bazelisk cache directory doesn't contain an expected file: $file_path is missing. Was the Bazel cache volume mounted wrong?"
+        exit 1
+    fi
+
+    file_path="$MSMTP_CONFIG_MOUNT_POINT/config"
+    if [ ! -f "$file_path" ]; then
+        echo "ERROR: The msmtp config directory doesn't contain an expected file: $file_path is missing. Was the msmtp config bind mount mounted wrong?"
+        exit 1
+    fi
+
+    # Check that some users might be able login via SSH key.
+    assert_file_exists "$SSH_AUTHORIZED_KEYS_FILE"
+    assert_file_is_not_empty "$SSH_AUTHORIZED_KEYS_FILE"
 }
 
 check_test_environment

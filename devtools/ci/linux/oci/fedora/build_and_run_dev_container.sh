@@ -11,20 +11,22 @@
 # This CI container is intended to have five mount points mounted in the
 # following ways.
 #
-# 1. `/mnt/phasicj` - A read-only bind mount to the PhasicJ workspace.
-# 2. `~/.config/msmtp/` - A read-only bind mount to email config & secret creds.
-# 3. `~/.cache/bazel` - A volume for Bazel fetch/build/test cache.
-# 4. `~/.cache/bazelisk` - A volume for bazelisk download cache.
-# 5. `/etc/ssh` - A volume for SSH host keys and SSH server configuration.
+# 1. `~/.config/msmtp/` - A read-only bind mount for email config & creds.
+# 2. `~/phasicj.git` - A volume to hold the outward facing "edge" PhasicJ repo.
+# 3. `~/phasicj.git` - A volume to hold the outward facing "edge" PhasicJ repo.
+# 4. `~/.cache/bazel` - A volume for Bazel fetch/build/test cache.
+# 5. `~/.cache/bazelisk` - A volume for bazelisk download cache.
+# 6. `/etc/ssh` - A volume for SSH host keys and SSH server configuration.
 #
 # This script helps a developer mount these five mount points with some
 # defaults:
 #
-# 1. This PhasicJ Bazel workspace is bind-mounted read-only.
-# 2. The host user's ~/.config/msmtp directory is bind-mounted read-only.
-# 3. The volume named `phasicj_ci_dev_bazel_cache` is used.
-# 4. The volume named `phasicj_ci_dev_bazelisk_cache` is used.
-# 5. The volume named `phasicj_ci_dev_etc_ssh` is used.
+# 1. The `secrets/msmtp` directory is bind-mounted read-only.
+# 2. The Podman volume named `phasicj_ci_dev_edge_repo` is used.
+# 3. The Podman volume named `phasicj_ci_dev_build_repo` is used.
+# 4. The Podman volume named `phasicj_ci_dev_bazel_cache` is used.
+# 5. The Podman volume named `phasicj_ci_dev_bazelisk_cache` is used.
+# 6. The Podman volume named `phasicj_ci_dev_etc_ssh` is used.
 
 CONTAINERFILE_DIR="devtools/ci/linux/oci/fedora"
 
@@ -53,8 +55,9 @@ run_container()
         --rm \
         --privileged \
         -it \
-        --mount type=bind,source=.,destination=/mnt/phasicj,ro=true \
         --mount type=bind,source="$CONTAINERFILE_DIR/secrets/msmtp",destination=/root/.config/msmtp,ro=true \
+        --mount type=volume,source=phasicj_ci_dev_edge_repo,destination=/root/phasicj.git,ro=true \
+        --mount type=volume,source=phasicj_ci_dev_build_repo,destination=/root/phasicj.build,ro=true \
         --mount type=volume,source=phasicj_ci_dev_bazel_cache,destination=/root/.cache/bazel \
         --mount type=volume,source=phasicj_ci_dev_bazelisk_cache,destination=/root/.cache/bazelisk \
         --mount type=volume,source=phasicj_ci_dev_etc_ssh,destination=/etc/ssh \
