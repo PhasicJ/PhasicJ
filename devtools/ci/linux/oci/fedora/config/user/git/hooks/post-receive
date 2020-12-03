@@ -2,17 +2,23 @@
 
 set -e
 
+# TODO(dwtj): Fix the hard-coded email address.
+export TS_MAILTO='v.pithos@gmail.com'
+
 while read oldrev newrev refname
 do
     phasicj_ci_task_id=$(uuidgen)
 
-    echo "CI will test Git revision $newrev"
-    echo "Queueing a new CI task with ID $phasicj_ci_task_id"
+    echo "This CI server will test commit $newrev"
+    echo "Now queueing a new CI task with ID $phasicj_ci_task_id"
     git tag "ci/$phasicj_ci_task_id" "$newrev"
 
-    # TODO(dwtj): Fix the hard-coded path to the CI script.
+    echo "Test results will be mailed to: $TS_MAILTO"
+    echo -n 'Task Spooler Job ID: '
     tsp \
+        -m \
         -L "commit: $newrev" \
         ci.sh \
         "$phasicj_ci_task_id"
+
 done
