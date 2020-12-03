@@ -19,6 +19,26 @@ assert_env_var_dir_exists()
     fi
 }
 
+assert_file_exists()
+{
+    REQUIRED_FILE="$1"
+
+    if [ ! -f "$REQUIRED_FILE" ]; then
+        echo "ERROR: A required file is missing: $REQUIRED_FILE"
+        exit 1
+    fi
+}
+
+assert_file_is_not_empty()
+{
+    REQUIRED_FILE="$1"
+
+    if [ ! -s "$REQUIRED_FILE" ]; then
+        echo "ERROR: A required file is empty, but it should contain some contents: $REQUIRED_FILE"
+        exit 1
+    fi
+}
+
 check_test_environment()
 {
     # Check that container volume mounts appear to be mounted.
@@ -43,6 +63,10 @@ check_test_environment()
         echo "ERROR: The msmtp config directory doesn't contain an expected file."
         exit 1
     fi
+
+    SSH_AUTHORIZED_KEYS_PATH="/root/.ssh/authorized_keys"
+    assert_file_exists "$SSH_AUTHORIZED_KEYS_PATH"
+    assert_file_is_not_empty "$SSH_AUTHORIZED_KEYS_PATH"
 }
 
 check_test_environment
