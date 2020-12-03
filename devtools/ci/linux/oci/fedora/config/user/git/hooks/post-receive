@@ -1,6 +1,18 @@
 #!/bin/sh -
 
+set -e
+
 while read oldrev newrev refname
 do
-echo "TODO(dwtj): Check newrev in build repo: $newrev"
+    phasicj_ci_task_id=$(uuidgen)
+
+    echo "CI will test Git revision $newrev"
+    echo "Queueing a new CI task with ID $phasicj_ci_task_id"
+    git tag "ci/$phasicj_ci_task_id" "$newrev"
+
+    # TODO(dwtj): Fix the hard-coded path to the CI script.
+    tsp \
+        -L "commit: $newrev" \
+        ci.sh \
+        "$phasicj_ci_task_id"
 done

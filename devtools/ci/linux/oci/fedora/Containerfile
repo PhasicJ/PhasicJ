@@ -68,6 +68,9 @@ COPY config/etc/ssh/sshd_config.d/* /etc/ssh/sshd_config.d
 # Configure the User's SSH Login ##############################################
 COPY config/user/ssh /root/.ssh
 
+# Install Scripts #############################################################
+COPY config/user/bin/* /root/bin/
+
 # Setup the Default Run Command ###############################################
 COPY run/default.sh /container/run/default.sh
 

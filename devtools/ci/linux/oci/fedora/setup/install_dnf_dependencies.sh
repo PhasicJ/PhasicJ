@@ -15,6 +15,7 @@ dnf install --assumeyes \
     mailx \
     msmtp \
     openssh-server \
-    git
+    git \
+    task-spooler
 
 dnf clean all
