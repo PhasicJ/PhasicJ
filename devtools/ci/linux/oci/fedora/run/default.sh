@@ -42,39 +42,39 @@ assert_file_is_not_empty()
 check_test_environment()
 {
     # Check that container volume mounts appear to be mounted.
-    assert_env_var_dir_exists "PHASICJ_EDGE_REPO_MOUNT_POINT"
-    assert_env_var_dir_exists "PHASICJ_BUILD_REPO_MOUNT_POINT"
-    assert_env_var_dir_exists "BAZEL_CACHE_MOUNT_POINT"
-    assert_env_var_dir_exists "BAZELISK_CACHE_MOUNT_POINT"
-    assert_env_var_dir_exists "MSMTP_CONFIG_MOUNT_POINT"
+    assert_env_var_dir_exists "PHASICJ_EDGE_REPO_DIR"
+    assert_env_var_dir_exists "PHASICJ_BUILD_REPO_DIR"
+    assert_env_var_dir_exists "BAZEL_CACHE_DIR"
+    assert_env_var_dir_exists "BAZELISK_CACHE_DIR"
+    assert_env_var_dir_exists "MSMTP_CONFIG_DIR"
 
     # For each required mount point, check that the mounts point appears to be
     # mounted correctly by superficially checking its contents.
-    file_path="$PHASICJ_EDGE_REPO_MOUNT_POINT/HEAD"
+    file_path="$PHASICJ_EDGE_REPO_DIR/HEAD"
     if [ ! -f "$file_path" ]; then
         echo "ERROR: The PhasicJ edge Git repository doesn't contain an expected file: $file_path is missing. Was the PhasicJ edge repository volume mounted wrong?"
         exit 1
     fi
 
-    file_path="$PHASICJ_BUILD_REPO_MOUNT_POINT/.phasicj_workspace_root"
+    file_path="$PHASICJ_BUILD_REPO_DIR/.phasicj_workspace_root"
     if [ ! -f "$file_path" ]; then
         echo "ERROR: The PhasicJ build Git repository doesn't contain an expected file: $file_path is missing. Was the PhasicJ build repository volume mounted wrong?"
         exit 1
     fi
 
-    file_path="$BAZEL_CACHE_MOUNT_POINT/.bazel_cache_volume_root"
+    file_path="$BAZEL_CACHE_DIR/.bazel_cache_volume_root"
     if [ ! -f "$file_path" ]; then
         echo "ERROR: The Bazel cache directory doesn't contain an expected file: $file_path is missing. Was the Bazel cache volume mounted wrong?"
         exit 1
     fi
 
-    file_path="$BAZELISK_CACHE_MOUNT_POINT/.bazelisk_cache_volume_root"
+    file_path="$BAZELISK_CACHE_DIR/.bazelisk_cache_volume_root"
     if [ ! -f "$file_path" ]; then
         echo "ERROR: The Bazelisk cache directory doesn't contain an expected file: $file_path is missing. Was the Bazel cache volume mounted wrong?"
         exit 1
     fi
 
-    file_path="$MSMTP_CONFIG_MOUNT_POINT/config"
+    file_path="$MSMTP_CONFIG_DIR/config"
     if [ ! -f "$file_path" ]; then
         echo "ERROR: The msmtp config directory doesn't contain an expected file: $file_path is missing. Was the msmtp config bind mount mounted wrong?"
         exit 1

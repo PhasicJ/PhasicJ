@@ -19,18 +19,18 @@ RUN ./install_bazelisk.sh "$bazelisk_url" "$bazelisk_sha256_file"
 # Define Some Build Image Constants ###########################################
 
 # Declare customizable mount points as build arguments.
-ARG phasicj_edge_repo_mount_point="/root/phasicj.git"
-ARG phasicj_build_repo_mount_point="/root/phasicj.build"
-ARG bazel_cache_mount_point="/root/.cache/bazel"
-ARG bazelisk_cache_mount_point="/root/.cache/bazelisk"
-ARG msmtp_config_mount_point="/root/.config/msmtp"
+ARG phasicj_edge_repo_dir="/root/phasicj.git"
+ARG phasicj_build_repo_dir="/root/phasicj.build"
+ARG bazel_cache_dir="/root/.cache/bazel"
+ARG bazelisk_cache_dir="/root/.cache/bazelisk"
+ARG msmtp_config_dir="/root/.config/msmtp"
 
 # Make these customizable mount points environment variables.
-ENV PHASICJ_EDGE_REPO_MOUNT_POINT="$phasicj_edge_repo_mount_point"
-ENV PHASICJ_BUILD_REPO_MOUNT_POINT="$phasicj_build_repo_mount_point"
-ENV BAZEL_CACHE_MOUNT_POINT="$bazel_cache_mount_point"
-ENV BAZELISK_CACHE_MOUNT_POINT="$bazelisk_cache_mount_point"
-ENV MSMTP_CONFIG_MOUNT_POINT="$msmtp_config_mount_point"
+ENV PHASICJ_EDGE_REPO_DIR="$phasicj_edge_repo_dir"
+ENV PHASICJ_BUILD_REPO_DIR="$phasicj_build_repo_dir"
+ENV BAZEL_CACHE_DIR="$bazel_cache_dir"
+ENV BAZELISK_CACHE_DIR="$bazelisk_cache_dir"
+ENV MSMTP_CONFIG_DIR="$msmtp_config_dir"
 
 ARG ssh_authorized_keys_file="/root/.ssh/authorized_keys"
 ENV SSH_AUTHORIZED_KEYS_FILE="$ssh_authorized_keys_file"
@@ -44,17 +44,18 @@ ARG phasicj_edge_repo_origin="https://github.com/dwtj/phasicj.git"
 # NOTE(dwtj): We use `touch` to make empty files to help run scripts detect
 # whether these cache volumes have been mounted appropriately.
 
-RUN mkdir -p "$bazel_cache_mount_point" && touch "${bazel_cache_mount_point}/.bazel_cache_volume_root"
-VOLUME "$bazel_cache_mount_point"
+RUN mkdir -p "$bazel_cache_dir" && touch "${bazel_cache_dir}/.bazel_cache_volume_root"
+VOLUME "$bazel_cache_dir"
 
-RUN mkdir -p "$bazelisk_cache_mount_point" && touch "${bazelisk_cache_mount_point}/.bazelisk_cache_volume_root"
-VOLUME "$bazelisk_cache_mount_point"
+RUN mkdir -p "$bazelisk_cache_dir" && touch "${bazelisk_cache_dir}/.bazelisk_cache_volume_root"
+VOLUME "$bazelisk_cache_dir"
 
-RUN git clone --bare "$phasicj_edge_repo_origin" "$phasicj_edge_repo_mount_point"
-VOLUME "$phasicj_edge_repo_mount_point"
+RUN git clone --bare "$phasicj_edge_repo_origin" "$phasicj_edge_repo_dir"
+COPY config/user/git/hooks/* "$phasicj_edge_repo_dir/hooks/"
+VOLUME "$phasicj_edge_repo_dir"
 
-RUN git clone "$phasicj_edge_repo_mount_point" "$phasicj_build_repo_mount_point"
-VOLUME "$phasicj_build_repo_mount_point"
+RUN git clone --origin edge "$phasicj_edge_repo_dir" "$phasicj_build_repo_dir"
+VOLUME "$phasicj_build_repo_dir"
 
 # Configure Email Send ########################################################
 # NOTE(dwtj): The msmtp config is expected to contain secrets, so we don't
@@ -66,9 +67,6 @@ COPY config/etc/ssh/sshd_config.d/* /etc/ssh/sshd_config.d
 
 # Configure the User's SSH Login ##############################################
 COPY config/user/ssh /root/.ssh
-
-# Configure Edge Git Repo Hooks ###############################################
-copy config/user/git/hooks/* "$phasicj_edge_repo_mount_point/hooks"
 
 # Setup the Default Run Command ###############################################
 COPY run/default.sh /container/run/default.sh
