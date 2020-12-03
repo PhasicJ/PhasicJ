@@ -63,6 +63,7 @@ VOLUME "$phasicj_build_repo_dir"
 # NOTE(dwtj): The msmtp config is expected to contain secrets, so we don't
 # include it in the image build. It needs to be mounted at container run-time.
 COPY config/user/mailrc /root/.mailrc
+COPY config/etc/aliases.msmtp /etc/aliases.msmtp
 
 # Configure SSH Server ########################################################
 COPY config/etc/ssh/sshd_config.d/* /etc/ssh/sshd_config.d

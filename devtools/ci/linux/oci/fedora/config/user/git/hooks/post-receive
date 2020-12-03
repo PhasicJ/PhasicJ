@@ -3,7 +3,7 @@
 set -e
 
 # TODO(dwtj): Fix the hard-coded email address.
-export TS_MAILTO='v.pithos@gmail.com'
+export TS_MAILTO='phasicj-ci'
 
 while read oldrev newrev refname
 do
