@@ -1,0 +1,25 @@
+#!/bin/sh -
+
+set -e
+
+# TODO(dwtj): Figure out why this isn't inherited properly.
+PATH="$PATH:/usr/local/bin:$HOME/bin:$HOME/.cargo/bin"
+
+# TODO(dwtj): Fix this hard-coded path.
+export TS_ONFINISH="ci_report.sh"
+
+while read oldrev newrev refname
+do
+    phasicj_ci_task_id=$(uuidgen)
+
+    echo "This CI server will test commit $newrev"
+    echo "Now queueing a new CI task with ID $phasicj_ci_task_id"
+    git tag "ci/$phasicj_ci_task_id" "$newrev"
+
+    printf 'Task Spooler Job ID: '
+    ts \
+        -L "commit: $newrev" \
+        ci.sh \
+        "$phasicj_ci_task_id"
+
+done

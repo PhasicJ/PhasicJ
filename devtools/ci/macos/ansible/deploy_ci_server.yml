@@ -1,0 +1,176 @@
+- name: Deploy PhasicJ macOS CI server to an existing macOS host
+  hosts: phasicj_macos_ci
+  collections:
+    - community.general
+  environment:
+    # NOTE(dwtj): For some reason, `/usr/local/bin` (the directory to which
+    #  Homebrew installs executables) is not on the `PATH` when commands are run
+    #  by Ansible. So, we add it manually.
+    PATH: "{{ ansible_env.PATH }}:/usr/local/bin"
+
+  tasks:
+    - name: Update Homebrew
+      homebrew:
+        update_homebrew: yes
+
+    - name: Homebrew Upgrade All
+      homebrew:
+        upgrade_all: yes
+
+    - name: Homebrew Install OpenJDK
+      homebrew:
+        name: openjdk
+
+    - name: Symlink Homebrew OpenJDK into System JDK Directory
+      file:
+          src: /usr/local/opt/openjdk/libexec/openjdk.jdk
+          dest: /Library/Java/JavaVirtualMachines/openjdk.jdk
+          state: link
+      become: yes
+
+    - name: Homebrew Install Bazelisk
+      homebrew:
+        name: bazelisk
+
+    - name: Homebrew Install colordiff
+      homebrew:
+        name: colordiff
+
+    - name: Homebrew Install Node.js
+      homebrew:
+        name: node
+
+    - name: Homebrew Install Rust
+      homebrew:
+        name: rust
+
+    - name: Homebrew Install MarkdownLint CLI
+      homebrew:
+        name: markdownlint-cli
+
+    - name: Homebrew Install Task Spooler
+      homebrew:
+        name: task-spooler
+
+    - name: Homebrew Install msmtp
+      homebrew:
+        name: msmtp
+
+    - name: Cargo install bindgen
+      command: cargo install bindgen
+      become: yes
+      become_user: phasicj-ci
+
+    - name: Install ~/.profile
+      copy:
+        src: files/user/profile
+        dest: "/Users/phasicj-ci/.profile"
+        owner: phasicj-ci
+        group: staff
+      become: yes
+
+    - name: Install ~/.zshrc
+      copy:
+        src: files/user/zshrc
+        dest: "/Users/phasicj-ci/.zshrc"
+        owner: phasicj-ci
+        group: staff
+      become: yes
+
+    - name: Create the ~/.ssh directory
+      file:
+        state: directory
+        path: /Users/phasicj-ci/.ssh
+        owner: phasicj-ci
+        group: staff
+        mode: 0700
+      become: yes
+
+    - name: Install SSH authorized_keys file.
+      copy:
+        src: files/user/ssh/authorized_keys
+        dest: "/Users/phasicj-ci/.ssh/authorized_keys"
+        mode: 0600
+        owner: phasicj-ci
+        group: staff
+      become: yes
+
+    - name: Clone Edge PhasicJ Repo from GitHub
+      git:
+        repo: https://github.com/dwtj/phasicj.git
+        dest: ~/phasicj.git
+        remote: github/dwtj
+        update: yes
+        bare: yes
+      become: yes
+      become_user: phasicj-ci
+
+    - name: Clone PhasicJ Build Repo from PhasicJ Edge Repo
+      git:
+        repo: ~/phasicj.git
+        dest: ~/phasicj.build
+        remote: edge
+        update: yes
+      become: yes
+      become_user: phasicj-ci
+
+    - name: Configure build Git repository to silence some output
+      command:
+        cmd: git config advice.detachedHead false
+        chdir: ~/phasicj.build
+      become: yes
+      become_user: phasicj-ci
+
+
+    - name: Install Git `post-receive` Hook in Edge Repo
+      copy:
+        src: files/user/phasicj.git/hooks/post-receive
+        dest: /Users/phasicj-ci/phasicj.git/hooks/post-receive
+        mode: 0700
+        owner: phasicj-ci
+        group: staff
+      become: yes
+
+    - name: Install `~/bin/ci.sh` script
+      copy:
+        src: files/user/bin/ci.sh
+        dest: /Users/phasicj-ci/bin/
+        owner: phasicj-ci
+        group: staff
+        mode: 0700
+      become: yes
+
+    - name: Install `~/bin/ci_report.sh` Script
+      copy:
+        src: files/user/bin/ci_report.sh
+        dest: /Users/phasicj-ci/bin/
+        owner: phasicj-ci
+        group: staff
+        mode: 0700
+      become: yes
+
+    - name: Install Email-Send Credentials File
+      copy:
+        src: secrets/user/msmtprc
+        dest: /Users/phasicj-ci/.msmtprc
+        owner: phasicj-ci
+        group: staff
+        mode: 0600
+      become: yes
+
+    - name: Install Email Aliases File
+      copy:
+        src: files/user/aliases.msmtp
+        dest: /Users/phasicj-ci/.aliases.msmtp
+        owner: phasicj-ci
+        group: staff
+        mode: 0600
+      become: yes
+
+    - name: Install the `~/.mailrc` File
+      copy:
+        src: files/user/mailrc
+        dest: /Users/phasicj-ci/.mailrc
+        owner: phasicj-ci
+        group: staff
+      become: yes

@@ -1,0 +1,2 @@
+set sendwait=true
+set sendmail=/usr/local/bin/msmtp
