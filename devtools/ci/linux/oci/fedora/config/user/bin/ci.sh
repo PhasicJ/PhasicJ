@@ -6,8 +6,6 @@ if [ -z "$PHASICJ_CI_TASK_ID" ]; then
     exit 1
 fi
 
-set -e
-
 # NOTE(dwtj): We don't want to inherit the GIT_DIR value from when this task
 # was added to task-spooler.
 unset GIT_DIR
@@ -24,7 +22,18 @@ echo
 echo '# bazel build //... ####################################################'
 echo
 bazel build //...
+exit_code=$?
+if [ $exit_code != "0" ]; then
+    echo "ERROR: Bazel build failed!"
+    exit $exit_code
+fi
 echo
 echo '# bazel test //... #####################################################'
+[ $? ] || exit $?
 echo
 bazel test //...
+exit_code=$?
+if [ $exit_code != "0" ]; then
+    echo "ERROR: Bazel test failed!"
+    exit $exit_code
+fi
