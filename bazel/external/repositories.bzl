@@ -36,9 +36,9 @@ def dwtj_rules_java():
         sha256 = _DWTJ_RULES_JAVA_ARCHIVE_INFO["sha256"],
     )
 
-_REMOTE_GRAALVM_VERSION = "20.2.0"
-_REMOTE_GRAALVM_LINUX_ARCHIVE_SHA256 = "5db74b5b8888712d2ac3cd7ae2a8361c2aa801bc94c801f5839351aba5064e29"
-_REMOTE_GRAALVM_LINUX_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "92b429939f12434575e4d586f79c5b686d322f29211d1608ed6055a97a35925c"
+_REMOTE_GRAALVM_VERSION = "21.0.0"
+_REMOTE_GRAALVM_LINUX_ARCHIVE_SHA256 = "4cdb5b9d0142cdaf5565fd20c5cde176d9b7c9dfd278267cab318f64f2923dbc"
+_REMOTE_GRAALVM_LINUX_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "c70b00b4eabcc0140505acab756c394a88be7980634706cce11f53e09658707c"
 
 def apply_remote_graalvm_linux_repository(name, remote_graalvm_repository_rule):
     remote_graalvm_repository_rule(
@@ -52,8 +52,8 @@ def apply_remote_graalvm_linux_repository(name, remote_graalvm_repository_rule):
         cpu = "x64",
     )
 
-_REMOTE_GRAALVM_DARWIN_X64_ARCHIVE_SHA256 = "e9df2caace6f90fcfbc623c184ef1bbb053de20eb4cf5b002d708c609340ba7a"
-_REMOTE_GRAALVM_DARWIN_X64_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "d60c321d6e680028f37954121eeebff0839a0a49a4436e5b41c636c3dd951de3"
+_REMOTE_GRAALVM_DARWIN_X64_ARCHIVE_SHA256 = "0e6b9af45d0ba40d8e61b16708361f794e17430f5098760bd03584ebcc950fa9"
+_REMOTE_GRAALVM_DARWIN_X64_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "68d95999312e96c8cd070a8ba1d9724bc4d4fbe03e29da2c392e021a5f393fb5"
 
 def apply_remote_graalvm_macos_repository(name, remote_graalvm_repository_rule):
     remote_graalvm_repository_rule(
