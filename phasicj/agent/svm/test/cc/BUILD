@@ -17,18 +17,18 @@ cc_library(
 )
 
 cc_test(
-    name = "test",
-    srcs = ["test.cc"],
+    name = "test_svm_dylib",
+    srcs = ["test_svm_dylib.cc"],
     deps = [":svm_dynamic_headers"],
     linkopts = [
         "-ldl",
     ],
     args = [
         "$(rootpath //phasicj/agent/svm)",
-        "$(rootpath //phasicj/agent/svm/test:SvmTestClass.class)",
+        "$(rootpath //phasicj/agent/svm/test/data:SvmTestClass.class)",
     ],
     data = [
         "//phasicj/agent/svm",
-        "//phasicj/agent/svm/test:SvmTestClass.class",
+        "//phasicj/agent/svm/test/data:SvmTestClass.class",
     ],
 )

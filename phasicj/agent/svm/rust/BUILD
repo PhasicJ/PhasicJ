@@ -52,7 +52,7 @@ rust_test(
     srcs = ["test.rs"],
     data = [
         "//phasicj/agent/svm:libsvm.so",
-        "//phasicj/agent/svm/test:SvmTestClass.class",
+        "//phasicj/agent/svm/test/data:SvmTestClass.class",
     ],
     rustc_env = {
         # NOTE(dwtj): This file is read at test run-time.
@@ -60,7 +60,7 @@ rust_test(
 
         # NOTE(dwtj): This file is read at compile-time and its bytes are
         #  embedded in the test executable.
-        "SVM_TEST_CLASS_FILE_PATH": "$(execpath //phasicj/agent/svm/test:SvmTestClass.class)",
+        "SVM_TEST_CLASS_FILE_PATH": "$(execpath //phasicj/agent/svm/test/data:SvmTestClass.class)",
     },
     deps = [
         ":phasicj_agent_svm_rust",

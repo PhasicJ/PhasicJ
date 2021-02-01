@@ -12,8 +12,8 @@ More specifically, this package has three purposes:
 
 - To combine and compile all of the PhasicJ agent's Java dependencies with a
   single `native-image` invocation.
-- To use `bindgen` to generate unsafe bindings for this library.
-- Possibly write some Rust code to wrap these unsafe bindings.
+- To use `bindgen` to generate unsafe Rust bindings for this library.
+- Possibly write some Rust code to wrap these unsafe bindings in safe code.
 
 Through these layers of adaptation, the PhasicJ agent should be able to call
 our `native-image`-compiled Java code.
