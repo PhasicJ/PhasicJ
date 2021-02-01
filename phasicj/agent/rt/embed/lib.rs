@@ -4,11 +4,13 @@ use ::std::path;
 use ::std::io::Write;
 
 pub fn rt_jar() -> &'static [u8] {
-    include_bytes!(concat!("../../../../", env!("RT_JAR_EXEC_PATH")))
+    //include_bytes!(concat!("../../../../", env!("RT_JAR_EXEC_PATH")))
+    include_bytes!(env!("RT_JAR_EXEC_PATH"))
 }
 
 pub fn rt_jar_sha1_hash() -> &'static str {
-    include_str!(concat!("../../../../", env!("RT_JAR_SHA1_EXEC_PATH")))
+    //include_str!(concat!("../../../../", env!("RT_JAR_SHA1_EXEC_PATH")))
+    include_str!(concat!(env!("RT_JAR_SHA1_EXEC_PATH")))
 }
 
 pub fn rt_jar_default_temp_file_path() -> path::PathBuf {

@@ -1,5 +1,5 @@
 load(
-    "@io_bazel_rules_rust//rust:rust.bzl",
+    "@rules_rust//rust:rust.bzl",
     "rust_library",
     "rust_test",
 )
@@ -25,13 +25,13 @@ rust_library(
     name = "phasicj_agent_rt_jar_embed",
     srcs = ["lib.rs"],
     data = [
-        "rt.jar",
-        "rt.jar.sha1",
+        ":rt.jar",
+        ":rt.jar.sha1",
     ],
     edition = "2018",
     rustc_env = {
-        "RT_JAR_EXEC_PATH": "$(location rt.jar)",
-        "RT_JAR_SHA1_EXEC_PATH": "$(location rt.jar.sha1)",
+        "RT_JAR_EXEC_PATH": "$(execpath :rt.jar)",
+        "RT_JAR_SHA1_EXEC_PATH": "$(execpath :rt.jar.sha1)",
     },
     visibility = ["//phasicj/agent:__subpackages__"],
 )

@@ -24,8 +24,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "3560a64223e7ff04befe0126e3679b70aaa78508",
-    "sha256": "b0efad55bb7a15d45fb78f35865ee04a4b4a73741057bb48cf823e12cfe62f84",
+    "commit": "994e22a96d2c2c44e6450e76ed345225798bce25",
+    "sha256": "5727473a881184d739f3b16db08a25d095c757a46f3561f954d253a28e67039d",
 }
 
 def dwtj_rules_java():
@@ -181,12 +181,13 @@ def bazel_skylib():
         sha256 = _BAZEL_SKYLIB_RELEASE_SHA256,
     )
 
-_RULES_RUST_COMMIT = "107e43201de1ef85be8a5be64fa9a6a14a6fc71d"
-_RULES_RUST_SHA256 = "e22184ec72924d096e80eb667c8284d40d8f473ce00ba2f58211e225f22fbc51"
+# Latest commit to master branch as of 2021-02-01.
+_RULES_RUST_COMMIT = "4fbf3cf1d7b2c4626abfe7f38c857895dda44cd0"
+_RULES_RUST_SHA256 = "79ad97b2b60ab580c01b7403c37c09e41a0ce5251d4126fccb862eb9e78e2501"
 
-def io_bazel_rules_rust():
+def rules_rust():
     http_archive(
-        name = "io_bazel_rules_rust",
+        name = "rules_rust",
         url = "https://github.com/bazelbuild/rules_rust/archive/{}.tar.gz".format(_RULES_RUST_COMMIT),
         sha256 = _RULES_RUST_SHA256,
         strip_prefix = "rules_rust-{}".format(_RULES_RUST_COMMIT),

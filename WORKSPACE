@@ -7,7 +7,7 @@ load(
     "apply_remote_graalvm_macos_repository",
     "com_github_renaissance_benchmarks",
     "dwtj_rules_java",
-    "io_bazel_rules_rust",
+    "rules_rust",
     "org_ow2_asm",
     "org_ow2_asm_commons",
     "rules_cc",
@@ -233,17 +233,13 @@ fetch_error_prone_toolchain()
 
 register_error_prone_toolchain()
 
-# CONFIGURE `@io_bazel_rules_rust` ############################################
+# CONFIGURE `@rules_rust` #####################################################
 
-io_bazel_rules_rust()
+rules_rust()
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
-
-load("@io_bazel_rules_rust//:workspace.bzl", "rust_workspace")
-
-rust_workspace()
 
 # CONFIGURE cargo-raze ########################################################
 

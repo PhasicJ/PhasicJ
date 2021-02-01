@@ -14,11 +14,11 @@ macro_rules! svm_file_name {
 }
 
 pub fn svm() -> &'static [u8] {
-    include_bytes!(concat!("../../../../../", env!("SVM_EXEC_PATH")))
+    include_bytes!(env!("SVM_EXEC_PATH"))
 }
 
 pub fn svm_sha1_hash() -> &'static str {
-    include_str!(concat!("../../../../../", env!("SVM_SHA1_EXEC_PATH")))
+    include_str!(env!("SVM_SHA1_EXEC_PATH"))
 }
 
 pub fn svm_default_temp_file_path() -> path::PathBuf {

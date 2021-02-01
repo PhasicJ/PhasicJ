@@ -10,11 +10,18 @@ path = "empty_lib_for_cargo_raze_configuration.rs"
 log = "0.4.11"
 libloading = "0.6.5"
 
-[raze]
+[package.metadata.raze]
 workspace_path = "//third_party/cargo"
 
-target = "x86_64-unknown-linux-gnu"
+package_aliases_dir = "."
+
+targets = [
+    "x86_64-apple-darwin",
+    "x86_64-unknown-linux-gnu",
+]
 
 genmode = "Remote"
 
 output_buildfile_suffix = "BUILD"
+
+rust_rules_workspace_name = "rules_rust"

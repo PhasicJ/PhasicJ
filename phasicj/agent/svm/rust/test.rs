@@ -6,7 +6,7 @@ use ::phasicj_agent_svm_rust as svm;
 
 const SVM_LIBRARY_FILE_PATH: &'static str = env!("SVM_LIBRARY_FILE_PATH");
 
-const SVM_TEST_CLASS_DATA: &'static [u8] = include_bytes!(concat!("../../../../", env!("SVM_TEST_CLASS_FILE_PATH")));
+const SVM_TEST_CLASS_DATA: &'static [u8] = include_bytes!(env!("SVM_TEST_CLASS_FILE_PATH"));
 
 // [JVMS 15 §4.1]https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-4.html#jvms-4.1
 const JVM_CLASS_FILE_MAGIC_NUMBER: [u8; 4] = [0xCA, 0xFE, 0xBA, 0xBE];
