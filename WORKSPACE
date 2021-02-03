@@ -204,6 +204,20 @@ org_ow2_asm_commons()
 
 rules_jvm_external()
 
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    name = "maven",
+    artifacts = [
+        "com.google.guava:guava:30.1-jre",
+    ],
+    repositories = [
+        "https://jcenter.bintray.com/",
+        "https://maven.google.com",
+        "https://repo1.maven.org/maven2",
+    ],
+)
+
 # CONFIGURE `@error_prone` ####################################################
 
 maven_error_prone_repository(
