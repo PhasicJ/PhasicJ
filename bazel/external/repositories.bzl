@@ -146,7 +146,7 @@ def org_ow2_asm():
     )
 
 _ORG_OW2_ASM_COMMONS_JAR_VERSION = "9.0"
-_ORG_OW2_ASM_COMMONS_JAR_SHA256 = ""
+_ORG_OW2_ASM_COMMONS_JAR_SHA256 = "1b9090acb7e67bd4ed2f2cfb002063316d79cecace237bd07cc4f7f1b302092f"
 
 def org_ow2_asm_commons():
     http_jar(
@@ -155,6 +155,7 @@ def org_ow2_asm_commons():
             "https://repository.ow2.org/nexus/content/repositories/releases/org/ow2/asm/asm-commons/{0}/asm-commons-{0}.jar".format(_ORG_OW2_ASM_COMMONS_JAR_VERSION),
             "https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/{0}/asm-commons-{0}.jar".format(_ORG_OW2_ASM_COMMONS_JAR_VERSION),
         ],
+        sha256 = _ORG_OW2_ASM_COMMONS_JAR_SHA256,
     )
 
 _DWTJ_RULES_EMBED_SHA256 = "40069df3088f7df175d6fba7f53a1475aa284a32c971443c81966bb743da77a6"
