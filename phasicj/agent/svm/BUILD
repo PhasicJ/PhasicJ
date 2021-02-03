@@ -23,7 +23,7 @@ graalvm_native_image_library(
     ],
     visibility = ["//phasicj/agent:__subpackages__"],
     deps = [
-        "//phasicj/agent/instr",
+        "//phasicj/agent/instr/svm",
         "//phasicj/agent/rt:java_lang_object_amendment",
         "//third_party/asm",
     ],

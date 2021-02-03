@@ -1,4 +1,4 @@
-package phasicj.agent.instr;
+package phasicj.agent.instr.svm;
 
 // NOTE(dwtj): These GraalVM types are available implicitly when compiling using `javac` provided
 //  with the GraalVM distribution or from `graal-sdk`.
@@ -10,6 +10,8 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.type.CCharPointer;
 import org.graalvm.nativeimage.c.type.CCharPointerPointer;
 import org.graalvm.nativeimage.c.type.CIntPointer;
+import phasicj.agent.instr.Amendment;
+import phasicj.agent.instr.MonitorInsnInstrumenter;
 
 public class Instrumenter {
 
