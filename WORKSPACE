@@ -11,6 +11,7 @@ load(
     "org_ow2_asm",
     "org_ow2_asm_commons",
     "rules_cc",
+    "rules_jvm_external",
 )
 
 # CONFIGURE `@rules_cc` #######################################################
@@ -201,21 +202,7 @@ org_ow2_asm_commons()
 
 # CONFIGURE `@rules_jvm_external` #############################################
 
-# NOTE(dwtj): These rules are a prerequisite of `maven_error_prone_repository`.
-
-# NOTE(dwtj): This version was used just because it was the latest release as of
-#  2020-10-13
-RULES_JVM_EXTERNAL_ARCHIVE_INFO = {
-    "tag": "3.3",
-    "sha256": "d85951a92c0908c80bd8551002d66cb23c3434409c814179c0ff026b53544dab",
-}
-
-http_archive(
-    name = "rules_jvm_external",
-    sha256 = RULES_JVM_EXTERNAL_ARCHIVE_INFO["sha256"],
-    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_ARCHIVE_INFO["tag"],
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_ARCHIVE_INFO["tag"],
-)
+rules_jvm_external()
 
 # CONFIGURE `@error_prone` ####################################################
 

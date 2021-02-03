@@ -8,10 +8,10 @@ load(
     "http_jar",
 )
 
-# NOTE(dwtj): This version was chosen because it was the most recent release as
-#  of 2020-07-09, when this code was drafted.
-_RULES_JVM_EXTERNAL_TAG = "3.3"
-_RULES_JVM_EXTERNAL_SHA256 = "d85951a92c0908c80bd8551002d66cb23c3434409c814179c0ff026b53544dab"
+# NOTE(dwtj): This version is used because it is the latest release as of
+#  2021-02-03.
+_RULES_JVM_EXTERNAL_TAG = "4.0"
+_RULES_JVM_EXTERNAL_SHA256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169"
 
 def rules_jvm_external():
     """Fetches and creates the `@rules_jvm_external` external repository.
