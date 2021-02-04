@@ -24,7 +24,7 @@ def extract_file_from_jar(
         name = name,
         srcs = [in_jar],
         outs = [out_file],
-        cmd_bash = '''"$(rootpath //third_party/openjdk:jar)" -xf "$<" {0} && mv --no-clobber "{0}" "$@"'''.format(file_to_extract),
+        cmd_bash = '''"$(rootpath //third_party/openjdk:jar)" -xf "$<" {0} && mv -n "{0}" "$@"'''.format(file_to_extract),
         tools = ["//third_party/openjdk:jar"],
         visibility = visibility,
     )
