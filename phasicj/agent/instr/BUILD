@@ -11,6 +11,7 @@ dwtj_java_library(
     srcs = [
         "Amendment.java",
         "AsmConfig.java",
+        "Instrumenter.java",
         "MonitorInsnInstrumenter.java",
     ],
     visibility = ["//phasicj/agent:__subpackages__"],

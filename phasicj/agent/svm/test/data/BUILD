@@ -1,4 +1,5 @@
 load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_library")
+load("//bazel:util/files/extract_file_from_jar.bzl", "extract_file_from_jar")
 
 dwtj_java_library(
     name = "svm_test_class_jar",
@@ -6,15 +7,12 @@ dwtj_java_library(
     output_jar = "svm_test_class.jar",
 )
 
-genrule(
+extract_file_from_jar(
     name = "svm_test_class_unjar",
-    srcs = ["svm_test_class.jar"],
-    outs = ["SvmTestClass.class"],
-    cmd_bash = '''"$(location //third_party/openjdk:jar)" -xf "$<" && mv "phasicj/agent/svm/test/SvmTestClass.class" "$@"''',
-    tools = ["//third_party/openjdk:jar"],
-    visibility = [
-        "//phasicj/agent/svm:__subpackages__",
-    ],
+    in_jar = ":svm_test_class.jar",
+    file_to_extract = "phasicj/agent/svm/test/SvmTestClass.class",
+    out_file = "SvmTestClass.class",
+    visibility = ["//phasicj/agent/svm:__subpackages__"],
 )
 
 # TODO(dwtj): Consider adding a test where `java.lang.Object` is instrumented.
