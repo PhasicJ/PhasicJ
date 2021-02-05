@@ -1,4 +1,9 @@
-load("@rules_rust//rust:rust.bzl", "rust_library")
+load(
+    "@rules_rust//rust:rust.bzl",
+    "rust_binary",
+    "rust_library",
+    "rust_test",
+)
 
 # NOTE(dwtj): This Rust target uses a `src/` subdirectory. Other Rust targets
 #  in this workspace do not. Here we are breaking with our workspace convention
@@ -23,5 +28,29 @@ rust_library(
     ],
     proc_macro_deps = [
         "//third_party/cargo:pest_derive",
+    ],
+)
+
+rust_binary(
+    name = "test_repl",
+    srcs = [
+        "src/test_repl.rs",
+    ],
+    edition = "2018",
+    deps = [
+        "//third_party/cargo:pest",
+        ":phasicj_agent_conf",
+    ],
+)
+
+rust_test(
+    name = "test",
+    srcs = [
+        "src/test.rs",
+    ],
+    edition = "2018",
+    deps = [
+        "phasicj_agent_conf",
+        "//third_party/cargo:pest",
     ],
 )

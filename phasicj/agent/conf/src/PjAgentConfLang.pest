@@ -1,16 +1,11 @@
-num = @{ int ~ ("." ~ ASCII_DIGIT*)? ~ (^"e" ~ int)? }
-    int = { ("+" | "-")? ~ ASCII_DIGIT+ }
+lower_latin_alpha = _{ 'a'..'z' }
 
-operation = _{ add | subtract | multiply | divide | power }
-    add      = { "+" }
-    subtract = { "-" }
-    multiply = { "*" }
-    divide   = { "/" }
-    power    = { "^" }
+snake_case_name = _{ (lower_latin_alpha | "_")+ }
 
-expr = { term ~ (operation ~ term)* }
-term = _{ num | "(" ~ expr ~ ")" }
+conf_flag_name = @{ snake_case_name }
 
-calculation = _{ SOI ~ expr ~ EOI }
+agent_option = @{ conf_flag_name }
 
-WHITESPACE = _{ " " | "\t" }
+agent_options_list = { SOI ~ (agent_option ~ ("," ~ agent_option)*)? ~ EOI }
+
+WHITESPACE = _{ " " }
