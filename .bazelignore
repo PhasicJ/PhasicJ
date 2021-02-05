@@ -7,4 +7,5 @@ architecture/prototypes/integration/pt_zeromq
 architecture/prototypes/benchmarking/pt_jvmti_vs_bytecode_events
 architecture/prototypes/integration/pt_rust_jvmti_agent
 architecture/prototypes/integration/pt_rules_docker
+architecture/prototypes/integration/pt_pest_parser
 devtools/ci/linux/oci

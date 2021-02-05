@@ -9,10 +9,10 @@ local_repository(
 
 load(
     "@phasicj//bazel:external/repositories.bzl",
-    "apply_remote_graalvm_repository",
+    "apply_remote_graalvm_linux_repository",
     "dwtj_rules_embed",
     "dwtj_rules_java",
-    "io_bazel_rules_rust",
+    "rules_rust",
     "rules_cc",
 )
 
@@ -27,7 +27,7 @@ load(
 
 # CONFIGURE `@graalvm_linux_x64` ##############################################
 
-apply_remote_graalvm_repository(
+apply_remote_graalvm_linux_repository(
     "graalvm_linux_x64",
     remote_graalvm_repository,
 )
@@ -48,14 +48,10 @@ rules_cc()
 
 dwtj_rules_embed()
 
-# CONFIGURE `@io_bazel_rules_rust` ############################################
+# CONFIGURE `@rules_rust` #####################################################
 
-io_bazel_rules_rust()
+rules_rust()
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
-
-load("@io_bazel_rules_rust//:workspace.bzl", "rust_workspace")
-
-rust_workspace()

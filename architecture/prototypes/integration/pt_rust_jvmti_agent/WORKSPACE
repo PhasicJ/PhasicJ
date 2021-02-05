@@ -11,13 +11,13 @@ load(
     "@phasicj//bazel:external/repositories.bzl",
     "bazel_skylib",
     "dwtj_rules_java",
-    "io_bazel_rules_rust",
+    "rules_rust",
 )
 
 # CONFIGURE `@bazel_skylib` ###################################################
-# This dependency is needed for `@io_bazel_rules_rust`. Here we set it to a
-# particular version (instead of using the version used in the
-# `rust_repositories()` macro below).
+# This dependency is needed for `@rules_rust`. Here we set it to a particular
+# version (instead of using the version used in the `rust_repositories()` macro
+# below).
 
 bazel_skylib()
 
@@ -25,17 +25,13 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
 
-# CONFIGURE `@io_bazel_rules_rust` ############################################
+# CONFIGURE `@rules_rust` #####################################################
 
-io_bazel_rules_rust()
+rules_rust()
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
-
-load("@io_bazel_rules_rust//:workspace.bzl", "rust_workspace")
-
-rust_workspace()
 
 # CONFIGURE `@dwtj_rules_java` ################################################
 

@@ -1,6 +1,6 @@
-load("@dwtj_rules_java//graalvm:defs.bzl", "graalvm_native_image_library")
+load("@dwtj_rules_java//experimental/graalvm:defs.bzl", "graalvm_native_image_library")
 load(
-    "@io_bazel_rules_rust//rust:rust.bzl",
+    "@rules_rust//rust:rust.bzl",
     "rust_binary",
     "rust_library",
 )

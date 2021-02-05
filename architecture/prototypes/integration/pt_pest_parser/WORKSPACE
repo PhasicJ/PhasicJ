@@ -1,0 +1,27 @@
+workspace(name = "pt_pest_parser")
+
+# LOAD HELPER FUNCTIONS FROM ROOT WORKSPACE ###################################
+
+local_repository(
+    name = "phasicj",
+    path = "../../../..",
+)
+
+load(
+    "@phasicj//bazel:external/repositories.bzl",
+    "rules_rust",
+)
+
+# CONFIGURE `@rules_rust` #####################################################
+
+rules_rust()
+
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()
+
+# CONFIGURE cargo-raze ########################################################
+
+load("//third_party/cargo:crates.bzl", "raze_fetch_remote_crates")
+
+raze_fetch_remote_crates()
