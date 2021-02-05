@@ -6,20 +6,57 @@ use phasicj_agent_conf::{
 };
 use pest::Parser;
 
-fn num_tokens_when_parsed_and_flattened(s: &str) -> usize {
+fn parse_flat_rule_vec(s: &str) -> Vec<Rule> {
     let pairs = PjAgentConfParser::parse(Rule::agent_options_list, s).unwrap_or_else(|e| panic!("{}", e));
-    let tokens: Vec<_> = pairs.flatten().into_iter().collect();
-    assert_eq!(tokens[0].as_rule(), Rule::agent_options_list);
-    return tokens.len();
+    let flattened: Vec<Rule> = pairs.flatten().into_iter().map(|token| token.as_rule()).collect();
+    return flattened;
 }
-
 
 #[test]
 fn test_options_parsing() {
-    // TODO(dwtj): Test that the right number of options was parsed.
-    assert_eq!(num_tokens_when_parsed_and_flattened(""), 3);
-    assert_eq!(num_tokens_when_parsed_and_flattened("hello"), 3);
-    assert_eq!(num_tokens_when_parsed_and_flattened(" hello "), 3);
-    assert_eq!(num_tokens_when_parsed_and_flattened("hello,world"), 4);
-    assert_eq!(num_tokens_when_parsed_and_flattened("hello, world"), 4);
+    assert_eq!(
+        parse_flat_rule_vec(""),
+        vec![
+            Rule::agent_options_list,
+            Rule::EOI,
+        ]
+    );
+
+    assert_eq!(
+        parse_flat_rule_vec("hello"),
+        vec![
+            Rule::agent_options_list,
+            Rule::agent_option,
+            Rule::EOI,
+        ]
+    );
+
+    assert_eq!(
+        parse_flat_rule_vec(" hello "),
+        vec![
+            Rule::agent_options_list,
+            Rule::agent_option,
+            Rule::EOI,
+        ]
+    );
+
+    assert_eq!(
+        parse_flat_rule_vec("hello,world"),
+        vec![
+            Rule::agent_options_list,
+            Rule::agent_option,
+            Rule::agent_option,
+            Rule::EOI,
+        ]
+    );
+
+    assert_eq!(
+        parse_flat_rule_vec("hello, world"),
+        vec![
+            Rule::agent_options_list,
+            Rule::agent_option,
+            Rule::agent_option,
+            Rule::EOI,
+        ]
+    );
 }
