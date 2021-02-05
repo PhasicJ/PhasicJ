@@ -24,7 +24,7 @@ sha1_hash_file(
 rust_library(
     name = "phasicj_agent_rt_jar_embed",
     srcs = ["lib.rs"],
-    data = [
+    compile_data = [
         ":rt.jar",
         ":rt.jar.sha1",
     ],

@@ -50,9 +50,11 @@ rust_library(
 rust_test(
     name = "test",
     srcs = ["test.rs"],
+    compile_data = [
+        "//phasicj/agent/svm/test/data:SvmTestClass.class",
+    ],
     data = [
         "//phasicj/agent/svm:libsvm.so",
-        "//phasicj/agent/svm/test/data:SvmTestClass.class",
     ],
     rustc_env = {
         # NOTE(dwtj): This file is read at test run-time.

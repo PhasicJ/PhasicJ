@@ -30,7 +30,7 @@ sha1_hash_file(
 rust_library(
     name = "phasicj_agent_svm_rust_embed",
     srcs = ["lib.rs"],
-    data = [
+    compile_data = [
         "libsvm.so",
         "libsvm.so.sha1",
     ],
@@ -51,8 +51,6 @@ rust_test(
         ":phasicj_agent_svm_rust_embed",
         "//phasicj/agent/svm/rust",
     ],
-    # NOTE(dwtj): This data isn't used at run-time. It is used at compile-time
-    #  to embed these bytes into the test binary.
-    data = ["//phasicj/agent/svm/test/data:SvmTestClass.class"],
+    compile_data = ["//phasicj/agent/svm/test/data:SvmTestClass.class"],
     edition = "2018",
 )
