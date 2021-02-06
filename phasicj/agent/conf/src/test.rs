@@ -87,4 +87,17 @@ fn test_options_parsing() {
             Rule::EOI,
         ]
     );
+
+    assert_eq!(
+        parse_flat_rule_vec(r#"foo="Bar and Baz", zap"#),
+        vec![
+            Rule::agent_options_list,
+            Rule::agent_option,
+            Rule::conf_option_name,
+            Rule::conf_option_arg,
+            Rule::agent_option,
+            Rule::conf_option_name,
+            Rule::EOI,
+        ]
+    );
 }
