@@ -27,6 +27,7 @@ fn test_options_parsing() {
         vec![
             Rule::agent_options_list,
             Rule::agent_option,
+            Rule::conf_option_name,
             Rule::EOI,
         ]
     );
@@ -36,6 +37,7 @@ fn test_options_parsing() {
         vec![
             Rule::agent_options_list,
             Rule::agent_option,
+            Rule::conf_option_name,
             Rule::EOI,
         ]
     );
@@ -45,7 +47,9 @@ fn test_options_parsing() {
         vec![
             Rule::agent_options_list,
             Rule::agent_option,
+            Rule::conf_option_name,
             Rule::agent_option,
+            Rule::conf_option_name,
             Rule::EOI,
         ]
     );
@@ -55,7 +59,31 @@ fn test_options_parsing() {
         vec![
             Rule::agent_options_list,
             Rule::agent_option,
+            Rule::conf_option_name,
             Rule::agent_option,
+            Rule::conf_option_name,
+            Rule::EOI,
+        ]
+    );
+
+    assert_eq!(
+        parse_flat_rule_vec("foo=bar"),
+        vec![
+            Rule::agent_options_list,
+            Rule::agent_option,
+            Rule::conf_option_name,
+            Rule::conf_option_arg,
+            Rule::EOI,
+        ]
+    );
+
+    assert_eq!(
+        parse_flat_rule_vec(r#"foo="Bar and Baz""#),
+        vec![
+            Rule::agent_options_list,
+            Rule::agent_option,
+            Rule::conf_option_name,
+            Rule::conf_option_arg,
             Rule::EOI,
         ]
     );

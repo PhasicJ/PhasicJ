@@ -2,10 +2,19 @@ lower_latin_alpha = _{ 'a'..'z' }
 
 snake_case_name = _{ (lower_latin_alpha | "_")+ }
 
-conf_flag_name = @{ snake_case_name }
+conf_option_name = @{ snake_case_name }
 
-agent_option = @{ conf_flag_name }
+// TODO(dwtj): Consider generaizing this. (E.g., what about spaces & unicode?)
+conf_option_arg = @{ ( ASCII_ALPHANUMERIC | "." | " " )* }
 
-agent_options_list = { SOI ~ (agent_option ~ ("," ~ agent_option)*)? ~ EOI }
+conf_option_quoted_arg = _{ "\"" ~ conf_option_arg ~ "\"" }
+
+agent_option = { conf_option_name ~ ( "=" ~ ( conf_option_quoted_arg | conf_option_arg ) )? }
+
+agent_options_list_sep = _{ "," }
+
+// A comma-separated list of options given to the PhasicJ agent during JVM
+// startup.
+agent_options_list = { SOI ~ (agent_option ~ (agent_options_list_sep ~ agent_option)*)? ~ EOI }
 
 WHITESPACE = _{ " " }
