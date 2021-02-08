@@ -32,9 +32,9 @@ rust_library(
 )
 
 rust_binary(
-    name = "test_repl",
+    name = "conf_test_repl",
     srcs = [
-        "src/test_repl.rs",
+        "src/conf_test_repl.rs",
     ],
     edition = "2018",
     deps = [
@@ -53,4 +53,11 @@ rust_test(
         "phasicj_agent_conf",
         "//third_party/cargo:pest",
     ],
+)
+
+sh_test(
+    name = "smoke_test_conf_test_repl",
+    srcs = ["smoke_test_conf_test_repl.sh"],
+    data = [":conf_test_repl"],
+    args = ["$(rootpath :conf_test_repl)"],
 )
