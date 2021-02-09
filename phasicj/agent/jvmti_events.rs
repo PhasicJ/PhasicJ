@@ -18,6 +18,8 @@ use crate::jvmti_env;
 use crate::jni_env;
 use ::phasicj_agent_svm_rust::SvmIsolateThread;
 use ::phasicj_agent_svm_rust_embed as svm_embed;
+use crate::env_storage::EnvStorage;
+use ::std::path::Path;
 
 pub fn get_initial_agent_callbacks() -> jvmtiEventCallbacks {
     return jvmtiEventCallbacks {
@@ -77,6 +79,9 @@ unsafe extern "C" fn pj_class_file_load_hook(
         new_class_data_len: *mut jint,
         new_class_data: *mut *mut raw::c_uchar) {
 
+    let env_storage = EnvStorage::new_from_env_global_storage(&mut *jvmti_env);
+    let conf = env_storage.conf;
+
     // TODO(dwtj): The given `name` is *modified* UTF-8, but this conversion
     //  expects standard UTF-8. Thus, this conversion will fail for some
     //  class names.
@@ -100,7 +105,15 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // TODO(dwtj): Consider implementing a safer design.
 
     let class: &mut [u8] = slice::from_raw_parts_mut(mem::transmute(class_data), class_data_len.try_into().unwrap());
+    if conf.debug_dump_classes_before_instr {
+        crate::debug::dump_class_to_file(Path::new("classes/before_instr"), class_name, class).unwrap();
+    }
+
     let instrumented_class = svm.svm_instr_instrument(class).expect("Failed to instrument a class.");
+    if conf.debug_dump_classes_after_instr {
+        // TODO(dwtj): Implement this feature.
+        panic!("Feature not yet implemented: debug_dump_classes_after_instr");
+    }
 
     // NOTE(dwtj): According to [this callback's documentation][1], this JVMTI
     //  callback's out-pointer, `new_class_data`, needs to be allocated via the

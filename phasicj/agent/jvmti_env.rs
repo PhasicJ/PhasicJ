@@ -93,7 +93,6 @@ pub fn add_capabilities(env: &mut jvmtiEnv, capa: &jvmtiCapabilities) {
     }
 }
 
-
 // [JVMTI#SetEventCallbacks](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#SetEventCallbacks)
 pub fn set_event_callbacks(env: &mut jvmtiEnv, cb: &jvmtiEventCallbacks) {
     unsafe {

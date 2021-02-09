@@ -1,6 +1,6 @@
 #!/bin/sh -
 
-set -e
+set -euo pipefail
 
 export JAVA_EXEC="$1"
 export AGENT_PATH="$2"

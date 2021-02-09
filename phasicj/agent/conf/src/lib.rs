@@ -14,13 +14,15 @@ use parser::Rule;
 use parser::PjAgentConfParser;
 
 #[derive(Debug)]
+#[derive(Copy)]
+#[derive(Clone)]
 pub struct PjAgentConf {
     pub debug_dump_classes_before_instr: bool,
     pub debug_dump_classes_after_instr: bool,
 }
 
 impl PjAgentConf {
-    pub fn new_with_defaults() -> PjAgentConf {
+    pub const fn new_with_defaults() -> PjAgentConf {
         return PjAgentConf {
             debug_dump_classes_before_instr: false,
             debug_dump_classes_after_instr: false,

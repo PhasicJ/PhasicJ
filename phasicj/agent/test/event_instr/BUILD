@@ -14,8 +14,8 @@ dwtj_java_binary(
 #
 #  1. The `@dwtj_rules_java` don't yet support JVMTI agents.
 #  2. We don't want `//phasicj/agent/rt` to be added to the test's runtime
-#     class-path; we want to test that the RT JAR is added to the boot class path
-#     automatically by the JVMTI agent at JVM startup.
+#     class-path; we want to test that the RT JAR is added to the boot class
+#     path automatically by the JVMTI agent at JVM startup.
 test(
     name = "test",
     java_exec = "//third_party/openjdk:java",

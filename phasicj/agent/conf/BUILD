@@ -5,6 +5,12 @@ load(
     "rust_test",
 )
 
+alias(
+    name = "conf",
+    actual = ":phasicj_agent_conf",
+    visibility = ["//phasicj/agent:__subpackages__"],
+)
+
 # NOTE(dwtj): This Rust target uses a `src/` subdirectory. Other Rust targets
 #  in this workspace do not. Here we are breaking with our workspace convention
 #  to help work around a problem that I am currently seeing with Pest and/or

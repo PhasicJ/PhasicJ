@@ -9,12 +9,14 @@ rust_library(
     name = "agent",
     srcs = [
         "agent.rs",
+        "env_storage.rs",
         "jni_env.rs",
         "jvmti_entrypoints.rs",
         "jvmti_env.rs",
         "jvmti_events.rs",
         "jvmti_setup.rs",
         "lib.rs",
+        "debug.rs",
     ],
     crate_type = "cdylib",
     edition = "2018",
@@ -22,6 +24,7 @@ rust_library(
         "//phasicj/agent/rt/embed:phasicj_agent_rt_jar_embed",
         "//phasicj/agent/svm/rust",
         "//phasicj/agent/svm/rust/embed",
+        "//phasicj/agent/conf",
         "@graalvm_linux_x64//rust/jvmti",
     ],
 )

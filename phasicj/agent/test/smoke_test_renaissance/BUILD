@@ -2,6 +2,7 @@ JAVA_EXEC_LABEL="//third_party/openjdk:java"
 PHASICJ_AGENT_LABEL="//phasicj/agent:libpjagent"
 RENAISSANCE_JAR_LABEL="@com_github_renaissance_benchmarks//jar"
 RENAISSANCE_MAIN_CLASS="org.renaissance.core.Launcher"
+PHASICJ_AGENT_OPTIONS="debug_dump_classes_before_instr"
 
 sh_test(
     name = "scrabble",
@@ -16,6 +17,7 @@ sh_test(
         "$(rootpath {})".format(PHASICJ_AGENT_LABEL),
         "$(rootpath {})".format(RENAISSANCE_JAR_LABEL),
         RENAISSANCE_MAIN_CLASS,
+        PHASICJ_AGENT_OPTIONS,
         "--repetitions",
         "1",
         "scrabble"

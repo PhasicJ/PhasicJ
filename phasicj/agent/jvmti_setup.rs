@@ -1,4 +1,5 @@
-use ::std::os::raw::c_uint;
+use ::std::convert::TryInto;
+use ::std::os::raw;
 use ::std::ptr;
 use ::std::mem;
 use ::jvmti::{
@@ -23,6 +24,8 @@ use crate::jvmti_env::{
     set_event_notification_mode,
     add_to_bootstrap_class_loader_search,
     get_env,
+    set_environment_local_storage,
+    allocate as jvmti_allocate,
 };
 
 use ::phasicj_agent_rt_jar_embed::{
@@ -30,21 +33,44 @@ use ::phasicj_agent_rt_jar_embed::{
     write_rt_jar_file_if_missing,
 };
 
-pub fn setup(jvm: &mut JavaVM) {
+use ::phasicj_agent_conf::PjAgentConf;
+use crate::env_storage::EnvStorage;
+
+pub fn setup(jvm: &mut JavaVM, conf: PjAgentConf) {
     unsafe{
         let env: *mut jvmtiEnv = get_env(jvm);
         let env = &mut *env;
-        configure_jvmti_env(env);
+        configure_jvmti_env(env, conf);
         write_embedded_svm_lib_to_default_temp_path();
     }
 }
 
-pub fn configure_jvmti_env(env: &mut jvmtiEnv) {
+pub fn configure_jvmti_env(env: &mut jvmtiEnv, conf: PjAgentConf) {
+    unsafe { initialize_env_storage(env, conf); }
     expect_jvmti_environment_provides_all_required_capabilities(env);
     add_all_required_capabilities(env);
     set_all_event_callbacks(env);
     set_all_event_notification_modes(env);
     add_embedded_jar_to_bootstrap_class_loader_search(env);
+}
+
+unsafe fn initialize_env_storage(env: &mut jvmtiEnv, conf: PjAgentConf) {
+    // Allocate some JVMTI-managed memory for an `EnvStorage` struct in
+    // environment-local storage.
+    let mut buf: mem::MaybeUninit<*mut raw::c_uchar> = mem::MaybeUninit::uninit();
+    let buf_size: usize = mem::size_of::<EnvStorage>();
+    jvmti_allocate(
+        env,
+        buf_size.try_into().unwrap(),
+        buf.as_mut_ptr()
+    );
+    let buf: *mut raw::c_uchar = buf.assume_init();
+    let buf: *mut EnvStorage = mem::transmute(buf);
+    *buf = EnvStorage {
+        conf: conf,
+    };
+    let buf: *mut raw::c_void = mem::transmute(buf);
+    set_environment_local_storage(env, buf);
 }
 
 fn expect_jvmti_environment_provides_all_required_capabilities(env: &mut jvmtiEnv){
@@ -99,7 +125,7 @@ fn write_embedded_svm_lib_to_default_temp_path() {
     ::phasicj_agent_svm_rust_embed::write_svm_file_if_missing(&path).unwrap();
 }
 
-fn expect_capability(capa: c_uint) {
+fn expect_capability(capa: raw::c_uint) {
     if capa == 0 {
         panic!();
     }
