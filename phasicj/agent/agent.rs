@@ -22,6 +22,9 @@ pub fn on_load(jvm: &mut JavaVM, options: &ffi::CStr) {
 
     let options = options.to_str().expect("Failed parsing the PhasicJ agent options as valid UTF-8.");
     let conf = PjAgentConf::new_from_agent_options_list_str(options);
+    if conf.verbose {
+        crate::debug::print_verbose_startup_info(&conf);
+    }
     setup(jvm, conf);
 }
 

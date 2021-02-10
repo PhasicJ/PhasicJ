@@ -4,6 +4,12 @@ use std::path::PathBuf;
 use std::io;
 use std::io::prelude::*;
 use std::env;
+use phasicj_agent_conf::PjAgentConf;
+
+pub fn print_verbose_startup_info(conf: &PjAgentConf) {
+    eprintln!("PjAgent: startup: current directory: {}", env::current_dir().unwrap().display());
+    eprintln!("PjAgent: startup: configuration: {:?}", conf);
+}
 
 pub fn dump_class_to_file(prefix: &Path, class_name: &str, class_data: &[u8]) -> io::Result<()> {
     let mut path_buf = PathBuf::new();

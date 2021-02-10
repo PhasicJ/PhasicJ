@@ -17,6 +17,7 @@ use parser::PjAgentConfParser;
 #[derive(Copy)]
 #[derive(Clone)]
 pub struct PjAgentConf {
+    pub verbose: bool,
     pub debug_dump_classes_before_instr: bool,
     pub debug_dump_classes_after_instr: bool,
 }
@@ -24,6 +25,7 @@ pub struct PjAgentConf {
 impl PjAgentConf {
     pub const fn new_with_defaults() -> PjAgentConf {
         return PjAgentConf {
+            verbose: false,
             debug_dump_classes_before_instr: false,
             debug_dump_classes_after_instr: false,
         };
@@ -71,6 +73,9 @@ impl PjAgentConf {
             option_name: &str,
             option_value: Option<&str>) {
         match option_name {
+            "verbose" => {
+                self.verbose = Self::eval_bool_option_value(option_value);
+            },
             "debug_dump_classes_before_instr" => {
                 self.debug_dump_classes_before_instr = Self::eval_bool_option_value(option_value);
             },

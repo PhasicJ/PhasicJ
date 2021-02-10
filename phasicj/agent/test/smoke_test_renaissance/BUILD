@@ -2,7 +2,7 @@ JAVA_EXEC_LABEL="//third_party/openjdk:java"
 PHASICJ_AGENT_LABEL="//phasicj/agent:libpjagent"
 RENAISSANCE_JAR_LABEL="@com_github_renaissance_benchmarks//jar"
 RENAISSANCE_MAIN_CLASS="org.renaissance.core.Launcher"
-PHASICJ_AGENT_OPTIONS="debug_dump_classes_before_instr"
+PHASICJ_AGENT_OPTIONS="verbose"
 
 sh_test(
     name = "scrabble",
