@@ -14,11 +14,11 @@ use ::jvmti::{
     jthread,
 };
 use ::std::ffi;
-use crate::jvmti_env;
-use crate::jni_env;
+use crate::jvm::jvmti_env;
+use crate::jvm::jni_env;
 use ::phasicj_agent_svm_rust::SvmIsolateThread;
 use ::phasicj_agent_svm_rust_embed as svm_embed;
-use crate::env_storage::EnvStorage;
+use crate::jvm::env_storage::EnvStorage;
 use ::std::path::Path;
 
 pub fn get_initial_agent_callbacks() -> jvmtiEventCallbacks {

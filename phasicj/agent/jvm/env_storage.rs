@@ -1,7 +1,7 @@
 use ::std::mem;
 use ::std::os::raw;
 use ::phasicj_agent_conf::PjAgentConf;
-use crate::jvmti_env;
+use crate::jvm::jvmti_env;
 use ::jvmti::jvmtiEnv;
 
 #[derive(Debug)]

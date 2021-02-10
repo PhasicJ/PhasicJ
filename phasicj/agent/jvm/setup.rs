@@ -14,9 +14,9 @@ use ::jvmti::{
 };
 use ::std::ffi;
 
-use crate::jvmti_events;
+use crate::jvm::events;
 
-use crate::jvmti_env::{
+use crate::jvm::jvmti_env::{
     get_potential_capabilities,
     get_capabilities,
     add_capabilities,
@@ -34,9 +34,9 @@ use ::phasicj_agent_rt_jar_embed::{
 };
 
 use ::phasicj_agent_conf::PjAgentConf;
-use crate::env_storage::EnvStorage;
+use crate::jvm::env_storage::EnvStorage;
 
-pub fn setup(jvm: &mut JavaVM, conf: PjAgentConf) {
+pub fn setup_agent(jvm: &mut JavaVM, conf: PjAgentConf) {
     unsafe{
         let env: *mut jvmtiEnv = get_env(jvm);
         let env = &mut *env;
@@ -96,7 +96,7 @@ fn add_all_required_capabilities(env: &mut jvmtiEnv) {
 }
 
 fn set_all_event_callbacks(env: &mut jvmtiEnv) {
-    let cb = jvmti_events::get_initial_agent_callbacks();
+    let cb = events::get_initial_agent_callbacks();
     set_event_callbacks(env, &cb);
 }
 

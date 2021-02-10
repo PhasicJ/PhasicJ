@@ -2,7 +2,7 @@ use jvmti::{
     JavaVM,
     jint,
 };
-use crate::jvmti_setup::setup;
+use crate::jvm::setup::setup_agent;
 use phasicj_agent_conf::PjAgentConf;
 use ::std::ffi;
 
@@ -25,7 +25,7 @@ pub fn on_load(jvm: &mut JavaVM, options: &ffi::CStr) {
     if conf.verbose {
         crate::debug::print_verbose_startup_info(&conf);
     }
-    setup(jvm, conf);
+    setup_agent(jvm, conf);
 }
 
 pub fn on_attach(_jvm: &mut JavaVM) -> jint {

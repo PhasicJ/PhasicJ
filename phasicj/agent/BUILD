@@ -1,22 +1,24 @@
 load("@rules_rust//rust:rust.bzl", "rust_library")
 load("//bazel:util/files/copy_file.bzl", "copy_file")
+load("@dwtj_rules_markdown//markdown:defs.bzl", "markdown_library")
 
 package(
     default_visibility = ["//visibility:public"],
+)
+
+markdown_library(
+    name = "all_markdown",
+    srcs = glob(["*.md"]),
 )
 
 rust_library(
     name = "agent",
     srcs = [
         "agent.rs",
-        "env_storage.rs",
-        "jni_env.rs",
-        "jvmti_entrypoints.rs",
-        "jvmti_env.rs",
-        "jvmti_events.rs",
-        "jvmti_setup.rs",
         "lib.rs",
+        "jvm.rs",
         "debug.rs",
+        "//phasicj/agent/jvm",
     ],
     crate_type = "cdylib",
     edition = "2018",
