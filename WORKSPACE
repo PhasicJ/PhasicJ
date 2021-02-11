@@ -210,6 +210,7 @@ maven_install(
     name = "maven",
     artifacts = [
         "com.google.guava:guava:30.1-jre",
+        "info.picocli:picocli:4.6.1",
     ],
     repositories = [
         "https://jcenter.bintray.com/",
