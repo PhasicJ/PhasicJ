@@ -1,15 +1,12 @@
 load("@rules_rust//rust:rust.bzl", "rust_library")
 load("//bazel:util/files/copy_file.bzl", "copy_file")
-load("@dwtj_rules_markdown//markdown:defs.bzl", "markdown_library")
+load("//bazel:docs.bzl", "index_md")
 
 package(
     default_visibility = ["//visibility:public"],
 )
 
-markdown_library(
-    name = "all_markdown",
-    srcs = glob(["*.md"]),
-)
+index_md()
 
 rust_library(
     name = "agent",

@@ -1,6 +1,3 @@
-load("@dwtj_rules_markdown//markdown:defs.bzl", "markdown_library")
+load("//bazel:docs.bzl", "index_md")
 
-markdown_library(
-    name = "markdown",
-    srcs = glob(["**/*.md"]),
-)
+index_md()
