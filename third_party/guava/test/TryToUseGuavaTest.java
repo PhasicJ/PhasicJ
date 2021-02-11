@@ -1,3 +1,5 @@
+package third_party.guava.test;
+
 import com.google.common.base.Charsets;
 
 public class TryToUseGuavaTest {
