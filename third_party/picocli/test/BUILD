@@ -15,5 +15,8 @@ dwtj_java_binary(
     name = "checksum",
     main_class = "third_party.picocli.test.CheckSum",
     srcs = [":CheckSum.java"],
-    deps = ["//third_party/picocli"],
+    deps = [
+        "//third_party/picocli",
+        "//third_party/picocli:picocli_codegen"
+    ],
 )
