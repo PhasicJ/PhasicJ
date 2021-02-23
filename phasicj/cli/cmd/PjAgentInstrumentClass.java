@@ -8,6 +8,8 @@ public class PjAgentInstrumentClass implements Callable<Integer> {
 
   @Override
   public Integer call() {
-    throw new UnsupportedOperationException("TODO(dwtj): Not yet implemented.");
+    // TODO(dwtj): Everything!
+    // throw new UnsupportedOperationException("TODO(dwtj): Not yet implemented.");
+    return 0;
   }
 }
