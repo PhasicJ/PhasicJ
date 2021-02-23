@@ -12,5 +12,8 @@ extract_file_from_jar(
     in_jar = "test.jar",
     file_to_extract = "phasicj/agent/instr/test/class_data/simple/SynchBlock.class",
     out_file = "SynchBlock.class",
-    visibility = ["//phasicj/agent/instr:__subpackages__"],
+    visibility = [
+        "//phasicj/agent/instr:__subpackages__",
+        "//phasicj/cli/test/agent/instr:__subpackages__",
+    ],
 )

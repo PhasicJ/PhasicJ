@@ -14,27 +14,21 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "cli",
+    actual = "exec",
+    visibility = ["//visibility:public"],
+)
+
 dwtj_java_binary(
     name = "phasicj_java_binary",
     main_class = "phasicj.cli.Main",
     srcs = [
         "Main.java",
-        "PjCommand.java",
-        "PjEvaluator.java",
     ],
     deps = [
+        "//phasicj/cli/cmd",
         "//third_party/picocli",
-        # We use the picocli annotation processor to generate some files to
-        # [assist `native-image`](https://picocli.info/#_annotation_processor).
-        # These files configure `native-image` to deal with certain picocli
-        # features (e.g., its use of reflection). Without this configuration,
-        # picocli doesn't work within a `native-image`.
-        "//third_party/picocli:picocli_codegen"
-    ],
-    javac_flags = [
-        # The `project` option is used by the picocli annotation processor.
-        # See [link](https://picocli.info/#_processor_option_project).
-        "-Aproject=phasicj/phasicj-cli"
     ],
 )
 
