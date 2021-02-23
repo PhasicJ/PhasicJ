@@ -24,6 +24,11 @@ dwtj_java_binary(
     ],
     deps = [
         "//third_party/picocli",
+        # We use the picocli annotation processor to generate some files to
+        # [assist `native-image`](https://picocli.info/#_annotation_processor).
+        # These files configure `native-image` to deal with certain picocli
+        # features (e.g., its use of reflection). Without this configuration,
+        # picocli doesn't work within a `native-image`.
         "//third_party/picocli:picocli_codegen"
     ],
     javac_flags = [
