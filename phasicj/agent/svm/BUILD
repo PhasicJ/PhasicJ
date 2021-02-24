@@ -17,9 +17,6 @@ graalvm_native_image_library(
     library_output = "libsvm.so",
     native_image_options = [
         "--no-fallback",
-        # TODO(dwtj): Consider moving this into a `resource-config.json` file, possibly in the JAR
-        #  which holds this class.
-        "-H:IncludeResources=phasicj/agent/rt/JavaLangObjectAmendment.class",
     ],
     visibility = ["//phasicj/agent:__subpackages__"],
     deps = [

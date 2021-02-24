@@ -9,6 +9,7 @@ java_library(
         "//third_party/guava",
         "//phasicj/agent/rt:java_lang_object_amendment",
     ],
+    visibility = ["//phasicj/cli/cmd:__subpackages__"],
 )
 
 graalvm_native_image_binary(
@@ -18,7 +19,6 @@ graalvm_native_image_binary(
     output = "phasicj_agent_instr",
     native_image_options = [
         "--no-fallback",
-        "-H:IncludeResources=phasicj/agent/rt/JavaLangObjectAmendment.class",
     ],
     visibility = ["//phasicj/agent:__subpackages__"],
 )

@@ -15,6 +15,7 @@ dwtj_java_library(
         # features (e.g., its use of reflection). Without this configuration,
         # picocli doesn't work within a `native-image`.
         "//third_party/picocli:picocli_codegen",
+        "//phasicj/agent/instr/cli:cli_java"
     ],
     javac_flags = [
         # The `project` option is used by the picocli annotation processor.

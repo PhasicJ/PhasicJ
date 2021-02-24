@@ -7,12 +7,25 @@ dwtj_java_library(
     visibility = ["//phasicj/agent:__subpackages__"],
 )
 
+# NOTE(dwtj): This class is not meant to be "run". We compile it to create
+#  snippets of bytecode to be used by the PhasicJ agent's runtime. Specifically,
+#  this class definition used to specify some fields & methods to be added to
+#  the `java.lang.Object` class of a user's Java application when monitored by
+#  the PhasicJ agent.
 dwtj_java_library(
     name = "java_lang_object_amendment",
     srcs = ["JavaLangObjectAmendment.java"],
     visibility = ["//phasicj/agent:__subpackages__"],
-    # TODO(dwtj): Consider making this a compile-time only dependency once that
-    #  is supported in `@dwtj_rules_java`. The amendment itself isn't meant to
-    #  be "run", after all.
+    resources = {
+        # NOTE(dwtj): We include this GraalVM `native-image` configuration file
+        #  in order to tell the `native-image` tool that the
+        #  `JavaLangObjectAmendment.class` file should be treated as a resource
+        #  file. This is similar to `native-image -H:IncludeResources=...`,
+        #  except it is implicit. [This link][1] provides some background.
+        #
+        #  [1]: https://www.graalvm.org/reference-manual/native-image/Resources/
+        "META-INF$native-image$phasicj$agent$rt$resource-config.json":
+            "META-INF/native-image/phasicj/agent/rt/resource-config.json",
+    },
     deps = [":rt"],
 )
