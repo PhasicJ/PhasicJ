@@ -134,6 +134,19 @@ mod test_parser {
         );
     }
 
+    #[test]
+    fn test_file_path_option_value() {
+        assert_eq!(
+            parse_flat_rule_vec(r#"phasicj_exec="My Path/to/phasicj-exec""#),
+            vec![
+                Rule::agent_options_list,
+                Rule::agent_option,
+                Rule::conf_option_name,
+                Rule::conf_option_arg,
+                Rule::EOI,
+            ]
+        );
+    }
 }
 
 mod test_conf_defaults {
@@ -174,6 +187,14 @@ mod test_conf_options_apply {
             "debug_dump_classes_before_instr=true,debug_dump_classes_before_instr=false"
         );
         assert_eq!(conf.debug_dump_classes_before_instr, false);
+    }
+
+    #[test]
+    fn test_phasicj_exec_option() {
+        let path = "My Path/to/phasicj-exec";
+        let to_parse = format!(r#"phasicj_exec="{}""#, path);
+        let conf = PjAgentConf::new_from_agent_options_list_str(&to_parse);
+        assert_eq!(path, conf.phasicj_exec.unwrap());
     }
 
 }

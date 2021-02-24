@@ -5,7 +5,7 @@ snake_case_name = _{ (lower_latin_alpha | "_")+ }
 conf_option_name = @{ snake_case_name }
 
 // TODO(dwtj): Consider generaizing this. (E.g., what about spaces & unicode?)
-conf_option_arg = @{ ( ASCII_ALPHANUMERIC | "." | " " )* }
+conf_option_arg = @{ ( ASCII_ALPHANUMERIC | "." | " " | "/" | "-" | "_" )* }
 
 conf_option_quoted_arg = _{ "\"" ~ conf_option_arg ~ "\"" }
 

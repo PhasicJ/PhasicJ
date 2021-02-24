@@ -65,6 +65,12 @@ pub unsafe fn allocate(env: &mut jvmtiEnv, size: jlong, mem_ptr: *mut *mut raw::
     jvmti_check(f(env, size, mem_ptr));
 }
 
+// [JVMTI#Deallocate](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#Deallocate)
+pub unsafe fn deallocate(env: &mut jvmtiEnv, mem: *mut raw::c_uchar) {
+    let f = (**env).Deallocate.unwrap();
+    jvmti_check(f(env, mem));
+}
+
 // [JVMTI#GetPotentialCapabilities](https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#GetPotentialCapabilities)
 pub fn get_potential_capabilities(env: &mut jvmtiEnv) -> jvmtiCapabilities {
     let mut capa: MaybeUninit<jvmtiCapabilities> = MaybeUninit::uninit();

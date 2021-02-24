@@ -4,5 +4,5 @@ dwtj_java_library(
     name = "svm",
     srcs = ["Instrumenter.java"],
     deps = ["//phasicj/agent/instr"],
-    visibility = ["//phasicj/agent:__subpackages__"],
+    visibility = ["//phasicj/agent/experimental/svm:__subpackages__"],
 )

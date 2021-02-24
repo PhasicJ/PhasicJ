@@ -7,7 +7,7 @@ load(
 alias(
     name = "rust",
     actual = "phasicj_agent_experimental_svm_rust",
-    visibility = ["//phasicj/agent:__subpackages__"],
+    visibility = ["//phasicj/agent/experimental/svm:__subpackages__"],
 )
 
 # TODO(dwtj): Consider rewriting this using a `@rules_rust` `bindgen` rule.

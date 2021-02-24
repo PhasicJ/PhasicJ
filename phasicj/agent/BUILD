@@ -21,9 +21,8 @@ rust_library(
     edition = "2018",
     deps = [
         "//phasicj/agent/rt/embed:phasicj_agent_rt_jar_embed",
-        "//phasicj/agent/experimental/svm/rust",
-        "//phasicj/agent/experimental/svm/rust/embed",
         "//phasicj/agent/conf",
+        "//phasicj/agent/instr/rust",
         "@graalvm_linux_x64//rust/jvmti",
     ],
 )

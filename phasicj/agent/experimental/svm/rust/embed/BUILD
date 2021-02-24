@@ -9,7 +9,7 @@ load("//bazel:util/files/copy_file.bzl", "copy_file")
 alias(
     name = "embed",
     actual = ":phasicj_agent_experimental_svm_rust_embed",
-    visibility = ["//phasicj/agent:__subpackages__"],
+    visibility = ["//phasicj/agent/experimental/svm:__subpackages__"],
 )
 
 # NOTE(dwtj): We copy this file to abreviate its usage in this `BUILD` file and

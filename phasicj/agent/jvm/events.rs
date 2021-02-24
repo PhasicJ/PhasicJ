@@ -16,10 +16,11 @@ use ::jvmti::{
 use ::std::ffi;
 use crate::jvm::jvmti_env;
 use crate::jvm::jni_env;
-use ::phasicj_agent_experimental_svm_rust::SvmIsolateThread;
-use ::phasicj_agent_experimental_svm_rust_embed as svm_embed;
 use crate::jvm::env_storage::EnvStorage;
 use ::std::path::Path;
+use ::phasicj_agent_conf::PjAgentConf;
+
+use phasicj_agent_instr_rust::Instrumenter;
 
 pub fn get_initial_agent_callbacks() -> jvmtiEventCallbacks {
     return jvmtiEventCallbacks {
@@ -61,8 +62,8 @@ unsafe extern "C" fn pj_vm_init(_env: *mut jvmtiEnv, _jni_env: *mut JNIEnv, _: j
 
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#VMDeath
 #[no_mangle]
-unsafe extern "C" fn pj_vm_death(_env: *mut jvmtiEnv, _jni_env: *mut JNIEnv) {
-    // Nothing needed here yet.
+unsafe extern "C" fn pj_vm_death(env: *mut jvmtiEnv, _jni_env: *mut JNIEnv) {
+    EnvStorage::free(&mut *env);
 }
 
 // https://docs.oracle.com/en/java/javase/15/docs/specs/jvmti.html#ClassFileLoadHook
@@ -79,8 +80,10 @@ unsafe extern "C" fn pj_class_file_load_hook(
         new_class_data_len: *mut jint,
         new_class_data: *mut *mut raw::c_uchar) {
 
-    let env_storage = EnvStorage::new_from_env_global_storage(&mut *jvmti_env);
-    let conf = env_storage.conf;
+    let env_storage = EnvStorage::of(&mut *jvmti_env).expect(
+        "Failed to get JVMTI environment-local storage."
+    );
+    let conf = &env_storage.conf;
 
     // TODO(dwtj): The given `name` is *modified* UTF-8, but this conversion
     //  expects standard UTF-8. Thus, this conversion will fail for some
@@ -92,27 +95,30 @@ unsafe extern "C" fn pj_class_file_load_hook(
         return;
     }
 
-    // TODO(dwtj): Creating a new Graal Isolate for each instrumentation seems
-    //  wasteful. Consider reusing them. Either have one global one with all
-    //  threads attached or have one isolate per thread.
+    let class: &mut [u8] = slice::from_raw_parts_mut(
+        mem::transmute(class_data),
+        class_data_len.try_into().unwrap()
+    );
 
-    let library_path = svm_embed::svm_default_temp_file_path();
-    let mut svm = SvmIsolateThread::new_from_library_path(&library_path).expect("Failed to create a new `Svm` instance.");
-
-    // NOTE(dwtj): During our call to `instrument()` SVM allocates memory. This
-    //  memory is wrapped by our `SvmClass`. We are reponsible for manually
-    //  freeing this memory by calling `Svm::free_svm_class()`.
-    // TODO(dwtj): Consider implementing a safer design.
-
-    let class: &mut [u8] = slice::from_raw_parts_mut(mem::transmute(class_data), class_data_len.try_into().unwrap());
     if conf.debug_dump_classes_before_instr {
         crate::debug::dump_class_to_file(Path::new("classes/before_instr"), class_name, class).unwrap();
     }
+    let instr_result = match &conf.phasicj_exec {
+        None => Instrumenter::using_system_path().instrument(class),
+        Some(path) => Instrumenter::wrap(&path).instrument(class),
+    };
+    if instr_result.is_err() {
+        // If our attempt to get an instrumented copy of the class data failed,
+        // then we just don't instrument it, log this fact, and return early.
+        // TODO(dwtj): Use a unified logging strategy.
+        // TODO(dwtj): Log more information.
+        eprintln!("Failed to instrument a class: {}", class_name);
+        return;
+    }
+    let instrumented_class = instr_result.unwrap();
 
-    let instrumented_class = svm.svm_instr_instrument(class).expect("Failed to instrument a class.");
     if conf.debug_dump_classes_after_instr {
-        // TODO(dwtj): Implement this feature.
-        panic!("Feature not yet implemented: debug_dump_classes_after_instr");
+        crate::debug::dump_class_to_file(Path::new("classes/after_instr"), class_name, &instrumented_class).unwrap();
     }
 
     // NOTE(dwtj): According to [this callback's documentation][1], this JVMTI
@@ -129,7 +135,7 @@ unsafe extern "C" fn pj_class_file_load_hook(
     // Allocate some JVMTI-managed memory that can be returned via
     // the `new_class_data` pointer.
     let mut jvmti_buf: MaybeUninit<*mut raw::c_uchar> = MaybeUninit::uninit();
-    let buf_size: usize = instrumented_class.size();
+    let buf_size: usize = instrumented_class.len();
     jvmti_env::allocate(
         &mut *jvmti_env,
         buf_size.try_into().unwrap(),
@@ -137,22 +143,8 @@ unsafe extern "C" fn pj_class_file_load_hook(
     );
     let jvmti_buf: *mut raw::c_uchar = jvmti_buf.assume_init();
 
-    // Copy binary data from the SVM-managed memory into our newly allocated
-    // JVMTI-managed memory. (To please the Rust compiler, we use transmute to
-    // cast these bytes to `c_uchar`.)
-    {
-        let svm_class_buf: *const raw::c_uchar = mem::transmute(instrumented_class.as_slice().as_ptr());
-        ptr::copy_nonoverlapping(
-            svm_class_buf,
-            jvmti_buf,
-            instrumented_class.size()
-        );
-    }
+    ptr::copy_nonoverlapping(instrumented_class.as_ptr(), jvmti_buf, instrumented_class.len());
 
-    svm.svm_instr_free(instrumented_class).expect("Failed to free an `SvmClass`.");
-
-    // Return the SVM-instrumented class data which we copied into a JVMTI-
-    // allocated buffer via out-pointers.
     *new_class_data_len = buf_size.try_into().unwrap();
     *new_class_data = jvmti_buf;
 }

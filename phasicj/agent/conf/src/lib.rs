@@ -14,10 +14,10 @@ use parser::Rule;
 use parser::PjAgentConfParser;
 
 #[derive(Debug)]
-#[derive(Copy)]
 #[derive(Clone)]
 pub struct PjAgentConf {
     pub verbose: bool,
+    pub phasicj_exec: Option<String>,
     pub debug_dump_classes_before_instr: bool,
     pub debug_dump_classes_after_instr: bool,
 }
@@ -26,6 +26,7 @@ impl PjAgentConf {
     pub const fn new_with_defaults() -> PjAgentConf {
         return PjAgentConf {
             verbose: false,
+            phasicj_exec: None,
             debug_dump_classes_before_instr: false,
             debug_dump_classes_after_instr: false,
         };
@@ -75,6 +76,13 @@ impl PjAgentConf {
         match option_name {
             "verbose" => {
                 self.verbose = Self::eval_bool_option_value(option_value);
+            },
+            "phasicj_exec" => {
+                match option_value {
+                    None => panic!("The PhasicJ agent's `phasicj_exec` option is set, but it has no value."),
+                    Some("") => panic!("The PhasicJ agent's `phasicj_exec` option cannot be set to an empty string."),
+                    Some(value) => self.phasicj_exec = Some(String::from(value)),
+                };
             },
             "debug_dump_classes_before_instr" => {
                 self.debug_dump_classes_before_instr = Self::eval_bool_option_value(option_value);

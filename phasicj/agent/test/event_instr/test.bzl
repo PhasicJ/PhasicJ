@@ -6,6 +6,7 @@ def test(name, java_exec):
             "$(rootpath {})".format(java_exec),
             "$(rootpath //phasicj/agent:libpjagent)",
             "$(rootpath :TestApp.jar)",
+            "$(rootpath //phasicj/cli)",
         ],
         data = [
             java_exec,
@@ -18,5 +19,6 @@ def test(name, java_exec):
             #
             #  [1]: https://github.com/bazelbuild/bazel/issues/6783).
             "//phasicj/agent:libpjagent",
+            "//phasicj/cli",
         ],
     )
