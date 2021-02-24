@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <dlfcn.h>
-#include "phasicj/agent/svm/svm_dynamic.h"
+#include "phasicj/agent/experimental/svm/svm_dynamic.h"
 
 namespace fs = std::filesystem;
 

@@ -1,4 +1,4 @@
-package phasicj.agent.instr.svm;
+package phasicj.agent.instr.experimental.svm;
 
 // NOTE(dwtj): These GraalVM types are available implicitly when compiling using `javac` provided
 //  with the GraalVM distribution or from `graal-sdk`.

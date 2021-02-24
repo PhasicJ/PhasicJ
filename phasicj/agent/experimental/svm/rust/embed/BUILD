@@ -8,7 +8,7 @@ load("//bazel:util/files/copy_file.bzl", "copy_file")
 
 alias(
     name = "embed",
-    actual = ":phasicj_agent_svm_rust_embed",
+    actual = ":phasicj_agent_experimental_svm_rust_embed",
     visibility = ["//phasicj/agent:__subpackages__"],
 )
 
@@ -17,7 +17,7 @@ alias(
 #  package.
 copy_file(
     name = "copy_libsvm_so",
-    src = "//phasicj/agent/svm:libsvm.so",
+    src = "//phasicj/agent/experimental/svm:libsvm.so",
     out = "libsvm.so",
 )
 
@@ -28,7 +28,7 @@ sha1_hash_file(
 )
 
 rust_library(
-    name = "phasicj_agent_svm_rust_embed",
+    name = "phasicj_agent_experimental_svm_rust_embed",
     srcs = ["lib.rs"],
     compile_data = [
         "libsvm.so",
@@ -45,12 +45,12 @@ rust_test(
     name = "test",
     srcs = ["test.rs"],
     rustc_env = {
-        "SVM_TEST_CLASS_EXEC_PATH": "$(execpath //phasicj/agent/svm/test/data:SvmTestClass.class)"
+        "SVM_TEST_CLASS_EXEC_PATH": "$(execpath //phasicj/agent/experimental/svm/test/data:SvmTestClass.class)"
     },
     deps = [
-        ":phasicj_agent_svm_rust_embed",
-        "//phasicj/agent/svm/rust",
+        ":phasicj_agent_experimental_svm_rust_embed",
+        "//phasicj/agent/experimental/svm/rust",
     ],
-    compile_data = ["//phasicj/agent/svm/test/data:SvmTestClass.class"],
+    compile_data = ["//phasicj/agent/experimental/svm/test/data:SvmTestClass.class"],
     edition = "2018",
 )

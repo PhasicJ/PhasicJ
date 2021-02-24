@@ -2,7 +2,7 @@
 
 use ::std::path::Path;
 
-use ::phasicj_agent_svm_rust as svm;
+use ::phasicj_agent_experimental_svm_rust as svm;
 
 const SVM_LIBRARY_FILE_PATH: &'static str = env!("SVM_LIBRARY_FILE_PATH");
 

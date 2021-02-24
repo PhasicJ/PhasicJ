@@ -16,8 +16,8 @@ use ::jvmti::{
 use ::std::ffi;
 use crate::jvm::jvmti_env;
 use crate::jvm::jni_env;
-use ::phasicj_agent_svm_rust::SvmIsolateThread;
-use ::phasicj_agent_svm_rust_embed as svm_embed;
+use ::phasicj_agent_experimental_svm_rust::SvmIsolateThread;
+use ::phasicj_agent_experimental_svm_rust_embed as svm_embed;
 use crate::jvm::env_storage::EnvStorage;
 use ::std::path::Path;
 

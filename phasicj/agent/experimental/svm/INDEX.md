@@ -1,4 +1,7 @@
-# PhasicJ Agent Substrate VM Module
+# Experimental PhasicJ Agent Substrate VM Module
+
+NOTE(dwtj): This module is currently marked experimental because my attempts
+to integrate it with the PhasicJ Agent have stalled.
 
 Substrate VM (SVM) is the virtual machine (or alternatively, "runtime") used as
 the foundations for Java programs when compiled to native code using the

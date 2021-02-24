@@ -10,9 +10,9 @@ dwtj_java_library(
 extract_file_from_jar(
     name = "svm_test_class_unjar",
     in_jar = ":svm_test_class.jar",
-    file_to_extract = "phasicj/agent/svm/test/SvmTestClass.class",
+    file_to_extract = "phasicj/agent/experimental/svm/test/SvmTestClass.class",
     out_file = "SvmTestClass.class",
-    visibility = ["//phasicj/agent/svm:__subpackages__"],
+    visibility = ["//phasicj/agent/experimental/svm:__subpackages__"],
 )
 
 # TODO(dwtj): Consider adding a test where `java.lang.Object` is instrumented.

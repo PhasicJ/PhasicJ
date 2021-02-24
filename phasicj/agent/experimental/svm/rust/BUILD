@@ -6,7 +6,7 @@ load(
 
 alias(
     name = "rust",
-    actual = "phasicj_agent_svm_rust",
+    actual = "phasicj_agent_experimental_svm_rust",
     visibility = ["//phasicj/agent:__subpackages__"],
 )
 
@@ -14,11 +14,11 @@ alias(
 genrule(
     name = "svm_dynamic_bindgen",
     srcs = [
-        "//phasicj/agent/svm:svm_dynamic.h",
-        "//phasicj/agent/svm:graal_isolate_dynamic.h",
+        "//phasicj/agent/experimental/svm:svm_dynamic.h",
+        "//phasicj/agent/experimental/svm:graal_isolate_dynamic.h",
     ],
     outs = ["svm_dynamic.rs"],
-    cmd_bash = 'bindgen --output "$@" $(execpath //phasicj/agent/svm:svm_dynamic.h) -- -I`dirname "$(execpath //phasicj/agent/svm:graal_isolate_dynamic.h)"`',
+    cmd_bash = 'bindgen --output "$@" $(execpath //phasicj/agent/experimental/svm:svm_dynamic.h) -- -I`dirname "$(execpath //phasicj/agent/experimental/svm:graal_isolate_dynamic.h)"`',
 )
 
 rust_library(
@@ -31,18 +31,18 @@ rust_library(
         "-A",
         "non-upper-case-globals",
     ],
-    visibility = ["//phasicj/agent/svm:__subpackages__"],
+    visibility = ["//phasicj/agent/experimental/svm:__subpackages__"],
 )
 
 rust_library(
-    name = "phasicj_agent_svm_rust",
+    name = "phasicj_agent_experimental_svm_rust",
     srcs = [
         "lib.rs",
         "svm_function_types.rs",
     ],
     deps = [
         "//third_party/cargo:libloading",
-        "//phasicj/agent/svm/rust:svm_raw",
+        "//phasicj/agent/experimental/svm/rust:svm_raw",
     ],
     edition = "2018",
 )
@@ -51,21 +51,21 @@ rust_test(
     name = "test",
     srcs = ["test.rs"],
     compile_data = [
-        "//phasicj/agent/svm/test/data:SvmTestClass.class",
+        "//phasicj/agent/experimental/svm/test/data:SvmTestClass.class",
     ],
     data = [
-        "//phasicj/agent/svm:libsvm.so",
+        "//phasicj/agent/experimental/svm:libsvm.so",
     ],
     rustc_env = {
         # NOTE(dwtj): This file is read at test run-time.
-        "SVM_LIBRARY_FILE_PATH": "$(rootpath //phasicj/agent/svm:libsvm.so)",
+        "SVM_LIBRARY_FILE_PATH": "$(rootpath //phasicj/agent/experimental/svm:libsvm.so)",
 
         # NOTE(dwtj): This file is read at compile-time and its bytes are
         #  embedded in the test executable.
-        "SVM_TEST_CLASS_FILE_PATH": "$(execpath //phasicj/agent/svm/test/data:SvmTestClass.class)",
+        "SVM_TEST_CLASS_FILE_PATH": "$(execpath //phasicj/agent/experimental/svm/test/data:SvmTestClass.class)",
     },
     deps = [
-        ":phasicj_agent_svm_rust",
+        ":phasicj_agent_experimental_svm_rust",
     ],
     edition = "2018",
 )

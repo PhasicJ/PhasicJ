@@ -1,4 +1,4 @@
-package phasicj.agent.svm.test;
+package phasicj.agent.experimental.svm.test;
 
 public class SvmTestClass {
   public static void main(String[] args) {

@@ -1,13 +1,13 @@
 #![cfg(test)]
 
-use ::phasicj_agent_svm_rust_embed::{
+use ::phasicj_agent_experimental_svm_rust_embed::{
     svm,
     svm_sha1_hash,
     svm_default_temp_file_path,
     write_svm_file_if_missing,
 };
 
-use ::phasicj_agent_svm_rust::SvmIsolateThread;
+use ::phasicj_agent_experimental_svm_rust::SvmIsolateThread;
 
 #[test]
 fn test_svm_is_non_empty() {
