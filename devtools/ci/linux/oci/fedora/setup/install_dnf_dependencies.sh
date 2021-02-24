@@ -16,6 +16,7 @@ dnf install --assumeyes \
     msmtp \
     openssh-server \
     git \
-    task-spooler
+    task-spooler \
+    rubygem-asciidoctor
 
 dnf clean all
