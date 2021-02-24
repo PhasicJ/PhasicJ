@@ -56,6 +56,10 @@
       homebrew:
         name: msmtp
 
+    - name: Homebrew Install asciidoctor
+      homebrew:
+        name: asciidoctor
+
     - name: Cargo install bindgen
       command: cargo install bindgen
       become: yes
