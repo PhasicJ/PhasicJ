@@ -32,7 +32,6 @@ impl <'a> Instrumenter<'a> {
 
     // TODO(dwtj): Improve error handling throughout this function.
     pub fn instrument(&self, class_data: &[u8]) -> io::Result<Vec<u8>> {
-        eprintln!("{:?} agent instrument-class", &self.phasicj_exec);
         let output = self.invoke_phasicj_agent_instrument_class(class_data)?;
         if !output.status.success() {
             // TODO(dwtj): Consider collecting stderr.
