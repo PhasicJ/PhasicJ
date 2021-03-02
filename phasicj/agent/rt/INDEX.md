@@ -21,23 +21,23 @@ JVMTI interface to interact with and monitor the user's JVM application.
 
 JVMTI is a powerful interface. A JVMTI agent can drastically alter the behaivor
 of the JVM application. It is thus a guiding principle of PhasicJ's design and
-implementation that we attempt to interfere with the behavior of the user's
-application as little as possible. But, some amount of modification seems
-unavoidable in order to monitor the user application.
+implementation that we attempt to minimize our interference of the natural
+behavior of the user's application. But, in order to sufficiently monitor the
+user applciation, some amount of modification seems unavoidable.
 
 ## The Runtime Processes and Forwards Monitored Events
 
 Currently, we monitor user application events via a combination of JVMTI events
-and bytecode instrumentation. The [`instr`][1] package implements the code
-which actually performs bytecode instrumentation. The PhasicJ Agent Runtime,
-implemented under this directory, is the first step in processing events
-generated from bytecode instrumented sites.
+and bytecode instrumentation. The code in the [`instr`][1] package implements
+the code which actually performs bytecode instrumentation. The added
+instrumentation sites call the PhasicJ Agent Runtime, [`rt`][2], as the first
+step in processing events generated from bytecode instrumented sites.
 
 The PhasicJ Agent Runtime is the direct receiver of these monitored
 application events. For example, whenever the user application performs a
 `MONITORENTER` instruction in some class `C`, the instrumentation in class
 `C` should collect relevant information about this event and then forward
-this information to the PhasicJ Agent Runtime. By "forward", here we just
+this information to the PhasicJ Agent Runtime. By "forward" here we just
 mean a regular method call within the user's JVM from the user's application
 code to our PhasicJ Agent Runtime code.
 
@@ -51,24 +51,25 @@ components with only minimal processing.
 ## Calling the Runtime From Instrumentation Sites
 
 The PhasicJ Agent may instrument any class in the user's JVM, even Java
-standard library classes. Our design needs to ensure that at run-time any
-added static field accesses and method calls will be resolved to class
-definitions classes at run-time. We don't want our instrumentation to trigger
-any `NoClassDefFoundError`s.
+standard library classes. Our design needs to ensure that, at run-time, any
+added field accesses and method calls will be resolved to some actually
+available class definitions. We don't want our instrumentation to trigger any
+`NoClassDefFoundError`s.
 
-To make our Runtime's class definitions available at all instrumentation sites,
-even those in the Java standard library, we use the JVMTI interface add a JAR
-containing all of them to the user application's bootstrap class loader's
-search path (a.k.a. the boot class-path).
+To make our PhasicJ Agent Runtime class definitions available at all
+instrumentation sites, even those in the Java standard library, we use the
+JVMTI interface to add a JAR containing these Runtime classes to the user
+application's bootstrap class loader's search path (a.k.a. the boot
+class-path).
 
 Unfortunately, the JVM cannot even read from our Runtime JAR added in this
-way before it has initialized to a certain point. Therefore, even if we use the
-JVMTI interface to add our Runtime JAR as early as possible, our
-instrumentation sites can't use the classes in this JAR until after a
-certain point in JVM startup. Essentially, during early JVM startup, there is
-only a limited set of class definitions which can be used, and we cannot extend
-this set. We want this set to be instrumented, and we want them to be run, but
-we can't let `NoClassDefFoundError`s occur.
+way before it has been initialized to a certain point. Therefore, even if we
+use the JVMTI interface to add our Runtime JAR as early as possible, our
+instrumentation sites can't use the classes in this JAR until after this
+point in JVM startup. Essentially, during early JVM startup, there is only a
+limited set of class definitions which can be used, and we cannot extend this
+set. We want this set to be instrumented, and we want them to be run, but we
+can't let `NoClassDefFoundError`s occur.
 
 Fortunately, we can work around this problem by using instrumentation to modify
 the definitions of classes within this set. Instead of having our
@@ -87,3 +88,4 @@ and methods which we add to `java.lang.Object` to support this forwarding.
 ---
 
 [1]: /phasicj/agent/instr
+[2]: /phasicj/agent/rt
