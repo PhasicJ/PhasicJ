@@ -182,9 +182,9 @@ def bazel_skylib():
         sha256 = _BAZEL_SKYLIB_RELEASE_SHA256,
     )
 
-# Latest commit to master branch as of 2021-02-01.
-_RULES_RUST_COMMIT = "4fbf3cf1d7b2c4626abfe7f38c857895dda44cd0"
-_RULES_RUST_SHA256 = "79ad97b2b60ab580c01b7403c37c09e41a0ce5251d4126fccb862eb9e78e2501"
+# Latest commit to master branch as of 2021-06-18.
+_RULES_RUST_COMMIT = "f66001a3ae396b7695e10ca451a6d89c024529a1"
+_RULES_RUST_SHA256 = "a05a34b9e89ec8f86270be51a1328edaa93abfc7c931243e8bd55ca4516626a6"
 
 def rules_rust():
     http_archive(

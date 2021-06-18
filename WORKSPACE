@@ -242,7 +242,7 @@ rules_rust()
 
 load("@rules_rust//rust:repositories.bzl", "rust_repositories")
 
-rust_repositories()
+rust_repositories(edition = "2018")
 
 # CONFIGURE cargo-raze ########################################################
 
