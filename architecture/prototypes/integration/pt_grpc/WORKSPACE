@@ -17,6 +17,7 @@ load(
     "rules_cc",
     "rules_java",
     "rules_proto",
+    "rules_jvm_external",
 )
 
 # CONFIGURE `@rules_proto` ####################################################
@@ -54,13 +55,13 @@ rules_cc()
 # CONFIGURE `@com_github_grpc_grpc` ###########################################
 
 # NOTE(dwtj): This version is used because it is the latest release as I am
-#  drafting this on 2020-09-19.
+#  updating this on 2021-06-18.
 
-_GRPC_TAG = "v1.32.0"
+_GRPC_TAG = "v1.38.0"
 
-_GRPC_ARCHIVE_PREFIX = "grpc-1.32.0"
+_GRPC_ARCHIVE_PREFIX = "grpc-1.38.0"
 
-_GRPC_SHA256 = "f880ebeb2ccf0e47721526c10dd97469200e40b5f101a0d9774eb69efa0bd07a"
+_GRPC_SHA256 = "abd9e52c69000f2c051761cfa1f12d52d8b7647b6c66828a91d462e796f2aede"
 
 http_archive(
     name = "com_github_grpc_grpc",
@@ -80,13 +81,14 @@ grpc_extra_deps()
 # CONFIGURE `@com_github_grpc_grpc_java` ######################################
 
 # NOTE(dwtj): This version is used because it is the latest release as I am
-#  drafting this on 2020-09-19.
+#  updating this on 2021-06-18.
 
-_GRPC_JAVA_TAG = "v1.32.1"
+_GRPC_JAVA_TAG = "v1.38.1"
 
-_GRPC_JAVA_ARCHIVE_PREFIX = "grpc-java-1.32.1"
+_GRPC_JAVA_ARCHIVE_PREFIX = "grpc-java-1.38.1"
 
-_GRPC_JAVA_SHA256 = "e5d691f80e7388035c34616a17830ec2687fb2ef5c5d9c9b79c605a7addb78ab"
+_GRPC_JAVA_SHA256 = "80119952caa2111abd708e350be01e0615d1510a862cf0151eeae573445f98fa" # v1.38.1
+# _GRPC_JAVA_SHA256 = "c454e068bfb5d0b5bdb5e3d7e32cd1fc34aaf22202855e29e048f3ad338e57b2" # v1.38.0
 
 http_archive(
     name = "com_github_grpc_grpc_java",
@@ -95,6 +97,40 @@ http_archive(
     url = "https://github.com/grpc/grpc-java/archive/{}.tar.gz".format(_GRPC_JAVA_TAG),
 )
 
-load("@com_github_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+load(
+    "@com_github_grpc_grpc_java//:repositories.bzl",
+    "grpc_java_repositories",
+    "IO_GRPC_GRPC_JAVA_ARTIFACTS",
+    "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
+)
+
+# Needed for some gRPC-java deps (e.g., `@com_google_code_findbugs_jsr305`).
+# See [this example Bazel workspace][1] for a full example.
+#
+# [1]: https://github.com/grpc/grpc-java/blob/d4fa0ecc07495097453b0a2848765f076b9e714c/examples/WORKSPACE
+
+rules_jvm_external()
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    name = "maven",
+    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
+    generate_compat_repositories = True,
+    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+    repositories = [
+        "https://jcenter.bintray.com/",
+        "https://maven.google.com",
+        "https://repo1.maven.org/maven2",
+    ],
+)
+
+load("@maven//:compat.bzl", "compat_repositories")
+
+compat_repositories()
 
 grpc_java_repositories()
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
