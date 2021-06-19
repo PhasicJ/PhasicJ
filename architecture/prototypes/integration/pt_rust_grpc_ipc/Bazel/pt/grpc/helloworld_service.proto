@@ -1,0 +1,18 @@
+// Code taken from [this tutorial][1]
+//
+// [1]: https://github.com/hyperium/tonic/blob/12815d0a1d558eb9f661a85354336b04df1f5bab/examples/helloworld-tutorial.md
+
+syntax = "proto3";
+package helloworld;
+
+service Greeter {
+    rpc SayHello (HelloRequest) returns (HelloReply);
+}
+
+message HelloRequest {
+   string name = 1;
+}
+
+message HelloReply {
+    string message = 1;
+}

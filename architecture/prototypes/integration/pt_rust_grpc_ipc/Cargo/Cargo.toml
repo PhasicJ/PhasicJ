@@ -1,0 +1,14 @@
+[package]
+name = "pt_rust_grpc_ipc"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+tokio = { version = "1.7.1", features = ["full"] }
+tonic = "0.4.3"
+prost = "0.7"
+simple-error = "0.2.3"
+
+[build-dependencies]
+tonic-build = "0.4"
+prost-build = "0.7.0"

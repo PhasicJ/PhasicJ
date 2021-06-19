@@ -45,6 +45,14 @@ bazel build //...
 # TODO(dwtj): Add a test.
 #bazel test //...
 
+cd "${REPOSITORY_ROOT}/architecture/prototypes/integration/pt_rust_grpc_ipc/Bazel"
+bazel build //...
+bazel test //...
+
+cd "${REPOSITORY_ROOT}/architecture/prototypes/integration/pt_rust_grpc_ipc/Cargo"
+cargo build
+cargo test
+
 echo
 echo 'SUCCESS: All checks completed successfully!'
 echo
