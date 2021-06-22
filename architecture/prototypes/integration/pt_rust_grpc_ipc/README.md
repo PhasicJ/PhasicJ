@@ -20,6 +20,9 @@ We chose UNIX domain sockets in order to rely on UNIX permissions as a simple
 authentication strategy. They can only be used for host-local communication,
 but this limitation is no problem at this point.
 
+An example which includes a gRPC/Tonic client and server communicating over
+UNIX domain sockets is available [here][8].
+
 When using Bazel, we also use the `cargo-raze` Cargo plugin/extension to
 generate Cargo dependency information to make Cargo dependencies available from
 within Bazel. Configuration is put in `//third_pary/cargo:Cargo.toml` and
@@ -40,3 +43,4 @@ demonstrate these approaches with `//pt/grpc/bazel_style` and
 [5]: https://grpc.io/
 [6]: https://developers.google.com/protocol-buffers
 [7]: https://docs.rs/tonic/
+[8]: https://github.com/hyperium/tonic/blob/e5e311853bff347355722bc829d40f54e8954aee/examples/src/uds/server.rs

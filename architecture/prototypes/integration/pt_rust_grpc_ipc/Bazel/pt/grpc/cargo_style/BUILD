@@ -13,20 +13,56 @@ cargo_build_script(
         "PROTOC": "/usr/bin/protoc",
         "PROTOC_INCLUDE": "/usr/include",
     },
+    edition = "2018",
 )
 
 rust_binary(
-    name = "test_server",
-    srcs = ["test_server.rs"],
+    name = "server",
+    srcs = ["server.rs"],
     deps = [
         ":helloworld",
         "//third_party/cargo:tokio",
         "//third_party/cargo:tonic",
         "//third_party/cargo:prost",
+        "//third_party/cargo:tower",
+
+        # NOTE(dwtj): These two are needed for `async_stream::stream!` and
+        # `tonic::transport::server::Router::serve_with_incoming()`.
+        "//third_party/cargo:async_stream",
+        "//third_party/cargo:futures",
     ],
     proc_macro_deps = [
         # Needed because `async fn` [isn't yet supported within traits][1].
         # [1]: https://rust-lang.github.io/async-book/07_workarounds/05_async_in_traits.html[]
         "//third_party/cargo:async_trait",
     ],
+    edition = "2018",
+)
+
+rust_binary(
+    name = "client",
+    srcs = ["client.rs"],
+    deps = [
+        ":helloworld",
+        "//third_party/cargo:tokio",
+        "//third_party/cargo:tonic",
+        "//third_party/cargo:prost",
+        "//third_party/cargo:tower",
+    ],
+    edition = "2018",
+)
+
+sh_test(
+    name = "helloworld_test",
+    srcs = ["test.sh"],
+    data = [
+        ":server",
+        ":client",
+    ],
+    args = [
+        "$(rootpath :server)",
+        "$(rootpath :client)",
+    ],
+    env = {"RUST_BACKTRACE": "1"},
+    flaky = True,
 )

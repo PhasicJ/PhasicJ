@@ -1,6 +1,6 @@
 [package]
 name = "cargo_raze_configuration"
-version = "0.0.0"
+version = "0.1.0"
 
 # NOTE(dwtj): Some lib is needed here, otherwise the Cargo tooling is unhappy.
 [lib]
@@ -8,12 +8,19 @@ path = "empty_lib_for_cargo_raze_configuration.rs"
 
 [dependencies]
 tokio = { version = "1.7.1", features = ["full"] }
-tonic = "0.4.3"
+# NOTE(dwtj): We use an unrelased version of `tonic` because of some upcoming
+# breaking changes to the way in which UNIX domain sockets are used.
+#tonic = "0.4.3"
+#tonic-build = "0.4.2"
+tonic = { git = "https://github.com/hyperium/tonic", commit = "b90bb7bbc012207451fe2788a8efd69023312425" }
+tonic-build = { git = "https://github.com/hyperium/tonic", commit = "b90bb7bbc012207451fe2788a8efd69023312425" }
 prost = "0.7"
-tonic-build = "0.4.2"
 prost-build = "0.7.0"
+tower = "0.4.8"
 simple-error = "0.2.3"
 async-trait = "0.1.50"
+async-stream = "0.3.2"
+futures = "0.3.2"
 
 [package.metadata.raze]
 workspace_path = "//third_party/cargo"

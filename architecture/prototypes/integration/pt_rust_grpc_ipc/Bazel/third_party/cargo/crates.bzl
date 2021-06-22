@@ -133,6 +133,16 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
+        name = "raze__futures__0_3_15",
+        url = "https://crates.io/api/v1/crates/futures/0.3.15/download",
+        type = "tar.gz",
+        sha256 = "0e7e43a803dae2fa37c1f6a8fe121e1f7bf9548b4dfc0522a42f34145dadfc27",
+        strip_prefix = "futures-0.3.15",
+        build_file = Label("//third_party/cargo/remote:BUILD.futures-0.3.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
         name = "raze__futures_channel__0_3_15",
         url = "https://crates.io/api/v1/crates/futures-channel/0.3.15/download",
         type = "tar.gz",
@@ -149,6 +159,36 @@ def raze_fetch_remote_crates():
         sha256 = "0402f765d8a89a26043b889b26ce3c4679d268fa6bb22cd7c6aad98340e179d1",
         strip_prefix = "futures-core-0.3.15",
         build_file = Label("//third_party/cargo/remote:BUILD.futures-core-0.3.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "raze__futures_executor__0_3_15",
+        url = "https://crates.io/api/v1/crates/futures-executor/0.3.15/download",
+        type = "tar.gz",
+        sha256 = "badaa6a909fac9e7236d0620a2f57f7664640c56575b71a7552fbd68deafab79",
+        strip_prefix = "futures-executor-0.3.15",
+        build_file = Label("//third_party/cargo/remote:BUILD.futures-executor-0.3.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "raze__futures_io__0_3_15",
+        url = "https://crates.io/api/v1/crates/futures-io/0.3.15/download",
+        type = "tar.gz",
+        sha256 = "acc499defb3b348f8d8f3f66415835a9131856ff7714bf10dadfc4ec4bdb29a1",
+        strip_prefix = "futures-io-0.3.15",
+        build_file = Label("//third_party/cargo/remote:BUILD.futures-io-0.3.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "raze__futures_macro__0_3_15",
+        url = "https://crates.io/api/v1/crates/futures-macro/0.3.15/download",
+        type = "tar.gz",
+        sha256 = "a4c40298486cdf52cc00cd6d6987892ba502c7656a16a4192a9992b1ccedd121",
+        strip_prefix = "futures-macro-0.3.15",
+        build_file = Label("//third_party/cargo/remote:BUILD.futures-macro-0.3.15.bazel"),
     )
 
     maybe(
@@ -523,6 +563,26 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
+        name = "raze__proc_macro_hack__0_5_19",
+        url = "https://crates.io/api/v1/crates/proc-macro-hack/0.5.19/download",
+        type = "tar.gz",
+        sha256 = "dbf0c48bc1d91375ae5c3cd81e3722dff1abcf81a30960240640d223f59fe0e5",
+        strip_prefix = "proc-macro-hack-0.5.19",
+        build_file = Label("//third_party/cargo/remote:BUILD.proc-macro-hack-0.5.19.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "raze__proc_macro_nested__0_1_7",
+        url = "https://crates.io/api/v1/crates/proc-macro-nested/0.1.7/download",
+        type = "tar.gz",
+        sha256 = "bc881b2c22681370c6a780e47af9840ef841837bc98118431d4e1868bd0c1086",
+        strip_prefix = "proc-macro-nested-0.1.7",
+        build_file = Label("//third_party/cargo/remote:BUILD.proc-macro-nested-0.1.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
         name = "raze__proc_macro2__1_0_27",
         url = "https://crates.io/api/v1/crates/proc-macro2/1.0.27/download",
         type = "tar.gz",
@@ -762,23 +822,21 @@ def raze_fetch_remote_crates():
     )
 
     maybe(
-        http_archive,
+        new_git_repository,
         name = "raze__tonic__0_4_3",
-        url = "https://crates.io/api/v1/crates/tonic/0.4.3/download",
-        type = "tar.gz",
-        sha256 = "2ac42cd97ac6bd2339af5bcabf105540e21e45636ec6fa6aae5e85d44db31be0",
-        strip_prefix = "tonic-0.4.3",
+        remote = "https://github.com/hyperium/tonic",
+        commit = "b90bb7bbc012207451fe2788a8efd69023312425",
         build_file = Label("//third_party/cargo/remote:BUILD.tonic-0.4.3.bazel"),
+        init_submodules = True,
     )
 
     maybe(
-        http_archive,
+        new_git_repository,
         name = "raze__tonic_build__0_4_2",
-        url = "https://crates.io/api/v1/crates/tonic-build/0.4.2/download",
-        type = "tar.gz",
-        sha256 = "c695de27302f4697191dda1c7178131a8cb805463dda02864acb80fe1322fdcf",
-        strip_prefix = "tonic-build-0.4.2",
+        remote = "https://github.com/hyperium/tonic",
+        commit = "b90bb7bbc012207451fe2788a8efd69023312425",
         build_file = Label("//third_party/cargo/remote:BUILD.tonic-build-0.4.2.bazel"),
+        init_submodules = True,
     )
 
     maybe(
