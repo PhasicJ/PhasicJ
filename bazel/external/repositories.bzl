@@ -24,8 +24,8 @@ def rules_jvm_external():
     )
 
 _DWTJ_RULES_JAVA_ARCHIVE_INFO = {
-    "commit": "18a8a441cfa48d4df0c2440e6f4dd4961894114d",
-    "sha256": "c4726c833be490062551957bb584461ec58e1d4eb1fe24d1858ba9f64f8560c3",
+    "commit": "9d979544ab2a242ff777caee7cd83fe2fe6844d3",
+    "sha256": "06cc8702a42f3ab8bfd0de462d07e2590ecd1a05a3f0841c3b9fa49809a6ff69",
 }
 
 def dwtj_rules_java():
@@ -36,9 +36,9 @@ def dwtj_rules_java():
         sha256 = _DWTJ_RULES_JAVA_ARCHIVE_INFO["sha256"],
     )
 
-_REMOTE_GRAALVM_VERSION = "21.0.0"
-_REMOTE_GRAALVM_LINUX_ARCHIVE_SHA256 = "4cdb5b9d0142cdaf5565fd20c5cde176d9b7c9dfd278267cab318f64f2923dbc"
-_REMOTE_GRAALVM_LINUX_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "c70b00b4eabcc0140505acab756c394a88be7980634706cce11f53e09658707c"
+_REMOTE_GRAALVM_VERSION = "21.1.0"
+_REMOTE_GRAALVM_LINUX_ARCHIVE_SHA256 = "39252954d2cb16dbc8ce4269f8b93a326a0efffdce04625615e827fe5b5e4ab7"
+_REMOTE_GRAALVM_LINUX_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "1ab725616fede21ad5ae900d00ec6d45753db6f6f4fe51a836d538c79d79614a"
 
 def apply_remote_graalvm_linux_repository(name, remote_graalvm_repository_rule):
     remote_graalvm_repository_rule(
@@ -52,8 +52,8 @@ def apply_remote_graalvm_linux_repository(name, remote_graalvm_repository_rule):
         cpu = "x64",
     )
 
-_REMOTE_GRAALVM_DARWIN_X64_ARCHIVE_SHA256 = "0e6b9af45d0ba40d8e61b16708361f794e17430f5098760bd03584ebcc950fa9"
-_REMOTE_GRAALVM_DARWIN_X64_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "68d95999312e96c8cd070a8ba1d9724bc4d4fbe03e29da2c392e021a5f393fb5"
+_REMOTE_GRAALVM_DARWIN_X64_ARCHIVE_SHA256 = "b53cd5a085fea39cb27fc0e3974f00140c8bb774fb2854d72db99e1be405ae2b"
+_REMOTE_GRAALVM_DARWIN_X64_NATIVE_IMAGE_INSTALLABLE_JAR_SHA256 = "71790754752e5ae744912c0def358c9e2176f2ad3fd371dc6b401705dfef0137"
 
 def apply_remote_graalvm_macos_repository(name, remote_graalvm_repository_rule):
     remote_graalvm_repository_rule(
@@ -122,14 +122,18 @@ def rules_cc():
         sha256 = _RULES_CC_SHA256,
     )
 
-_RENAISSANCE_BENCHMARKS_JAR_VERSION = "0.11.0"
-_RENAISSANCE_BENCHMARKS_JAR_SHA256 = "6b6038cc0dfab4f44fa97f4918f75332ad91ae332db7867b18baf17ed55d2ce4"
+# This is the latest commit on the master branch of the Renaissance benchmarks
+# as of 2021-06-24.
+_RENAISSANCE_BENCHMARKS_COMMIT = "4cccf729d40d03928fe2c21e518ea89a2c403349"
+_RENAISSANCE_BENCHMARKS_SHA256 = "33a25951c0bac9939ad8ea902084703f07e227aa32900423e61dbf7c845a5eb8"
 
 def com_github_renaissance_benchmarks():
-    http_jar(
+    http_archive(
         name = "com_github_renaissance_benchmarks",
-        url = "https://github.com/renaissance-benchmarks/renaissance/releases/download/v{0}/renaissance-gpl-{0}.jar".format(_RENAISSANCE_BENCHMARKS_JAR_VERSION),
-        sha256 = _RENAISSANCE_BENCHMARKS_JAR_SHA256,
+        url = "https://github.com/renaissance-benchmarks/renaissance/archive/{}.tar.gz".format(_RENAISSANCE_BENCHMARKS_COMMIT),
+        strip_prefix = "renaissance-{}".format(_RENAISSANCE_BENCHMARKS_COMMIT),
+        sha256 = _RENAISSANCE_BENCHMARKS_SHA256,
+        build_file = "//bazel:external/BUILD.renaissance",
     )
 
 _ORG_OW2_ASM_JAR_VERSION = "9.0"

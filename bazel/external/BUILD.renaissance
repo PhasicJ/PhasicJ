@@ -1,0 +1,5 @@
+filegroup(
+    name = "all_renaissance_source_files",
+    srcs = glob(["**/*"]),
+    visibility = ["//visibility:public"],
+)
