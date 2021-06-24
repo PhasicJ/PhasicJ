@@ -48,3 +48,17 @@ rust_proto_repositories(register_default_toolchain = True)
 load("//third_party/cargo:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
+
+# CONFIGURE `@platforms` ######################################################
+
+PLATFORMS_RELEASE = "0.0.4"
+PLATFORMS_SHA256 = "079945598e4b6cc075846f7fd6a9d0857c33a7afc0de868c2ccb96405225135d"
+
+http_archive(
+    name = "platforms",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/{0}/platforms-{0}.tar.gz".format(PLATFORMS_RELEASE),
+        "https://github.com/bazelbuild/platforms/releases/download/{0}/platforms-{0}.tar.gz".format(PLATFORMS_RELEASE),
+    ],
+    sha256 = PLATFORMS_SHA256,
+)

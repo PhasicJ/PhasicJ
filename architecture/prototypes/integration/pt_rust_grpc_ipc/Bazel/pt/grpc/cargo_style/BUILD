@@ -1,6 +1,14 @@
 load("@rules_rust//rust:defs.bzl", "rust_binary")
 load("@rules_rust//cargo:cargo_build_script.bzl", "cargo_build_script")
 
+HELLOWORLD_SERVICE_PROTO = "//pt/grpc:helloworld_service.proto"
+
+# NOTE(dwtj): We perform our own selection of the `protoc` executable based on
+# our platform because `@rules_proto` has not implemented a toolchain to help us
+# perform this selection.
+# TODO(dwtj): Select between CPU architectures when more are supported in
+# PhasicJ.
+# TODO(dwtj): Figure out how to make this more concise.
 cargo_build_script(
     name = "helloworld",
     srcs = ["helloworld_build.rs"],
@@ -8,11 +16,24 @@ cargo_build_script(
         "//third_party/cargo:tonic_build",
         "//third_party/cargo:prost_build",
     ],
-    data = ["//pt/grpc:helloworld_service.proto"],
-    build_script_env = {
-        "PROTOC": "/usr/bin/protoc",
-        "PROTOC_INCLUDE": "/usr/include",
-    },
+    data = select({
+        "@platforms//os:macos": [
+            HELLOWORLD_SERVICE_PROTO,
+            "@com_google_protobuf_protoc_macos_x86_64//:protoc",
+        ],
+        "@platforms//os:linux": [
+            HELLOWORLD_SERVICE_PROTO,
+            "@com_google_protobuf_protoc_linux_x86_64//:protoc",
+        ]
+    }),
+    build_script_env = select({
+        "@platforms//os:macos": {
+            "PROTOC": "$(rootpath @com_google_protobuf_protoc_macos_x86_64//:protoc)",
+        },
+        "@platforms//os:linux": {
+            "PROTOC": "$(rootpath @com_google_protobuf_protoc_linux_x86_64//:protoc)",
+        },
+    }),
     edition = "2018",
 )
 
