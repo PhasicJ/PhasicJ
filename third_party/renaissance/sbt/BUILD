@@ -26,6 +26,11 @@ genrule(
         "@platforms//os:macos": cmd_bash_select_clause("macos"),
         "@platforms//os:linux": cmd_bash_select_clause("linux"),
     }),
+    # TODO(dwtj): Try to remove this.
+    # NOTE(dwtj): When local = False (the default), `sbt` will error when it
+    # tries to write to `~/.cache/coursier` because the sandbox makes this
+    # part of the filesystem read-only.
+    local = True,
 )
 
 java_import(
