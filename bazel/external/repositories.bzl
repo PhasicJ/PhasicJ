@@ -77,38 +77,15 @@ def rules_java():
         sha256 = _RULES_JAVA_SHA256,
     )
 
-# NOTE(dwtj): This version was chosen because it was the most recent commit to
-#  [master] when this code was drafted, 2020-09-19.
-#_RULES_PROTO_COMMIT = "40298556293ae502c66579620a7ce867d5f57311"
-#_RULES_PROTO_SHA256 = "aa1ee19226f707d44bee44c720915199c20c84a23318bb0597ed4e5c873ccbd5"
-#
-#def rules_proto():
-#    http_archive(
-#        name = "rules_proto",
-#        sha256 = _RULES_PROTO_SHA256,
-#        strip_prefix = "rules_proto-{}".format(_RULES_PROTO_COMMIT),
-#        url = "https://github.com/bazelbuild/rules_proto/archive/{}.tar.gz".format(_RULES_PROTO_COMMIT),
-#    )
-
-# NOTE(dwtj): We currently use a forked version of `@rules_proto` by Yannic was
-#  because it fixes a [bug][1] seen in the latest [master] of `@rules_proto` (as
-#  of 2020-09-19). Yannic's fix appears to just bump the Protobuf version to
-#  v3.13.0.
-#
-#  [1]: https://github.com/bazelbuild/rules_proto/issues/67
-
-# TODO(dwtj): Use the official `@rules_proto` release once this issue is
-#  resolved.
-
-_YANNIC_RULES_PROTO_COMMIT = "6103a187ba73feab10b5c44b52fa093675807d34"
-_YANNIC_RULES_PROTO_SHA256 = "397d82596ae66101626d0eed39a0f09a01b07e6b1de362fe05c900c2eae6848a"
+_RULES_PROTO_COMMIT = "c0b62f2f46c85c16cb3b5e9e921f0d00e3101934"
+_RULES_PROTO_SHA256 = "e0cab008a9cdc2400a1d6572167bf9c5afc72e19ee2b862d18581051efab42c9"
 
 def rules_proto():
     http_archive(
         name = "rules_proto",
-        sha256 = _YANNIC_RULES_PROTO_SHA256,
-        strip_prefix = "rules_proto_bazelbuild-{}".format(_YANNIC_RULES_PROTO_COMMIT),
-        url = "https://github.com/Yannic/rules_proto_bazelbuild/archive/{}.tar.gz".format(_YANNIC_RULES_PROTO_COMMIT),
+        sha256 = _RULES_PROTO_SHA256,
+        strip_prefix = "rules_proto-{}".format(_RULES_PROTO_COMMIT),
+        url = "https://github.com/bazelbuild/rules_proto/archive/{}.tar.gz".format(_RULES_PROTO_COMMIT),
     )
 
 _RULES_CC_COMMIT = "02becfef8bc97bda4f9bb64e153f1b0671aec4ba"
@@ -196,4 +173,17 @@ def rules_rust():
         url = "https://github.com/bazelbuild/rules_rust/archive/{}.tar.gz".format(_RULES_RUST_COMMIT),
         sha256 = _RULES_RUST_SHA256,
         strip_prefix = "rules_rust-{}".format(_RULES_RUST_COMMIT),
+    )
+
+_PLATFORMS_RELEASE = "0.0.4"
+_PLATFORMS_SHA256 = "079945598e4b6cc075846f7fd6a9d0857c33a7afc0de868c2ccb96405225135d"
+
+def platforms():
+    http_archive(
+        name = "platforms",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/{0}/platforms-{0}.tar.gz".format(_PLATFORMS_RELEASE),
+            "https://github.com/bazelbuild/platforms/releases/download/{0}/platforms-{0}.tar.gz".format(_PLATFORMS_RELEASE),
+        ],
+        sha256 = _PLATFORMS_SHA256,
     )
