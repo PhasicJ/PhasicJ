@@ -1,5 +1,11 @@
+package(
+    default_visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "all_renaissance_source_files",
-    srcs = glob(["**/*"]),
-    visibility = ["//visibility:public"],
+    srcs = glob(
+        ["**/*"],
+        exclude = ["target/**/*"],
+    ),
 )

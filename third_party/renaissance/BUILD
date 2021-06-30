@@ -6,10 +6,10 @@ package(
 
 dwtj_legacy_java_import(
     name = "renaissance",
-    imports = ["//third_party/renaissance/sbt:legacy_java_import"],
+    imports = ["jar"],
 )
 
 alias(
     name = "jar",
-    actual = "//third_party/renaissance/sbt:jar"
+    actual = "@com_github_dwtj_renaissance_jar//jar"
 )

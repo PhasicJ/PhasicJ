@@ -6,6 +6,7 @@ load(
     "apply_remote_graalvm_linux_repository",
     "apply_remote_graalvm_macos_repository",
     "com_github_renaissance_benchmarks",
+    "com_github_dwtj_renaissance_jar",
     "dwtj_rules_java",
     "rules_rust",
     "org_ow2_asm",
@@ -189,8 +190,14 @@ load("@google_java_format//:defs.bzl", "register_google_java_format_toolchain")
 register_google_java_format_toolchain()
 
 # CONFIGURE `@com_github_renaissance_benchmarks` ##############################
+# NOTE(dwtj): This is the Renaissance source code.
 
 com_github_renaissance_benchmarks()
+
+# CONFIGURE `@com_github_renaissance_benchmarks` ##############################
+# NOTE(dwtj): This is a release JAR of Renaissance which I compiled.
+
+com_github_dwtj_renaissance_jar()
 
 # CONFIGURE `@org_ow2_asm` ################################################
 

@@ -113,6 +113,13 @@ def com_github_renaissance_benchmarks():
         build_file = "//bazel:external/BUILD.renaissance",
     )
 
+def com_github_dwtj_renaissance_jar():
+    http_jar(
+        name = "com_github_dwtj_renaissance_jar",
+        url = "https://github.com/dwtj/renaissance/releases/download/v0.12.0-snapshot/renaissance.jar",
+        sha256 = "2ea4f40c127710a8c78804e9b1115f735ea8a8ea00a3556a85a66b0682d076eb",
+    )
+
 _ORG_OW2_ASM_JAR_VERSION = "9.0"
 _ORG_OW2_ASM_JAR_SHA256 = "0df97574914aee92fd349d0cb4e00f3345d45b2c239e0bb50f0a90ead47888e0"
 
