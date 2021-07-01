@@ -28,10 +28,10 @@ cargo_build_script(
     }),
     build_script_env = select({
         "@platforms//os:macos": {
-            "PROTOC": "$(rootpath @com_google_protobuf_protoc_macos_x86_64//:protoc)",
+            "PROTOC": "$(execpath @com_google_protobuf_protoc_macos_x86_64//:protoc)",
         },
         "@platforms//os:linux": {
-            "PROTOC": "$(rootpath @com_google_protobuf_protoc_linux_x86_64//:protoc)",
+            "PROTOC": "$(execpath @com_google_protobuf_protoc_linux_x86_64//:protoc)",
         },
     }),
     edition = "2018",

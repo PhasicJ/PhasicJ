@@ -13,6 +13,33 @@ licenses([
 
 # Aliased targets
 alias(
+    name = "async_stream",
+    actual = "@raze__async_stream__0_3_2//:async_stream",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "async_trait",
+    actual = "@raze__async_trait__0_1_50//:async_trait",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "futures",
+    actual = "@raze__futures__0_3_15//:futures",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
     name = "libloading",
     actual = "@raze__libloading__0_6_7//:libloading",
     tags = [
@@ -42,6 +69,69 @@ alias(
 alias(
     name = "pest_derive",
     actual = "@raze__pest_derive__2_1_0//:pest_derive",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "prost",
+    actual = "@raze__prost__0_7_0//:prost",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "prost_build",
+    actual = "@raze__prost_build__0_7_0//:prost_build",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "simple_error",
+    actual = "@raze__simple_error__0_2_3//:simple_error",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "tokio",
+    actual = "@raze__tokio__1_7_1//:tokio",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "tonic",
+    actual = "@raze__tonic__0_4_3//:tonic",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "tonic_build",
+    actual = "@raze__tonic_build__0_4_2//:tonic_build",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
+    name = "tower",
+    actual = "@raze__tower__0_4_8//:tower",
     tags = [
         "cargo-raze",
         "manual",

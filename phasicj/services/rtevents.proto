@@ -1,0 +1,14 @@
+syntax = "proto3";
+package phasicj.services.rtevents;
+
+service Recorder {
+    rpc RecordEvents (RtEvent) returns (RecordEventsAck);
+}
+
+message RtEvent {
+   string description = 1;
+}
+
+message RecordEventsAck {
+    string message = 1;
+}

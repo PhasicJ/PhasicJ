@@ -13,7 +13,21 @@ load(
     "org_ow2_asm_commons",
     "rules_cc",
     "rules_jvm_external",
+    "rules_proto",
 )
+
+# CONFIGURE `@rules_proto` ####################################################
+
+rules_proto()
+
+load(
+    "@rules_proto//proto:repositories.bzl",
+    "rules_proto_dependencies",
+    "rules_proto_toolchains",
+)
+
+rules_proto_dependencies()
+rules_proto_toolchains()
 
 # CONFIGURE `@rules_cc` #######################################################
 

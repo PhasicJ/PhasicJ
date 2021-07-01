@@ -243,12 +243,12 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
-        name = "raze__hashbrown__0_9_1",
-        url = "https://crates.io/api/v1/crates/hashbrown/0.9.1/download",
+        name = "raze__hashbrown__0_11_2",
+        url = "https://crates.io/api/v1/crates/hashbrown/0.11.2/download",
         type = "tar.gz",
-        sha256 = "d7afe4a420e3fe79967a00898cc1f4db7c8a49a9333a29f8a4bd76a253d5cd04",
-        strip_prefix = "hashbrown-0.9.1",
-        build_file = Label("//third_party/cargo/remote:BUILD.hashbrown-0.9.1.bazel"),
+        sha256 = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e",
+        strip_prefix = "hashbrown-0.11.2",
+        build_file = Label("//third_party/cargo/remote:BUILD.hashbrown-0.11.2.bazel"),
     )
 
     maybe(
@@ -263,12 +263,12 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
-        name = "raze__hermit_abi__0_1_18",
-        url = "https://crates.io/api/v1/crates/hermit-abi/0.1.18/download",
+        name = "raze__hermit_abi__0_1_19",
+        url = "https://crates.io/api/v1/crates/hermit-abi/0.1.19/download",
         type = "tar.gz",
-        sha256 = "322f4de77956e22ed0e5032c359a0f1273f1f7f0d79bfa3b8ffbc730d7fbcc5c",
-        strip_prefix = "hermit-abi-0.1.18",
-        build_file = Label("//third_party/cargo/remote:BUILD.hermit-abi-0.1.18.bazel"),
+        sha256 = "62b467343b94ba476dcb2500d242dadbb39557df889310ac77c5d99100aaac33",
+        strip_prefix = "hermit-abi-0.1.19",
+        build_file = Label("//third_party/cargo/remote:BUILD.hermit-abi-0.1.19.bazel"),
     )
 
     maybe(
@@ -323,12 +323,22 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
-        name = "raze__indexmap__1_6_2",
-        url = "https://crates.io/api/v1/crates/indexmap/1.6.2/download",
+        name = "raze__hyper_timeout__0_4_1",
+        url = "https://crates.io/api/v1/crates/hyper-timeout/0.4.1/download",
         type = "tar.gz",
-        sha256 = "824845a0bf897a9042383849b02c1bc219c2383772efcd5c6f9766fa4b81aef3",
-        strip_prefix = "indexmap-1.6.2",
-        build_file = Label("//third_party/cargo/remote:BUILD.indexmap-1.6.2.bazel"),
+        sha256 = "bbb958482e8c7be4bc3cf272a766a2b0bf1a6755e7a6ae777f017a31d11b13b1",
+        strip_prefix = "hyper-timeout-0.4.1",
+        build_file = Label("//third_party/cargo/remote:BUILD.hyper-timeout-0.4.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "raze__indexmap__1_7_0",
+        url = "https://crates.io/api/v1/crates/indexmap/1.7.0/download",
+        type = "tar.gz",
+        sha256 = "bc633605454125dec4b66843673f01c7df2b89479b32e0ed634e43a91cff62a5",
+        strip_prefix = "indexmap-1.7.0",
+        build_file = Label("//third_party/cargo/remote:BUILD.indexmap-1.7.0.bazel"),
     )
 
     maybe(
@@ -533,12 +543,12 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
-        name = "raze__pin_project_lite__0_2_6",
-        url = "https://crates.io/api/v1/crates/pin-project-lite/0.2.6/download",
+        name = "raze__pin_project_lite__0_2_7",
+        url = "https://crates.io/api/v1/crates/pin-project-lite/0.2.7/download",
         type = "tar.gz",
-        sha256 = "dc0e1f259c92177c30a4c9d177246edd0a3568b25756a977d0632cf8fa37e905",
-        strip_prefix = "pin-project-lite-0.2.6",
-        build_file = Label("//third_party/cargo/remote:BUILD.pin-project-lite-0.2.6.bazel"),
+        sha256 = "8d31d11c69a6b52a174b42bdc0c30e5e11670f90788b2c471c31c1d17d449443",
+        strip_prefix = "pin-project-lite-0.2.7",
+        build_file = Label("//third_party/cargo/remote:BUILD.pin-project-lite-0.2.7.bazel"),
     )
 
     maybe(
@@ -793,6 +803,16 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
+        name = "raze__tokio_io_timeout__1_1_1",
+        url = "https://crates.io/api/v1/crates/tokio-io-timeout/1.1.1/download",
+        type = "tar.gz",
+        sha256 = "90c49f106be240de154571dd31fbe48acb10ba6c6dd6f6517ad603abffa42de9",
+        strip_prefix = "tokio-io-timeout-1.1.1",
+        build_file = Label("//third_party/cargo/remote:BUILD.tokio-io-timeout-1.1.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
         name = "raze__tokio_macros__1_2_0",
         url = "https://crates.io/api/v1/crates/tokio-macros/1.2.0/download",
         type = "tar.gz",
@@ -825,7 +845,7 @@ def raze_fetch_remote_crates():
         new_git_repository,
         name = "raze__tonic__0_4_3",
         remote = "https://github.com/hyperium/tonic",
-        commit = "b90bb7bbc012207451fe2788a8efd69023312425",
+        commit = "7677ad6476ac91d679042df00ffe0084c09e028e",
         build_file = Label("//third_party/cargo/remote:BUILD.tonic-0.4.3.bazel"),
         init_submodules = True,
     )
@@ -834,7 +854,7 @@ def raze_fetch_remote_crates():
         new_git_repository,
         name = "raze__tonic_build__0_4_2",
         remote = "https://github.com/hyperium/tonic",
-        commit = "b90bb7bbc012207451fe2788a8efd69023312425",
+        commit = "7677ad6476ac91d679042df00ffe0084c09e028e",
         build_file = Label("//third_party/cargo/remote:BUILD.tonic-build-0.4.2.bazel"),
         init_submodules = True,
     )
