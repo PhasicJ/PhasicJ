@@ -11,7 +11,7 @@ log = "0.4.11"
 libloading = "0.6.5"
 pest = "2.1.3"
 pest_derive = "2.1.0"
-tokio = { version = "1.8.0", features = ["full"] }
+tokio = { version = "1.8.0", features = ["net", "fs", "rt-multi-thread"] }
 # NOTE(dwtj): We use an unrelased version of `tonic` because of some upcoming
 # breaking changes to the way in which UNIX domain sockets are used.
 tonic = { git = "https://github.com/hyperium/tonic", commit = "7677ad6476ac91d679042df00ffe0084c09e028e" }
