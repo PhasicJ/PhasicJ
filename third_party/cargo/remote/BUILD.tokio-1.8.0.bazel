@@ -75,7 +75,7 @@ cargo_build_script(
         "cargo-raze",
         "manual",
     ],
-    version = "1.7.1",
+    version = "1.8.0",
     visibility = ["//visibility:private"],
     deps = [
         "@raze__autocfg__1_0_1//:autocfg",
@@ -134,7 +134,7 @@ rust_library(
         "cargo-raze",
         "manual",
     ],
-    version = "1.7.1",
+    version = "1.8.0",
     # buildifier: leave-alone
     deps = [
         ":tokio_build_script",
@@ -307,6 +307,8 @@ rust_library(
 # Unsupported target "task_abort" with type "test" omitted
 
 # Unsupported target "task_blocking" with type "test" omitted
+
+# Unsupported target "task_builder" with type "test" omitted
 
 # Unsupported target "task_local" with type "test" omitted
 

@@ -943,12 +943,12 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
-        name = "raze__tokio__1_7_1",
-        url = "https://crates.io/api/v1/crates/tokio/1.7.1/download",
+        name = "raze__tokio__1_8_0",
+        url = "https://crates.io/api/v1/crates/tokio/1.8.0/download",
         type = "tar.gz",
-        sha256 = "5fb2ed024293bb19f7a5dc54fe83bf86532a44c12a2bb8ba40d64a4509395ca2",
-        strip_prefix = "tokio-1.7.1",
-        build_file = Label("//third_party/cargo/remote:BUILD.tokio-1.7.1.bazel"),
+        sha256 = "570c2eb13b3ab38208130eccd41be92520388791207fde783bda7c1e8ace28d4",
+        strip_prefix = "tokio-1.8.0",
+        build_file = Label("//third_party/cargo/remote:BUILD.tokio-1.8.0.bazel"),
     )
 
     maybe(
@@ -995,7 +995,7 @@ def raze_fetch_remote_crates():
         new_git_repository,
         name = "raze__tonic__0_4_3",
         remote = "https://github.com/hyperium/tonic",
-        commit = "7677ad6476ac91d679042df00ffe0084c09e028e",
+        commit = "0583cff80f57ba071295416ee8828c3430851d0d",
         build_file = Label("//third_party/cargo/remote:BUILD.tonic-0.4.3.bazel"),
         init_submodules = True,
     )
@@ -1004,7 +1004,7 @@ def raze_fetch_remote_crates():
         new_git_repository,
         name = "raze__tonic_build__0_4_2",
         remote = "https://github.com/hyperium/tonic",
-        commit = "7677ad6476ac91d679042df00ffe0084c09e028e",
+        commit = "0583cff80f57ba071295416ee8828c3430851d0d",
         build_file = Label("//third_party/cargo/remote:BUILD.tonic-build-0.4.2.bazel"),
         init_submodules = True,
     )
@@ -1111,12 +1111,12 @@ def raze_fetch_remote_crates():
 
     maybe(
         http_archive,
-        name = "raze__unicode_segmentation__1_7_1",
-        url = "https://crates.io/api/v1/crates/unicode-segmentation/1.7.1/download",
+        name = "raze__unicode_segmentation__1_8_0",
+        url = "https://crates.io/api/v1/crates/unicode-segmentation/1.8.0/download",
         type = "tar.gz",
-        sha256 = "bb0d2e7be6ae3a5fa87eed5fb451aff96f2573d2694942e40543ae0bbe19c796",
-        strip_prefix = "unicode-segmentation-1.7.1",
-        build_file = Label("//third_party/cargo/remote:BUILD.unicode-segmentation-1.7.1.bazel"),
+        sha256 = "8895849a949e7845e06bd6dc1aa51731a103c42707010a5b591c0038fb73385b",
+        strip_prefix = "unicode-segmentation-1.8.0",
+        build_file = Label("//third_party/cargo/remote:BUILD.unicode-segmentation-1.8.0.bazel"),
     )
 
     maybe(
