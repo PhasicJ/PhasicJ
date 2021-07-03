@@ -1,3 +1,8 @@
+/// NOTE(dwtj): This code has been adapted from Tonic's [UNIX domain socket
+/// example][1].
+///
+/// [1]: https://github.com/hyperium/tonic/blob/0583cff80f57ba071295416ee8828c3430851d0d/examples/src/uds/client.rs
+
 #![cfg_attr(not(unix), allow(unused_imports))]
 
 pub mod rtevents {

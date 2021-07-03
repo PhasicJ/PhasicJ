@@ -1,3 +1,8 @@
+/// NOTE(dwtj): This code has been adapted from Tonic's [UNIX domain socket
+/// example][1].
+///
+/// [1]: https://github.com/hyperium/tonic/blob/0583cff80f57ba071295416ee8828c3430851d0d/examples/src/uds/server.rs
+
 #![cfg_attr(not(unix), allow(unused_imports))]
 
 use futures::TryFutureExt;
@@ -27,6 +32,11 @@ impl Recorder for MyRecorder {
     ) -> Result<Response<RecordEventsAck>, Status> {
         #[cfg(unix)]
         {
+            // NOTE(dwtj): The `http::Extensions` type uses the runtime
+            //  reflection support provided by `std::any` to implements a map
+            //  from `TypeID`s to an instance of that type. In this case, it
+            //  is used to hold our `UdsConnectInfo` custom type which we
+            //  used to wrap/describe/point to a `Connected` UNIX domain socket.
             let conn_info = request.extensions().get::<unix::UdsConnectInfo>().unwrap();
             println!("Got a request {:?} with info {:?}", request, conn_info);
         }
@@ -71,6 +81,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+// NOTE(dwtj): We introduce the new `UnixStream` struct to wrap Tokio's
+// `UnixStream` such that it implements Tonic's `Connected` trait.
 #[cfg(unix)]
 mod unix {
     use std::{
