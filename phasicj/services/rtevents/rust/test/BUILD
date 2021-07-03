@@ -5,6 +5,7 @@ rust_binary(
     srcs = ["test_server.rs"],
     deps = [
         "//phasicj/services/rtevents/rust",
+        "//phasicj/services/util/tonic",
         "//third_party/cargo:tokio",
         "//third_party/cargo:tonic",
         "//third_party/cargo:prost",
@@ -32,6 +33,7 @@ rust_binary(
         "//third_party/cargo:prost",
         "//third_party/cargo:tower",
     ],
+    visibility = ["//phasicj/daemon/tests/smoke_test:__pkg__"],
 )
 
 sh_test(
