@@ -13,7 +13,8 @@ rust_binary(
     name = "pjeventsd",
     srcs = [
         "main.rs",
-        "rtevents.rs"
+        "rtevents.rs",
+        "cli.rs",
     ],
     deps = [
         "//phasicj/services/rtevents/rust",
@@ -30,5 +31,7 @@ rust_binary(
         # `tonic::transport::server::Router::serve_with_incoming()`.
         "//third_party/cargo:async_stream",
         "//third_party/cargo:futures",
+
+        "//third_party/cargo:clap",
     ],
 )

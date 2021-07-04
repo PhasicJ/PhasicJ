@@ -6,8 +6,9 @@ DAEMON_EXEC="$1"
 CLIENT_EXEC="$2"
 
 UDS_NAME="pjevents.S"
+DATABASE_NAME="pjevents.db"
 
-"$DAEMON_EXEC" "$UDS_NAME" &
+"$DAEMON_EXEC" --socket "$UDS_NAME" --database "$DATABASE_NAME" &
 DAEMON_PID="$!"
 echo Daemon PID: "$DAEMON_PID"
 

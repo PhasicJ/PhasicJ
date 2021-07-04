@@ -4,14 +4,10 @@ use tokio::net::UnixListener;
 use futures::TryFutureExt;
 use rtevents::RecorderServer;
 use tonic::transport::Server;
+use clap::Clap;
 
 mod rtevents;
-
-fn get_socket_name_from_cli_args() -> String {
-    let args: Vec<String> = env::args().collect();
-    assert_eq!(args.len(), 2);
-    return args[1].clone();
-}
+mod cli;
 
 // NOTE(dwtj): We don't use `#[tokio::main]` so that we can start up the logger
 // before starting the Tokio runtime.
@@ -24,10 +20,12 @@ fn main() {
     let rt = tokio::runtime::Runtime::new().unwrap();
     log::info!("Tokio runtime started");
 
+    let opts = cli::Opts::parse();
+    log::info!("CLI options parsed: {:?}", opts);
+
     rt.block_on(async {
         log::info!("Started root Tokio task");
-        let socket_name = get_socket_name_from_cli_args();
-        record_pj_rt_events_from_uds(&socket_name).await;
+        record_pj_rt_events_from_uds(&opts.socket).await;
     });
 
     log::info!("Exited root Tokio task");
