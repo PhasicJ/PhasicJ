@@ -1,4 +1,5 @@
 load("@rules_rust//rust:defs.bzl", "rust_binary")
+load("//:phasicj_version.bzl", "PHASICJ_VERSION")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -34,4 +35,5 @@ rust_binary(
 
         "//third_party/cargo:clap",
     ],
+    rustc_env = {"PHASICJ_VERSION": PHASICJ_VERSION},
 )
