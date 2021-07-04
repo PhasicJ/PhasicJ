@@ -60,6 +60,10 @@
       homebrew:
         name: asciidoctor
 
+    - name: Homebrew Install SQLite
+      homebrew:
+        name: sqlite
+
     - name: Cargo install bindgen
       command: cargo install bindgen
       become: yes

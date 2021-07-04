@@ -27,6 +27,7 @@ async-trait = "0.1.50"
 async-stream = "0.3.2"
 futures = "0.3.2"
 clap = "3.0.0-beta.2"
+rusqlite = { version = "0.25.3", features = ["bundled"] }
 
 [package.metadata.raze]
 workspace_path = "//third_party/cargo"

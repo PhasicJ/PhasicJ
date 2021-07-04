@@ -1,7 +1,7 @@
 use std::path::Path;
 use tokio::net::UnixListener;
 use futures::TryFutureExt;
-use rtevents::RecorderServer;
+use rtevents::{SqliteRecorder, RecorderServer};
 use tonic::transport::Server;
 use clap::Clap;
 
@@ -24,27 +24,28 @@ fn main() {
 
     rt.block_on(async {
         log::info!("Started root Tokio task");
-        record_pj_rt_events_from_uds(&opts.socket).await;
+        let socket = Path::new(&opts.socket);
+        let database = Path::new(&opts.database);
+        record_pj_rt_events_from_uds(socket, database).await;
+        log::info!("Ending root Tokio task");
     });
 
     log::info!("Exited root Tokio task");
 }
 
-async fn record_pj_rt_events_from_uds(socket_name: &str) {
+async fn record_pj_rt_events_from_uds(socket: &Path, database: &Path) {
     use phasicj_services_util_tonic::uds::UnixStream;
 
-    let socket_path = Path::new(&socket_name);
-
     // Ensure that the UDS's parent directory exists.
-    tokio::fs::create_dir_all((&socket_path).parent().unwrap()).await.unwrap();
+    tokio::fs::create_dir_all(socket.parent().unwrap()).await.unwrap();
 
     // Bind to the socket. For each connection from this socket,
     // - wrap this connection in our custom `UnixStream` type (which implements
     //   Tonic's `Connected` trait)
     // - then yield this wrapped connection to the stream.
     let incoming_connections_stream = {
-        log::info!("Binding to a UNIX domain socket at path {:?}", socket_path);
-        let uds = UnixListener::bind(socket_path).unwrap();
+        log::info!("Binding to a UNIX domain socket at path {:?}", socket);
+        let uds = UnixListener::bind(socket).unwrap();
 
         async_stream::stream! {
             while let conn = uds.accept().map_ok(|(s, _)| UnixStream(s)).await {
@@ -56,7 +57,7 @@ async fn record_pj_rt_events_from_uds(socket_name: &str) {
 
     // Make a recorder which will handle gRPC calls from any of the connections
     // yielded by the above stream.
-    let recorder = rtevents::DaemonRecorder::new();
+    let recorder = SqliteRecorder::new(database).unwrap();
     Server::builder()
         .add_service(RecorderServer::new(recorder))
         .serve_with_incoming(incoming_connections_stream)

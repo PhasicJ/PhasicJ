@@ -42,7 +42,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut client = RecorderClient::new(channel);
 
     let request = tonic::Request::new(RtEvent {
-        description: "Tonic".into(),
+        description: "Hello, Tonic!".into(),
     });
 
     let response = client.record_events(request).await?;

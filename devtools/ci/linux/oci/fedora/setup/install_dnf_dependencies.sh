@@ -17,6 +17,7 @@ dnf install --assumeyes \
     openssh-server \
     git \
     task-spooler \
-    rubygem-asciidoctor
+    rubygem-asciidoctor \
+    sqlite
 
 dnf clean all

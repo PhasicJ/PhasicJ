@@ -112,6 +112,15 @@ alias(
 )
 
 alias(
+    name = "rusqlite",
+    actual = "@raze__rusqlite__0_25_3//:rusqlite",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
     name = "simple_error",
     actual = "@raze__simple_error__0_2_3//:simple_error",
     tags = [

@@ -23,6 +23,7 @@ rust_binary(
 
         "//third_party/cargo:log",
         "//third_party/cargo:env_logger",
+
         "//third_party/cargo:tokio",
         "//third_party/cargo:tonic",
         "//third_party/cargo:prost",
@@ -34,6 +35,8 @@ rust_binary(
         "//third_party/cargo:futures",
 
         "//third_party/cargo:clap",
+
+        "//third_party/cargo:rusqlite",
     ],
     rustc_env = {"PHASICJ_VERSION": PHASICJ_VERSION},
 )
