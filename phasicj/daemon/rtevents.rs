@@ -1,4 +1,4 @@
-use tonic::{transport::Server, Request, Response, Status};
+use tonic::{Request, Response, Status};
 
 mod protos {
     tonic::include_proto!("phasicj.services.rtevents");

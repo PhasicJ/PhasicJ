@@ -1,5 +1,4 @@
 use std::path::Path;
-use std::env;
 use tokio::net::UnixListener;
 use futures::TryFutureExt;
 use rtevents::RecorderServer;
