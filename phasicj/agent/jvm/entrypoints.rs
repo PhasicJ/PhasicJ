@@ -1,6 +1,8 @@
 use ::jvmti::{
+    JNIEnv,
     JavaVM,
     jint,
+    jclass,
 };
 use ::std::ffi;
 
@@ -47,4 +49,18 @@ pub extern fn Agent_OnAttach(
 #[no_mangle]
 pub extern fn Agent_OnUnload(jvm: *mut JavaVM) {
     unsafe { on_unload(&mut *jvm); }
+}
+
+// TODO(dwtj): Consider putting these in the `rt` subdirectory. I tried putting
+//  them in their own crate in `//phasicj/agent/rt/`, but they did not show up
+//  in the final agent shared library (possibly because of some link-time
+//  optimization which filtered them out because they didn't appear to be used.)
+#[no_mangle]
+pub extern fn Java_phasicj_agent_rt_ApplicationEvents_monitorEnter(_env: *mut JNIEnv, _cls: jclass) {
+    log::trace!("`monitorEnter()` in Rust");
+}
+
+#[no_mangle]
+pub extern fn Java_phasicj_agent_rt_ApplicationEvents_monitorExit(_env: *mut JNIEnv, _cls: jclass) {
+    log::trace!("`monitorExit()` in Rust");
 }
