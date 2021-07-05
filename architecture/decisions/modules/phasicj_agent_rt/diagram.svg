@@ -1,0 +1,1403 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg2788"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="phasicj_event_forwarding_instr.svg"
+   inkscape:export-filename="/home/dwtj/phasicj_event_forwarding_instr.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2782">
+    <marker
+       style="overflow:visible"
+       id="marker1914"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         id="path1912" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1438" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1334"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         id="path1332" />
+    </marker>
+    <inkscape:path-effect
+       effect="powerstroke"
+       id="path-effect2765"
+       is_visible="true"
+       lpeversion="1"
+       offset_points="1,0.1322915"
+       sort_points="true"
+       interpolator_type="CubicBezierJohan"
+       interpolator_beta="0.2"
+       start_linecap_type="zerowidth"
+       linejoin_type="extrp_arc"
+       miter_limit="4"
+       scale_width="1"
+       end_linecap_type="zerowidth" />
+    <rect
+       x="74.539384"
+       y="78.272906"
+       width="66.593887"
+       height="22.715861"
+       id="rect2414" />
+    <marker
+       style="overflow:visible"
+       id="marker2306"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         id="path2304" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutL"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         id="path1148" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Tail"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Tail"
+       inkscape:isstock="true">
+      <g
+         transform="scale(-1.2)"
+         id="g1054"
+         style="stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1">
+        <path
+           style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round;stroke-opacity:1;fill-opacity:1"
+           d="M -3.8048674,-3.9585227 L 0.54352094,0"
+           id="path1042" />
+        <path
+           style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round;stroke-opacity:1;fill-opacity:1"
+           d="M -1.2866832,-3.9585227 L 3.0617053,0"
+           id="path1044" />
+        <path
+           style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round;stroke-opacity:1;fill-opacity:1"
+           d="M 1.3053582,-3.9585227 L 5.6537466,0"
+           id="path1046" />
+        <path
+           style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round;stroke-opacity:1;fill-opacity:1"
+           d="M -3.8048674,4.1775838 L 0.54352094,0.21974226"
+           id="path1048" />
+        <path
+           style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round;stroke-opacity:1;fill-opacity:1"
+           d="M -1.2866832,4.1775838 L 3.0617053,0.21974226"
+           id="path1050" />
+        <path
+           style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round;stroke-opacity:1;fill-opacity:1"
+           d="M 1.3053582,4.1775838 L 5.6537466,0.21974226"
+           id="path1052" />
+      </g>
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Sstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) translate(6,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1018" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DiamondMstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DiamondMstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) translate(6.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "
+         id="path1097" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1694"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1692" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1582"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1580" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1494"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1492" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1430"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1428" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1378"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1376" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1009" />
+    </marker>
+    <rect
+       x="7.5045577"
+       y="3.4209798"
+       width="194.07781"
+       height="23.929928"
+       id="rect13485" />
+    <rect
+       x="7.5045577"
+       y="109.59021"
+       width="194.24687"
+       height="17.705379"
+       id="rect13479" />
+    <rect
+       x="108.23147"
+       y="34.841562"
+       width="93.350902"
+       height="61.703712"
+       id="rect13458" />
+    <rect
+       x="7.3965867"
+       y="33.063866"
+       width="90.34863"
+       height="61.708478"
+       id="rect13452" />
+    <rect
+       x="7.5045577"
+       y="3.4154188"
+       width="194.23581"
+       height="26.15062"
+       id="rect13422" />
+    <rect
+       x="110.24118"
+       y="33.683725"
+       width="193.80723"
+       height="26.417719"
+       id="rect13400" />
+    <rect
+       x="7.8825262"
+       y="4.9501305"
+       width="168.44218"
+       height="27.20396"
+       id="rect13394" />
+    <rect
+       x="92.749507"
+       y="13.873507"
+       width="90.653382"
+       height="15.781498"
+       id="rect12821" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 148.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="210 : 148.5 : 1"
+       inkscape:persp3d-origin="105 : 99 : 1"
+       id="perspective10174" />
+    <symbol
+       id="MagneticDrum">
+      <title
+         id="title5344">Magnetic Drum (Direct Access)</title>
+      <desc
+         id="desc5346">Magnetic drum. (ISO)</desc>
+      <path
+         d="m 6.6145833,30.427083 a 17.197917,17.197917 0 0 1 0,-21.1666663 H 33.072917 a 17.197917,17.197917 0 0 1 0,21.1666663 z"
+         style="stroke-width:0.529167"
+         id="path5348" />
+      <path
+         d="m 33.072917,30.427083 a 17.197917,17.197917 0 0 1 0,-21.1666663"
+         style="fill:none;stroke-width:0.529167;stroke-linecap:butt"
+         id="path5350" />
+    </symbol>
+    <symbol
+       id="MagneticDisk">
+      <title
+         id="title5331">Magnetic Disk (Database)</title>
+      <desc
+         id="desc5333">A magnetic disk. (ISO)</desc>
+      <path
+         d="m 9.2604167,6.6145833 a 17.197917,17.197917 0 0 1 21.1666663,0 V 33.072917 a 17.197917,17.197917 0 0 1 -21.1666663,0 z"
+         style="stroke-width:0.529167"
+         id="path5335" />
+      <path
+         d="m 30.427083,6.6145833 a 17.197917,17.197917 0 0 1 -21.1666663,0"
+         style="fill:none;stroke-width:0.529167;stroke-linecap:butt"
+         id="path5337" />
+      <path
+         d="m 30.427083,10.583333 a 17.197917,17.197917 0 0 1 -21.1666663,0"
+         style="fill:none;stroke-width:0.529167;stroke-linecap:butt"
+         id="path5339" />
+      <path
+         d="m 30.427083,14.552083 a 17.197917,17.197917 0 0 1 -21.1666663,0"
+         style="fill:none;stroke-width:0.529167;stroke-linecap:butt"
+         id="path5341" />
+    </symbol>
+    <symbol
+       id="CircleBalloon"
+       style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title
+         id="title9163">Circle Balloon</title>
+      <ellipse
+         cx="54.239582"
+         cy="33.072918"
+         rx="33.072918"
+         ry="18.520834"
+         style="stroke:none;stroke-width:0.264583"
+         id="ellipse9165" />
+      <path
+         d="m 29.104167,43.920833 c 2.910416,5.55625 -2.645834,7.9375 -5.820834,11.377084 C 31.75,54.504167 38.89375,53.445833 41.804167,48.41875"
+         style="stroke:none;stroke-width:0.264583"
+         id="path9167" />
+      <ellipse
+         cx="52.916668"
+         cy="31.75"
+         rx="33.072918"
+         ry="18.520834"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="ellipse9169" />
+      <path
+         d="M 28.045833,42.8625 C 30.95625,48.41875 25.4,50.8 22.225,54.239583 30.691667,53.445833 37.835417,52.3875 40.745833,47.360417"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="path9171" />
+      <ellipse
+         cx="52.122917"
+         cy="30.956249"
+         rx="30.956249"
+         ry="16.668751"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="ellipse9173" />
+      <path
+         d="m 27.252083,39.422917 c 3.704167,6.614583 2.38125,8.995833 -1.5875,12.435416 7.9375,-0.79375 13.229167,-2.645833 15.345834,-8.202083"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="path9175" />
+    </symbol>
+    <symbol
+       id="HipBalloon"
+       style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title
+         id="title9148">Hip Balloon</title>
+      <path
+         d="m 25.664583,17.197917 h 57.15 c 2.38125,0 4.497917,2.010833 4.497917,4.497916 0,0 -3.704167,9.260417 -3.704167,14.022917 0,4.7625 3.704167,14.022917 3.704167,14.022917 0,2.38125 -2.116667,4.497916 -4.497917,4.497916 h -57.15 c -2.487083,0 -4.497916,-2.116666 -4.497916,-4.497916 0,0 3.704166,-9.260417 3.704166,-14.022917 0,-4.7625 -3.704166,-14.022917 -3.704166,-14.022917 0,-2.487083 2.010833,-4.497916 4.497916,-4.497916 z"
+         style="stroke:none;stroke-width:0.264583"
+         id="path9150" />
+      <path
+         d="m 33.3375,52.652083 -1.322917,11.377084 15.875,-11.377084"
+         style="stroke:none;stroke-width:0.264583"
+         id="path9152" />
+      <path
+         d="m 23.8125,15.875 h 57.15 c 2.38125,0 4.497917,2.010833 4.497917,4.497917 0,0 -3.704167,9.260416 -3.704167,14.022916 0,4.7625 3.704167,14.022917 3.704167,14.022917 0,2.38125 -2.116667,4.497917 -4.497917,4.497917 h -57.15 c -2.487083,0 -4.497917,-2.116667 -4.497917,-4.497917 0,0 3.704167,-9.260417 3.704167,-14.022917 0,-4.7625 -3.704167,-14.022916 -3.704167,-14.022916 0,-2.487084 2.010834,-4.497917 4.497917,-4.497917 z"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="path9154" />
+      <path
+         d="m 31.75,51.59375 -1.322917,11.377083 15.875,-11.377083"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="path9156" />
+      <path
+         d="m 23.8125,17.197917 h 56.885417 c 1.5875,0 2.645833,1.190625 2.645833,2.645833 0,0 -3.704167,9.525 -3.704167,14.022917 0,4.7625 3.704167,13.758333 3.704167,13.758333 0,1.5875 -1.058333,2.645833 -2.645833,2.645833 H 23.8125 c -1.455208,0 -2.645833,-1.058333 -2.645833,-2.645833 0,0 3.704166,-8.995833 3.704166,-13.758333 0,-4.497917 -3.704166,-14.022917 -3.704166,-14.022917 0,-1.455208 1.190625,-2.645833 2.645833,-2.645833 z"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="path9158" />
+      <path
+         d="M 32.808333,47.625 31.485417,59.002083 47.360417,47.625"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="path9160" />
+    </symbol>
+    <symbol
+       id="SquaredBalloon"
+       style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title
+         id="title9118">Squared Balloon</title>
+      <rect
+         x="21.166666"
+         y="17.197916"
+         width="66.145836"
+         height="37.041668"
+         rx="4.4979167"
+         style="stroke:none;stroke-width:0.264583"
+         id="rect9120" />
+      <path
+         d="m 33.3375,52.652083 6.614583,11.377084 7.9375,-11.377084"
+         style="stroke:none;stroke-width:0.264583"
+         id="path9122" />
+      <rect
+         x="19.84375"
+         y="15.875"
+         width="66.145836"
+         height="37.041668"
+         rx="3.96875"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="rect9124" />
+      <path
+         d="m 31.75,51.59375 6.614583,11.377083 7.9375,-11.377083"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="path9126" />
+      <rect
+         x="21.166666"
+         y="17.197916"
+         width="62.177082"
+         height="33.072918"
+         rx="2.6458333"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="rect9128" />
+      <path
+         d="M 31.220833,47.625 37.835417,59.002083 45.772917,47.625"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="path9130" />
+    </symbol>
+    <symbol
+       id="RoundedBalloon"
+       style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title
+         id="title9103">Rounded Balloon</title>
+      <rect
+         x="21.166666"
+         y="17.197916"
+         width="66.145836"
+         height="31.75"
+         rx="8.4666662"
+         style="stroke:none;stroke-width:0.264583"
+         id="rect9105" />
+      <path
+         d="m 32.808333,47.360417 -7.9375,14.022916 20.6375,-14.022916"
+         style="stroke:none;stroke-width:0.264583"
+         id="path9107" />
+      <rect
+         x="19.84375"
+         y="15.875"
+         width="66.145836"
+         height="31.75"
+         rx="7.9375"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="rect9109" />
+      <path
+         d="M 31.75,46.302083 23.8125,60.325 44.45,46.302083"
+         style="fill:#eeeeee;stroke-width:0.926042"
+         id="path9111" />
+      <rect
+         x="21.166666"
+         y="17.197916"
+         width="62.177082"
+         height="27.78125"
+         rx="6.6145835"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="rect9113" />
+      <path
+         d="M 34.925,42.333333 26.9875,56.35625 47.625,42.333333"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583"
+         id="path9115" />
+    </symbol>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter13513"
+       x="-0.060629104"
+       width="1.0607048"
+       y="-0.084773099"
+       height="1.1134084">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.0026327931"
+         id="feGaussianBlur13515" />
+    </filter>
+    <rect
+       x="74.539384"
+       y="78.272906"
+       width="76.256653"
+       height="34.166983"
+       id="rect2448" />
+    <rect
+       x="7.3965869"
+       y="33.063866"
+       width="90.348633"
+       height="61.708477"
+       id="rect13452-3" />
+    <rect
+       x="7.3965869"
+       y="33.063866"
+       width="90.348633"
+       height="61.708477"
+       id="rect2507" />
+    <rect
+       x="108.23147"
+       y="34.84156"
+       width="93.439703"
+       height="90.836361"
+       id="rect13458-6" />
+    <rect
+       x="108.23147"
+       y="34.84156"
+       width="93.350899"
+       height="61.703712"
+       id="rect2624" />
+    <rect
+       x="74.539383"
+       y="78.272903"
+       width="36.883373"
+       height="14.358019"
+       id="rect2448-3" />
+    <rect
+       x="74.539383"
+       y="78.272903"
+       width="36.883373"
+       height="14.358019"
+       id="rect2039" />
+    <rect
+       x="74.539383"
+       y="78.272903"
+       width="38.350582"
+       height="19.411848"
+       id="rect2448-3-6" />
+    <rect
+       x="74.539383"
+       y="78.272903"
+       width="36.883373"
+       height="14.358019"
+       id="rect2140" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter13513-2"
+       x="-0.005551686"
+       width="1.0111034"
+       y="-0.013605403"
+       height="1.0272108">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.0026327931"
+         id="feGaussianBlur13515-9" />
+    </filter>
+    <rect
+       x="74.539383"
+       y="78.272903"
+       width="36.883373"
+       height="14.358019"
+       id="rect2448-3-0" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter13513-0"
+       x="-0.0078898942"
+       width="1.0832602"
+       y="-0.0060407888"
+       height="1.0813703">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.0026327931"
+         id="feGaussianBlur13515-6" />
+    </filter>
+    <rect
+       x="74.539383"
+       y="78.272903"
+       width="34.469919"
+       height="23.118814"
+       id="rect2448-3-2" />
+    <marker
+       style="overflow:visible"
+       id="marker1334-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1332-1" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.71986522"
+     inkscape:cx="448.00053"
+     inkscape:cy="394.5183"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     showguides="false"
+     inkscape:object-paths="true"
+     inkscape:snap-text-baseline="false"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-object-midpoints="false"
+     inkscape:snap-to-guides="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="false"
+     inkscape:guide-bbox="true"
+     inkscape:snap-nodes="true"
+     inkscape:snap-others="true"
+     inkscape:snap-grids="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false"
+     inkscape:pagecheckerboard="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2794" />
+    <sodipodi:guide
+       position="7.5045577,266.80021"
+       orientation="1,0"
+       id="guide12825" />
+    <sodipodi:guide
+       position="-4.6403822,313.43795"
+       orientation="0,-1"
+       id="guide12827" />
+    <sodipodi:guide
+       position="-23.959317,323.16204"
+       orientation="0,-1"
+       id="guide13404" />
+    <sodipodi:guide
+       position="201.75143,295.0349"
+       orientation="1,0"
+       id="guide13438" />
+    <sodipodi:guide
+       position="-29.716648,272.02158"
+       orientation="1,0"
+       id="guide2028" />
+    <sodipodi:guide
+       position="189.40899,295.36973"
+       orientation="1,0"
+       id="guide2030" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2785">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="opacity:1;filter:url(#filter13513)">
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.303446"
+       id="rect12780"
+       width="206.74762"
+       height="81.234398"
+       x="1.2289828"
+       y="1.6302826"
+       ry="6.865365" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect12780"
+       id="use12806"
+       width="100%"
+       height="100%"
+       transform="matrix(0.99987971,0,0,1.1619809,0.36001006,96.933893)"
+       style="stroke:#000000" />
+    <text
+       xml:space="preserve"
+       id="text13398"
+       style="font-size:3.52778px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13400)"
+       transform="translate(-101.90734,-58.824871)"><tspan
+         x="110.24023"
+         y="36.804852"
+         id="tspan19208"><tspan
+           style="font-weight:bold"
+           id="tspan19204">Our Agent Instruments the Application's Original Classes:</tspan><tspan
+           style="font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19206"> Classes from the user's application, third </tspan></tspan><tspan
+         x="110.24023"
+         y="41.214577"
+         id="tspan19212"><tspan
+           style="font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19210">party libraries, and the Java standard library are all loaded by the JVM as usual. Our agent analyzes all of </tspan></tspan><tspan
+         x="110.24023"
+         y="45.624303"
+         id="tspan19220"><tspan
+           style="font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19214">these classes and modifies them as needed. Out of all of these original classes, the </tspan><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19216">java.lang.Object</tspan><tspan
+           style="font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19218"> class </tspan></tspan><tspan
+         x="110.24023"
+         y="50.034028"
+         id="tspan19224"><tspan
+           style="font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19222">is treated specially. Our agent makes some unique modifications to it.</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text13420"
+       style="font-size:10.5833px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13422)" />
+    <g
+       id="g13471"
+       transform="matrix(1,0,0,0.76093499,0,-4.469173)">
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g13432"
+         id="use13436"
+         width="100%"
+         height="100%"
+         transform="translate(4.2333335,4.2333335)" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g13432"
+         id="use13434"
+         width="100%"
+         height="100%"
+         transform="translate(2.2003825,1.9290765)" />
+      <g
+         id="g13432"
+         transform="matrix(1.3415783,0,0,0.92763444,-14.6026,-0.38749553)">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:0.296;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect12815"
+           width="69.582893"
+           height="74.592278"
+           x="16.400732"
+           y="27.988182" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:0.267264px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="M 16.400732,36.063188 85.983624,35.647547 Z"
+           id="path13406" />
+      </g>
+    </g>
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g13432"
+       id="use13442"
+       width="100%"
+       height="100%"
+       transform="matrix(1.0004642,0,0,0.75425898,100.8061,-2.0085092)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:'serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;white-space:pre;inline-size:66.8486;stroke-width:0.264583"
+       x="24.893894"
+       y="7.6642609"
+       id="text12784"
+       transform="translate(26.946528,12.366291)"><tspan
+         x="24.893894"
+         y="7.6642609"
+         id="tspan19228"><tspan
+           style="font-family:monospace;-inkscape-font-specification:'monospace Bold'"
+           id="tspan19226">userapp.AppClass</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text13450"
+       style="font-size:3.52778px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13452)"
+       transform="translate(2.1166667,-8.4666669)"><tspan
+         x="7.3964844"
+         y="36.185712"
+         id="tspan19232"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19230">package userapp;
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="40.595437"
+         id="tspan19236"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19234">
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="45.005162"
+         id="tspan19240"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19238">class AppClass {
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="49.414887"
+         id="tspan19244"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19242">  void myMethod() {
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="53.824612"
+         id="tspan19248"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19246">    synchronized(AppClass.class) {
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="58.234338"
+         id="tspan19252"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19250">      ...
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="62.644063"
+         id="tspan19256"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19254">    }
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="67.053788"
+         id="tspan19260"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19258">  }
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="71.463513"
+         id="tspan19264"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19262">}</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text13456"
+       style="font-size:3.52778px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13458)"
+       transform="translate(2.1166667,-7.9375004)"><tspan
+         x="108.23242"
+         y="37.963055"
+         id="tspan19268"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19266">package java.lang;
+</tspan></tspan><tspan
+         x="108.23242"
+         y="42.372781"
+         id="tspan19272"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19270">
+</tspan></tspan><tspan
+         x="108.23242"
+         y="46.782506"
+         id="tspan19276"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19274">class Object {
+</tspan></tspan><tspan
+         x="108.23242"
+         y="51.192231"
+         id="tspan19280"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19278">  ...
+</tspan></tspan><tspan
+         x="108.23242"
+         y="55.601956"
+         id="tspan19284"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19282">}</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text13477"
+       style="font-size:5.64444px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13479)"
+       transform="translate(0,-6.879167)"><tspan
+         x="7.5039062"
+         y="114.58385"
+         id="tspan19288"><tspan
+           style="font-weight:bold;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
+           id="tspan19286">Instrumented Classes</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text13483"
+       style="font-size:5.64444px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13485)"
+       transform="translate(0,1.5875)"><tspan
+         x="7.5039062"
+         y="8.4158816"
+         id="tspan19292"><tspan
+           style="font-weight:bold;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
+           id="tspan19290">Original Classes</tspan></tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.355506;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutL)"
+       d="M 92.960956,67.644385 V 110.59687"
+       id="path2032"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.365;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2306)"
+       d="M 189.40899,69.354771 V 112.47524"
+       id="path2296"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:1;fill:#e6e6e6;stroke:#000000;stroke-width:0.414486;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect2410"
+       width="38.467899"
+       height="15.69683"
+       x="73.724594"
+       y="74.976089"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       id="text2412"
+       style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect2414)"
+       x="28.709698"
+       y="0"
+       transform="translate(-14.033727,2.0918912)"><tspan
+         x="90.424095"
+         y="82.018942"
+         id="tspan19296"><tspan
+           style="font-style:italic;text-align:center;text-anchor:middle"
+           id="tspan19294">Instrumentation</tspan></tspan></text>
+    <rect
+       style="opacity:1;fill:#e6e6e6;stroke:#000000;stroke-width:0.414486;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect2442"
+       width="38.467899"
+       height="15.69683"
+       x="166.31566"
+       y="74.230652"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       id="text2446"
+       style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect2448)"
+       x="28.857491"
+       y="0"
+       transform="translate(72.79933,-1.0677127)"><tspan
+         x="95.256126"
+         y="82.018942"
+         id="tspan19300"><tspan
+           style="font-style:italic;text-align:center;text-anchor:middle"
+           id="tspan19298">Instrumentation
+</tspan></tspan><tspan
+         x="98.062154"
+         y="87.310606"
+         id="tspan19304"><tspan
+           style="font-style:italic;text-align:center;text-anchor:middle"
+           id="tspan19302">(special case)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;text-align:center;text-anchor:middle;stroke-width:0.264583"
+       x="154.77223"
+       y="21.418457"
+       id="text2452"><tspan
+         sodipodi:role="line"
+         id="tspan2450"
+         x="154.77223"
+         y="21.418457"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:monospace;-inkscape-font-specification:'monospace Bold';text-align:center;text-anchor:middle;stroke-width:0.264583">java.lang.Object</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;stroke-width:0.264583"
+       x="220.49344"
+       y="75.878471"
+       id="text2460"><tspan
+         sodipodi:role="line"
+         id="tspan2458"
+         x="220.49344"
+         y="75.878471"
+         style="stroke-width:0.264583" /></text>
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g13471"
+       id="use13473"
+       width="100%"
+       height="100%"
+       transform="matrix(0.99952595,0,0,1.3480434,0.13092941,92.521968)" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;text-align:center;text-anchor:middle;white-space:pre;inline-size:67.8166;stroke-width:0.264583"
+       x="76.299446"
+       y="116.13387"
+       id="text2456"
+       transform="translate(-19.205195,2.0305565)"><tspan
+         x="76.299446"
+         y="116.13387"
+         id="tspan19308"><tspan
+           style="font-weight:bold;font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19306">userapp.AppClass</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text13450-5"
+       style="font-size:3.175px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13452-3);filter:url(#filter13513)"
+       transform="translate(2.1437496,88.272722)"><tspan
+         x="7.3964844"
+         y="35.873584"
+         id="tspan19312"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19310">package userapp;
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="39.842334"
+         id="tspan19316"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19314">
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="43.811084"
+         id="tspan19320"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19318">class AppClass {
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="47.779834"
+         id="tspan19324"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19322">  void myMethod() {
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="51.748584"
+         id="tspan19328"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19326">    Object.phasicj$agent$rt$monitorEnter(...);
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="55.717334"
+         id="tspan19332"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19330">    synchronized(AppClass.class) {
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="59.686084"
+         id="tspan19336"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19334">      ...
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="63.654834"
+         id="tspan19340"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19338">    }
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="67.623584"
+         id="tspan19344"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19342">  }
+</tspan></tspan><tspan
+         x="7.3964844"
+         y="71.592334"
+         id="tspan19348"><tspan
+           style="font-family:monospace;-inkscape-font-specification:monospace"
+           id="tspan19346">}</tspan></tspan></text>
+    <g
+       id="g2721">
+      <rect
+         style="fill:#ffffff;stroke:#000000;stroke-width:0.341597;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2704"
+         width="93.339272"
+         height="74.058968"
+         x="108.40634"
+         y="114.40248" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.322964px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 108.41406,120.22287 93.32385,-0.45254 z"
+         id="path2706" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;text-align:center;text-anchor:middle;stroke-width:0.264583;filter:url(#filter13513)"
+         x="156.00046"
+         y="118.35395"
+         id="text2452-7"><tspan
+           sodipodi:role="line"
+           id="tspan2450-5"
+           x="156.00046"
+           y="118.35395"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:monospace;-inkscape-font-specification:'monospace Bold';text-align:center;text-anchor:middle;stroke-width:0.264583">java.lang.Object</tspan></text>
+      <text
+         xml:space="preserve"
+         id="text13456-2"
+         style="font-size:3.175px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;white-space:pre;shape-inside:url(#rect13458-6);filter:url(#filter13513)"
+         transform="translate(2.3052383,86.714704)"><tspan
+           x="108.23242"
+           y="37.650928"
+           id="tspan19352"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19350">package java.lang;
+</tspan></tspan><tspan
+           x="108.23242"
+           y="41.619678"
+           id="tspan19356"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19354">
+</tspan></tspan><tspan
+           x="108.23242"
+           y="45.588428"
+           id="tspan19360"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19358">class Object {
+</tspan></tspan><tspan
+           x="108.23242"
+           y="49.557178"
+           id="tspan19364"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19362">  ...
+</tspan></tspan><tspan
+           x="108.23242"
+           y="53.525928"
+           id="tspan19368"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19366">  // All original methods and fields are above.
+</tspan></tspan><tspan
+           x="108.23242"
+           y="57.494678"
+           id="tspan19372"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19370">  
+</tspan></tspan><tspan
+           x="108.23242"
+           y="61.463428"
+           id="tspan19376"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19374">  // Add a flag to enable event forwarding.
+</tspan></tspan><tspan
+           x="108.23242"
+           y="65.432178"
+           id="tspan19380"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19378">  private volatile boolean
+</tspan></tspan><tspan
+           x="108.23242"
+           y="69.400928"
+           id="tspan19384"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19382">    phasicj$agent$rt$isEnabled = false;
+</tspan></tspan><tspan
+           x="108.23242"
+           y="73.369678"
+           id="tspan19388"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19386">  
+</tspan></tspan><tspan
+           x="108.23242"
+           y="77.338428"
+           id="tspan19392"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19390">  // Add an event forwarding method.
+</tspan></tspan><tspan
+           x="108.23242"
+           y="81.307178"
+           id="tspan19396"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19394">  public void phasicj$agent$rt$monitorEnter() {
+</tspan></tspan><tspan
+           x="108.23242"
+           y="85.275928"
+           id="tspan19400"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19398">    if (!phasicj$agent$rt$isEnabled) return;
+</tspan></tspan><tspan
+           x="108.23242"
+           y="89.244678"
+           id="tspan19404"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19402">    else { ... }
+</tspan></tspan><tspan
+           x="108.23242"
+           y="93.213428"
+           id="tspan19408"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19406">  }
+</tspan></tspan><tspan
+           x="108.23242"
+           y="97.182178"
+           id="tspan19412"><tspan
+             style="font-family:monospace;-inkscape-font-specification:monospace"
+             id="tspan19410">}</tspan></tspan></text>
+    </g>
+    <rect
+       style="opacity:1;fill:#e6e6e6;stroke:#000000;stroke-width:0.383588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect2743"
+       width="96.255478"
+       height="83.373085"
+       x="3.7287161"
+       y="209.23698"
+       ry="6.6228766" />
+    <rect
+       style="opacity:1;fill:#e6e6e6;stroke:#000000;stroke-width:0.37534;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect2745"
+       width="96.49044"
+       height="83.03994"
+       x="108.1087"
+       y="208.28206"
+       ry="6.3406067" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:0;font-family:serif;-inkscape-font-specification:serif;white-space:pre;inline-size:84.8702;stroke-width:0.264583"
+       x="9.0286608"
+       y="209.10173"
+       id="text1260"
+       transform="translate(0,8.4666671)"><tspan
+         x="9.0286608"
+         y="209.10173"
+         id="tspan19416"><tspan
+           style="font-weight:bold;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19414">PhasicJ Runtime JAR
+</tspan></tspan><tspan
+         x="9.0286608"
+         y="213.65492"
+         id="tspan19420"><tspan
+           style="font-size:3.175px;line-height:1.05;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19418">The PhasicJ Agent adds this JAR to the bootstrap </tspan></tspan><tspan
+         x="9.0286608"
+         y="216.98867"
+         id="tspan19424"><tspan
+           style="font-size:3.175px;line-height:1.05;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19422">class loader. It contains various classes which </tspan></tspan><tspan
+         x="9.0286608"
+         y="220.32243"
+         id="tspan19428"><tspan
+           style="font-size:3.175px;line-height:1.05;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19426">minimaly process events and then forward them to </tspan></tspan><tspan
+         x="9.0286608"
+         y="223.65618"
+         id="tspan19432"><tspan
+           style="font-size:3.175px;line-height:1.05;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19430">the PhasicJ Agent.</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:0;font-family:serif;-inkscape-font-specification:serif;white-space:pre;inline-size:87.4073;stroke-width:0.264583;filter:url(#filter13513)"
+       x="114.0137"
+       y="218.31731"
+       id="text1260-3"><tspan
+         x="114.0137"
+         y="218.31731"
+         id="tspan19436"><tspan
+           style="font-weight:bold;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19434">PhasicJ Native Agent
+</tspan></tspan><tspan
+         x="114.0137"
+         y="222.79112"
+         id="tspan19440"><tspan
+           style="font-size:3.175px;line-height:1;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19438">This is a JVMTI agent deployed as a shared native </tspan></tspan><tspan
+         x="114.0137"
+         y="225.96612"
+         id="tspan19444"><tspan
+           style="font-size:3.175px;line-height:1;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19442">library. This is  where we implement code for the bulk </tspan></tspan><tspan
+         x="114.0137"
+         y="229.14112"
+         id="tspan19448"><tspan
+           style="font-size:3.175px;line-height:1;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan19446">of the processing of monitored application events.</tspan></tspan></text>
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g13471"
+       id="use13473-7"
+       width="100%"
+       height="100%"
+       transform="matrix(0.87833757,0,0,0.9464061,2.427317,221.55652)"
+       style="filter:url(#filter13513)" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.397321;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1334)"
+       d="M 133.45671,177.43343 93.026746,214.36349"
+       id="path1834"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.414486;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter13513)"
+       id="rect2410-5"
+       width="38.467899"
+       height="15.69683"
+       x="90.532791"
+       y="190.57968"
+       ry="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.40292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1914)"
+       d="m 72.353706,261.09752 61.369184,-0.16499"
+       id="path1904"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       id="text2446-5"
+       style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;text-align:center;white-space:pre;shape-inside:url(#rect2448-3);filter:url(#filter13513)"
+       x="25.201902"
+       y="0"
+       transform="translate(17.457833,115.3602)"><tspan
+         x="79.115694"
+         y="82.018942"
+         id="tspan19452"><tspan
+           style="font-style:italic"
+           id="tspan19450">Calls various </tspan></tspan><tspan
+         x="81.078363"
+         y="87.310606"
+         id="tspan19456"><tspan
+           style="font-style:italic"
+           id="tspan19454">methods in</tspan></tspan></text>
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.397321;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1334-6);filter:url(#filter13513-0)"
+       d="m 91.801706,141.31987 19.774244,22.66579"
+       id="path1834-8"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.414486;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter13513-0)"
+       id="rect2410-5-7"
+       width="38.468002"
+       height="23.683762"
+       x="68.253952"
+       y="147.07709"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       id="text2446-5-9"
+       style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;text-align:center;white-space:pre;shape-inside:url(#rect2448-3-2);filter:url(#filter13513-0)"
+       x="25.201902"
+       y="0"
+       transform="translate(-4.3759323,72.97603)"><tspan
+         x="76.412057"
+         y="82.018942"
+         id="tspan19460"><tspan
+           style="font-style:italic"
+           id="tspan19458">Calls specially </tspan></tspan><tspan
+         x="77.341199"
+         y="87.310606"
+         id="tspan19464"><tspan
+           style="font-style:italic"
+           id="tspan19462">instrumented </tspan></tspan><tspan
+         x="82.585319"
+         y="92.60227"
+         id="tspan19468"><tspan
+           style="font-style:italic"
+           id="tspan19466">methods</tspan></tspan></text>
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.414486;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter13513-2)"
+       id="rect2410-5-1"
+       width="38.467899"
+       height="15.69683"
+       x="83.573051"
+       y="253.424"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       id="text2446-5-2"
+       style="font-size:4.23333px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;text-align:center;white-space:pre;shape-inside:url(#rect2448-3-6);filter:url(#filter13513-2)"
+       x="25.201902"
+       y="0"
+       transform="translate(9.9316818,178.32736)"><tspan
+         x="79.850069"
+         y="82.018942"
+         id="tspan19472"><tspan
+           style="font-style:italic"
+           id="tspan19470">Calls various </tspan></tspan><tspan
+         x="79.250623"
+         y="87.310606"
+         id="tspan19476"><tspan
+           style="font-style:italic"
+           id="tspan19474">native defs in</tspan></tspan></text>
+  </g>
+</svg>
