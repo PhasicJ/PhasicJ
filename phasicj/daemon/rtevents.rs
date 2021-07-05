@@ -24,7 +24,7 @@ impl SqliteRecorder {
         database_connection.execute(
             "CREATE TABLE rtevents (
                 id            INTEGER PRIMARY KEY,
-                description   BLOB
+                description   TEXT
                 )",
                 []
         )?;

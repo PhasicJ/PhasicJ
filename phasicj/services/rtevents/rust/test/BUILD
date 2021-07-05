@@ -33,7 +33,6 @@ rust_binary(
         "//third_party/cargo:prost",
         "//third_party/cargo:tower",
     ],
-    visibility = ["//phasicj/daemon/tests/smoke_test:__pkg__"],
 )
 
 sh_test(
