@@ -4,7 +4,7 @@ use jvmti::{
 };
 use crate::jvm::setup::setup_agent;
 use phasicj_agent_conf::PjAgentConf;
-use ::std::ffi;
+use std::ffi;
 
 const ERROR_AGENT_ATTACH_NOT_SUPPORTED: jint = 1;
 
@@ -19,7 +19,7 @@ pub fn on_load(jvm: &mut JavaVM, options: &ffi::CStr) {
 
     // TODO(dwtj): Learn how modified UTF-8 works and about how this distinction
     // might cause problems here (e.g. when the options encode a NUL byte).
-
+    env_logger::init();
     let options = options.to_str().expect("Failed parsing the PhasicJ agent options as valid UTF-8.");
     let conf = PjAgentConf::new_from_agent_options_list_str(options);
     if conf.verbose {
@@ -29,10 +29,11 @@ pub fn on_load(jvm: &mut JavaVM, options: &ffi::CStr) {
 }
 
 pub fn on_attach(_jvm: &mut JavaVM) -> jint {
-    println!("The PhasicJ Agent does not support being attached to a running JVM. This Agent only works if it is available at JVM startup.");
+    log::warn!("The PhasicJ Agent does not support being attached to a running JVM. This Agent only works if it is available at JVM startup.");
     return ERROR_AGENT_ATTACH_NOT_SUPPORTED;
 }
 
 pub fn on_unload(_jvm: &mut JavaVM) {
+    log::trace!("`on_unload()` called");
     // TODO(dwtj): Is there any cleanup needed here yet?
 }

@@ -24,6 +24,8 @@ rust_library(
         "//phasicj/agent/conf",
         "//phasicj/agent/instr/rust",
         "@graalvm_linux_x64//rust/jvmti",
+        "//third_party/cargo:log",
+        "//third_party/cargo:env_logger",
     ],
 )
 

@@ -21,4 +21,7 @@ def test(name, java_exec):
             "//phasicj/agent:libpjagent",
             "//phasicj/cli",
         ],
+        env = {
+            "RUST_LOG": "trace"
+        }
     )

@@ -110,9 +110,8 @@ unsafe extern "C" fn pj_class_file_load_hook(
     if instr_result.is_err() {
         // If our attempt to get an instrumented copy of the class data failed,
         // then we just don't instrument it, log this fact, and return early.
-        // TODO(dwtj): Use a unified logging strategy.
         // TODO(dwtj): Log more information.
-        eprintln!("Failed to instrument a class: {}", class_name);
+        log::error!("Failed to instrument a class: {}", class_name);
         return;
     }
     let instrumented_class = instr_result.unwrap();
