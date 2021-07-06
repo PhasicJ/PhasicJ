@@ -43,12 +43,10 @@ cargo_build_script(
             "@rust_linux_x86_64//:rustfmt_bin",
         ]
     }),
-    # TODO(dwtj): Figure out how to support the `rustfmt` feature. My immediate
-    #  problem is that `@rust_<os>_x86_64:rustfmt` expands to two files.
     build_script_env = select({
         "@platforms//os:macos": {
             "PROTOC": "$(execpath @com_google_protobuf_protoc_macos_x86_64//:protoc)",
-            "RUSTFMT": "$(execpath @rust_macos_x86_64//:rustfmt_bin)",
+            "RUSTFMT": "$(execpath @rust_darwin_x86_64//:rustfmt_bin)",
         },
         "@platforms//os:linux": {
             "PROTOC": "$(execpath @com_google_protobuf_protoc_linux_x86_64//:protoc)",
