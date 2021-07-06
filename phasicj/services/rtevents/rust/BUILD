@@ -23,7 +23,7 @@ cargo_build_script(
         "@platforms//os:macos": [
             "rtevents_proto",
             "@com_google_protobuf_protoc_macos_x86_64//:protoc",
-            "@rust_macos_x86_64//:rustfmt_bin",
+            "@rust_darwin_x86_64//:rustfmt_bin",
         ],
         "@platforms//os:linux": [
             "rtevents_proto",
