@@ -5,12 +5,8 @@
 ///
 /// [1]: https://github.com/hyperium/tonic/blob/0583cff80f57ba071295416ee8828c3430851d0d/examples/src/uds/client.rs
 
-pub mod rtevents {
-    tonic::include_proto!("phasicj.services.rtevents");
-}
-
-use rtevents::recorder_client::RecorderClient;
-use rtevents::RtEvent;
+use phasicj_services_rtevents::recorder_client::RecorderClient;
+use phasicj_services_rtevents::RtEvent;
 use std::convert::TryFrom;
 use std::env;
 #[cfg(unix)]

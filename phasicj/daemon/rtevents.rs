@@ -3,16 +3,10 @@ use std::sync::Mutex;
 use tonic::{Request, Response, Status};
 use rusqlite::{params, Connection};
 
-mod protos {
-    tonic::include_proto!("phasicj.services.rtevents");
-}
-
-use protos::{
+use phasicj_services_rtevents::{
     recorder_server::Recorder,
     RtEvent, RecordEventsAck,
 };
-
-pub use protos::recorder_server::RecorderServer;
 
 pub struct SqliteRecorder {
     database_connection: Mutex<Connection>,

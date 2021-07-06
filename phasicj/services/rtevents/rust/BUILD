@@ -1,9 +1,21 @@
 load("@rules_rust//cargo:cargo_build_script.bzl", "cargo_build_script")
+load("@rules_rust//rust:defs.bzl", "rust_library")
 
 alias(
     name = "rust",
     actual = "phasicj_services_rtevents",
     visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "phasicj_services_rtevents",
+    srcs = ["lib.rs"],
+    deps = [
+        ":cargo_build_script",
+        "//third_party/cargo:tonic",
+        "//third_party/cargo:prost",
+        "//third_party/cargo:tower",
+    ],
 )
 
 # NOTE(dwtj): We perform our own selection of the `protoc` executable based on
@@ -13,7 +25,7 @@ alias(
 # PhasicJ.
 # TODO(dwtj): Figure out how to make this more concise.
 cargo_build_script(
-    name = "phasicj_services_rtevents",
+    name = "cargo_build_script",
     srcs = ["rtevents.build.rs"],
     deps = [
         "//third_party/cargo:tonic_build",

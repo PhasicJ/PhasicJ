@@ -1,9 +1,5 @@
-pub mod rtevents {
-    tonic::include_proto!("phasicj.services.rtevents");
-}
-
-use rtevents::recorder_client::RecorderClient;
-use rtevents::RtEvent;
+use phasicj_services_rtevents::recorder_client::RecorderClient;
+use phasicj_services_rtevents::RtEvent;
 use std::path::PathBuf;
 use std::convert::TryFrom;
 use tokio::net::UnixStream;

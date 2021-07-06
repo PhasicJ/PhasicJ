@@ -1,9 +1,10 @@
 use std::path::Path;
 use tokio::net::UnixListener;
 use futures::TryFutureExt;
-use rtevents::{SqliteRecorder, RecorderServer};
+use rtevents::SqliteRecorder;
 use tonic::transport::Server;
 use clap::Clap;
+use phasicj_services_rtevents::recorder_server::RecorderServer;
 
 mod rtevents;
 mod cli;

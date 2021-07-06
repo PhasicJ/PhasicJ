@@ -12,11 +12,7 @@ use std::env;
 use tokio::net::UnixListener;
 use tonic::{transport::Server, Request, Response, Status};
 
-pub mod rtevents {
-    tonic::include_proto!("phasicj.services.rtevents");
-}
-
-use rtevents::{
+use phasicj_services_rtevents::{
     recorder_server::{Recorder, RecorderServer},
     RtEvent, RecordEventsAck,
 };
