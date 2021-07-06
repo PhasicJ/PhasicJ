@@ -28,6 +28,7 @@ rust_library(
         "//third_party/cargo:log",
         "//third_party/cargo:env_logger",
         "//third_party/cargo:lazy_static",
+        "//third_party/cargo:tokio",
     ],
 )
 
