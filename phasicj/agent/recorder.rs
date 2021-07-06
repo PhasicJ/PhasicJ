@@ -10,11 +10,19 @@ use std::sync::mpsc::channel;
 lazy_static! {
     // TODO(): Events sent into this channel will be forwarded to the daemon via
     // gRPC over UDP.
-    pub static ref EVENT_FORWARDING_CHANNEL: Mutex<Option<Sender<()>>> = Mutex::new(None);
+    static ref EVENT_FORWARDING_CHANNEL: Mutex<Option<Sender<()>>> = Mutex::new(None);
 }
 
-pub fn start_forwarding_worker_thread() {
-    // Initialize the channel.
+// This is meant to be used by event observation code within the agent to
+// forward events out of the agent.
+pub fn forward_event(event: ()) {
+    EVENT_FORWARDING_CHANNEL.lock().unwrap().as_ref().unwrap().send(()).unwrap();
+}
+
+// This is meant to be called once during the agent's initial startup before
+// the user's JVM application code has started to run.
+pub fn start_event_forwarding_single_threaded_tokio_runtime() {
+    // Initialize the event channel.
     let (tx, rx) = channel();
     {
         let mut data = EVENT_FORWARDING_CHANNEL.lock().unwrap();
@@ -24,7 +32,7 @@ pub fn start_forwarding_worker_thread() {
     thread::spawn(move || {
         loop {
             let msg = rx.recv().unwrap();
-            log::trace!("JVM Monitor Event!");
+            log::trace!("Observed an Event!");
         }
     });
 }
