@@ -15,6 +15,7 @@ rust_library(
         "lib.rs",
         "jvm.rs",
         "debug.rs",
+        "recorder.rs",
         "//phasicj/agent/jvm",
     ],
     crate_type = "cdylib",
@@ -26,6 +27,7 @@ rust_library(
         "@graalvm_linux_x64//rust/jvmti",
         "//third_party/cargo:log",
         "//third_party/cargo:env_logger",
+        "//third_party/cargo:lazy_static",
     ],
 )
 

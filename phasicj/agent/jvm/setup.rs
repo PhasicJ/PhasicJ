@@ -41,6 +41,7 @@ pub fn setup_agent(jvm: &mut JavaVM, conf: PjAgentConf) {
         let env = &mut *env;
         configure_jvmti_env(env, &conf);
     }
+    crate::recorder::start_forwarding_worker_thread();
 }
 
 pub fn configure_jvmti_env(env: &mut jvmtiEnv, conf: &PjAgentConf) {

@@ -58,6 +58,15 @@ alias(
 )
 
 alias(
+    name = "lazy_static",
+    actual = "@raze__lazy_static__1_4_0//:lazy_static",
+    tags = [
+        "cargo-raze",
+        "manual",
+    ],
+)
+
+alias(
     name = "libloading",
     actual = "@raze__libloading__0_6_7//:libloading",
     tags = [

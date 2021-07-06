@@ -1,5 +1,4 @@
 load("@dwtj_rules_java//java:defs.bzl", "dwtj_java_library")
-load("@rules_rust//rust:defs.bzl", "rust_library")
 load("//bazel:docs.bzl", "index_md")
 
 index_md()

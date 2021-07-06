@@ -51,6 +51,8 @@ pub extern fn Agent_OnUnload(jvm: *mut JavaVM) {
     unsafe { on_unload(&mut *jvm); }
 }
 
+use crate::recorder::EVENT_FORWARDING_CHANNEL;
+
 // TODO(dwtj): Consider putting these in the `rt` subdirectory. I tried putting
 //  them in their own crate in `//phasicj/agent/rt/`, but they did not show up
 //  in the final agent shared library (possibly because of some link-time
@@ -58,6 +60,7 @@ pub extern fn Agent_OnUnload(jvm: *mut JavaVM) {
 #[no_mangle]
 pub extern fn Java_phasicj_agent_rt_ApplicationEvents_monitorEnter(_env: *mut JNIEnv, _cls: jclass) {
     log::trace!("`monitorEnter()` in Rust");
+    EVENT_FORWARDING_CHANNEL.lock().unwrap().as_ref().unwrap().send(()).unwrap();
 }
 
 #[no_mangle]

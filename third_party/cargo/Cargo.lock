@@ -135,6 +135,7 @@ dependencies = [
  "clap",
  "env_logger",
  "futures",
+ "lazy_static",
  "libloading",
  "log",
  "pest",
