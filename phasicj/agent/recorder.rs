@@ -20,7 +20,7 @@ use phasicj_services_rtevents::{
 use std::path::{Path, PathBuf};
 use std::convert::TryFrom;
 
-const EVENT_CHANNEL_SIZE: usize = 128;
+const EVENT_CHANNEL_SIZE: usize = 1028;
 const NUM_WORKER_THREADS: usize = 2;
 const WORKER_THREAD_NAME: &'static str = "phasicj-agent-event-forwarder-worker";
 
@@ -65,6 +65,9 @@ async fn new_recorder_client(daemon_uds_path: &Path) -> RecorderClient<Channel> 
         .await
         .unwrap();
 
+    log::trace!(
+        "Created a new recorder gRPC client.",
+    );
     RecorderClient::new(channel)
 }
 
@@ -79,20 +82,25 @@ impl EventForwarder {
         let runtime = Builder::new_multi_thread()
             .worker_threads(NUM_WORKER_THREADS)
             .thread_name(WORKER_THREAD_NAME)
+            .enable_io()
             .build()
             .unwrap();
 
         let daemon_uds_pathbuf = daemon_uds_path.to_path_buf();
         let (tx, mut rx) = mpsc::channel(EVENT_CHANNEL_SIZE);
-        runtime.spawn(async move {
-            let mut client = new_recorder_client(&daemon_uds_pathbuf).await;
-            while let event = rx.recv().await {
-                log::trace!("Forwarded an event into Tokio runtime: {:?}", event);
-                let request = tonic::Request::new(RtEvent {
-                    description: "()".to_string(),
-                });
-                let response = client.record_events(request).await;
-            }
+        std::thread::spawn(move || {
+            runtime.block_on(async move {
+                let mut client = new_recorder_client(&daemon_uds_pathbuf).await;
+
+                log::trace!("Starting a recorder gRPC client event loop.");
+                while let event = rx.recv().await {
+                    log::trace!("Forwarded an event into Tokio runtime: {:?}", event);
+                    let request = tonic::Request::new(RtEvent {
+                        description: "()".to_string(),
+                    });
+                    let response = client.record_events(request).await.unwrap();
+                }
+            });
         });
 
         EventForwarder {
