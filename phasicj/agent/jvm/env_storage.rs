@@ -92,6 +92,8 @@ impl RawEnvStorage {
             conf: PjAgentConf {
                 verbose: self.verbose,
                 phasicj_exec: phasicj_exec,
+                // TODO(dwtj): Consider supporting this field too.
+                daemon_socket: None,
                 debug_dump_classes_before_instr: self.debug_dump_classes_before_instr,
                 debug_dump_classes_after_instr: self.debug_dump_classes_after_instr,
             }

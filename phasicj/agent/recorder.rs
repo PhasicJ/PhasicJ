@@ -7,6 +7,7 @@
 // [1]: https://tokio.rs/tokio/tutorial/bridging#sending-messages
 
 use lazy_static::lazy_static;
+use std::sync::Mutex;
 use tokio::sync::mpsc;
 use tokio::runtime::{Runtime, Builder};
 use tokio::net::UnixStream;
@@ -22,17 +23,16 @@ use std::convert::TryFrom;
 const EVENT_CHANNEL_SIZE: usize = 128;
 const NUM_WORKER_THREADS: usize = 2;
 const WORKER_THREAD_NAME: &'static str = "phasicj-agent-event-forwarder-worker";
-const DAEMON_SOCKET_PATH: &'static str = "pjeventsd.S";
 
-// pub fn install_static_event_forwarder(daemon_uds_path: &Path) {
-//     log::trace!("Installing event forwarder as singleton");
+pub fn install_static_event_forwarder(daemon_uds_path: &Path) {
+    log::trace!("Installing event forwarder as singleton");
 
-//     if EVENT_FORWARDER.is_some() {
-//         panic!("An event forwarder has already been installed");
-//     }
+    if EVENT_FORWARDER.lock().unwrap().is_some() {
+        panic!("An event forwarder has already been installed");
+    }
 
-//     *EVENT_FORWARDER = Some(EventForwarder::new(daemon_uds_path));
-// }
+    (*EVENT_FORWARDER.lock().unwrap()) = Some(EventForwarder::new(daemon_uds_path));
+}
 
 // This is meant to be used by event observation code within the agent to
 // forward events out of the agent. Events passed to this function will be
@@ -41,12 +41,11 @@ const DAEMON_SOCKET_PATH: &'static str = "pjeventsd.S";
 // This will fail if the `EventForwarder` singleton
 pub fn forward_event(event: ()) {
     log::trace!("Forwarding an event: {:?}", event);
-    EVENT_FORWARDER.as_ref().unwrap().forward_event(event);
+    EVENT_FORWARDER.lock().unwrap().as_ref().unwrap().forward_event(event);
 }
 
 lazy_static! {
-    static ref EVENT_FORWARDER: Option<EventForwarder> =
-        Some(EventForwarder::new(Path::new(DAEMON_SOCKET_PATH)));
+    static ref EVENT_FORWARDER: Mutex<Option<EventForwarder>> = Mutex::new(None);
 }
 
 async fn new_recorder_client(daemon_uds_path: &Path) -> RecorderClient<Channel> {

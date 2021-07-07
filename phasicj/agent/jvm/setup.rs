@@ -1,6 +1,7 @@
 use ::std::os::raw;
 use ::std::ptr;
 use ::std::mem;
+use ::std::path::Path;
 use ::jvmti::{
     JavaVM,
     jvmtiEnv,
@@ -41,6 +42,8 @@ pub fn setup_agent(jvm: &mut JavaVM, conf: PjAgentConf) {
         let env = &mut *env;
         configure_jvmti_env(env, &conf);
     }
+
+    crate::recorder::install_static_event_forwarder(Path::new(&conf.daemon_socket.unwrap()));
 }
 
 pub fn configure_jvmti_env(env: &mut jvmtiEnv, conf: &PjAgentConf) {

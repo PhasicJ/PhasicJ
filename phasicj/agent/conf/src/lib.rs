@@ -15,21 +15,19 @@ use parser::PjAgentConfParser;
 
 #[derive(Debug)]
 #[derive(Clone)]
+#[derive(Default)]
 pub struct PjAgentConf {
     pub verbose: bool,
     pub phasicj_exec: Option<String>,
+    pub daemon_socket: Option<String>,
     pub debug_dump_classes_before_instr: bool,
     pub debug_dump_classes_after_instr: bool,
+
 }
 
 impl PjAgentConf {
-    pub const fn new_with_defaults() -> PjAgentConf {
-        return PjAgentConf {
-            verbose: false,
-            phasicj_exec: None,
-            debug_dump_classes_before_instr: false,
-            debug_dump_classes_after_instr: false,
-        };
+    pub fn new_with_defaults() -> PjAgentConf {
+        PjAgentConf::default()
     }
 
     pub fn new_from_agent_options_list_str(options_str: &str) -> PjAgentConf {
@@ -83,6 +81,13 @@ impl PjAgentConf {
                     Some("") => panic!("The PhasicJ agent's `phasicj_exec` option cannot be set to an empty string."),
                     Some(value) => self.phasicj_exec = Some(String::from(value)),
                 };
+            },
+            "daemon_socket" => {
+                match option_value {
+                    None => panic!("The PhasicJ agent's `daemon_socket` option is set, but it has no value."),
+                    Some("") => panic!("The PhasicJ agent's `daemon_socket` option cannot be set to an empty string."),
+                    Some(value) => self.daemon_socket = Some(String::from(value)),
+                }
             },
             "debug_dump_classes_before_instr" => {
                 self.debug_dump_classes_before_instr = Self::eval_bool_option_value(option_value);

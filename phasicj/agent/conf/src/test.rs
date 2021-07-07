@@ -197,4 +197,12 @@ mod test_conf_options_apply {
         assert_eq!(path, conf.phasicj_exec.unwrap());
     }
 
+    #[test]
+    fn test_daemon_socket_option() {
+        let path = "My Path/to/pjdaemon.S";
+        let to_parse = format!(r#"daemon_socket="{}""#, path);
+        let conf = PjAgentConf::new_from_agent_options_list_str(&to_parse);
+        assert_eq!(path, conf.daemon_socket.unwrap());
+
+    }
 }
