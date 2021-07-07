@@ -24,11 +24,14 @@ rust_library(
         "//phasicj/agent/rt/embed:phasicj_agent_rt_jar_embed",
         "//phasicj/agent/conf",
         "//phasicj/agent/instr/rust",
+        "//phasicj/services/rtevents/rust",
         "@graalvm_linux_x64//rust/jvmti",
         "//third_party/cargo:log",
         "//third_party/cargo:env_logger",
         "//third_party/cargo:lazy_static",
         "//third_party/cargo:tokio",
+        "//third_party/cargo:tonic",
+        "//third_party/cargo:tower",
     ],
 )
 
